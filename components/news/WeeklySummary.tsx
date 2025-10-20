@@ -34,14 +34,13 @@ const WeeklySummary: React.FC = () => {
 
   return (
     <section className="my-10">
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
-        <h2 className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mb-5">
           <div className="w-[7px] h-[22px] bg-red-500" />
-          <span className="text-2xl font-bold text-zinc-800">
-            7 хоногийн төлөө
-          </span>
-        </h2>
-        
+          <div className="text-2xl font-bold text-zinc-800">
+            7 хоногийн тойм
+          </div>
+       </div>
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
           {tabs.map((tab) => (
             <button

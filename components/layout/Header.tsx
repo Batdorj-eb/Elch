@@ -7,7 +7,7 @@ import { Search } from 'lucide-react';
 
 const Header: React.FC = () => {
   return (
-    <div className="border-b border-stone-300 bg-white">
+    <div className="hidden md:block border-b border-stone-300 bg-white">
       <div className="max-w-[1920px] mx-auto px-4 lg:px-96 py-5">
         <div className="flex flex-col lg:flex-row justify-between items-center gap-5">
           {/* Date Section */}

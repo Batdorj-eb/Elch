@@ -1,9 +1,16 @@
+// components/layout/NavigationBar.tsx
+
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
+import Logo from '../../app/mobile_logo.png'
 
 const NavigationBar: React.FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const menuItems = [
     { label: 'Эхний хуудас', href: '/' },
     { label: 'Улс төр', href: '/politics' },
@@ -18,31 +25,73 @@ const NavigationBar: React.FC = () => {
   ];
 
   return (
-    <nav className="bg-zinc-800 text-white">
-      <div className="max-w-[1920px] mx-auto px-4 lg:px-96">
-        <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
+    <nav className="bg-[#FFF7EF] lg:bg-zinc-800 text-zinc-800 lg:text-white sticky top-0 z-50 py-3 lg:py-0">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96">
+        {/* Desktop & Mobile Header */}
+        <div className="flex items-center justify-between h-12 lg:h-auto">
           {/* Logo Icon */}
-          <div className="shrink-0 mr-4">
-            <span className="text-2xl font-bold text-red-500">EN</span>
+          <div className="shrink-0">
+            {/* Mobile logo image */}
+              <Image src={Logo} alt={'Logo'} width={200} />
+
+            {/* Desktop text logo */}
+            <span className="hidden lg:block text-xl lg:text-2xl font-bold text-red-500">
+              EN
+            </span>
           </div>
 
-          {/* Menu Items */}
-          {menuItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="px-4 py-3 text-sm hover:bg-zinc-700 transition whitespace-nowrap"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center gap-1">
+            {menuItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="px-3 xl:px-4 py-3 text-sm hover:bg-zinc-700 transition whitespace-nowrap"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
 
-          {/* Live Button */}
-          <button className="ml-auto shrink-0 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600 transition flex items-center gap-2">
+          {/* Desktop Live Button */}
+          <button className="hidden lg:flex items-center gap-2 shrink-0 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600 transition">
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
             ШУУД
           </button>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 hover:bg-zinc-700 rounded transition"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-zinc-700 py-2">
+            {menuItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-sm hover:bg-zinc-700 transition"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <button className="w-full mt-2 px-4 py-3 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600 transition flex items-center justify-center gap-2">
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+              ШУУД
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );

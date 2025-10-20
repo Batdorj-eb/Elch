@@ -31,7 +31,7 @@ const OpinionSection: React.FC = () => {
       <h2 className="flex items-center gap-4 mb-6">
         <div className="w-[7px] h-[22px] bg-red-500" />
         <span className="text-2xl font-bold text-zinc-800">
-          Ардын Эд
+          Ардын Элч
         </span>
       </h2>
 
