@@ -32,7 +32,13 @@ const NavigationBar: React.FC = () => {
           {/* Logo Icon */}
           <div className="shrink-0">
             {/* Mobile logo image */}
-              <Image src={Logo} alt={'Logo'} width={200} />
+              <Image
+                src={Logo}
+                alt="Logo"
+                width={200}
+                className="md:hidden"
+              />
+
 
             {/* Desktop text logo */}
             <span className="hidden lg:block text-xl lg:text-2xl font-bold text-red-500">
