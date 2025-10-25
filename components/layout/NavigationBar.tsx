@@ -1,5 +1,3 @@
-// components/layout/NavigationBar.tsx
-
 'use client';
 
 import React, { useState } from 'react';
@@ -12,20 +10,20 @@ const NavigationBar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
-    { label: 'Эхний хуудас', href: '/' },
     { label: 'Улс төр', href: '/politics' },
     { label: 'Эдийн засаг', href: '/economy' },
-    { label: 'Спорт, урлаг', href: '/sports' },
     { label: 'Нийгэм', href: '/society' },
-    { label: 'Хууль эрх зүй', href: '/law' },
-    { label: 'Боловсрол', href: '/education' },
-    { label: 'Дэлхий', href: '/world' },
-    { label: '7 ХН видео', href: '/videos' },
+    { label: 'Ардын элч', href: '/elch' },
+    { label: 'Товч, тойм', href: '/brief' },
+    { label: 'Fact-checking', href: '/fact' },
+    { label: 'Поп мэдээ', href: '/pop' },
+    { label: 'Дэлхийд', href: '/world' },
+    { label: '126 ирц', href: '/126' },
     { label: 'Бусад', href: '/others' },
   ];
 
   return (
-    <nav className="bg-[#FFF7EF] lg:bg-zinc-800 text-zinc-800 lg:text-white sticky top-0 z-50 py-3 lg:py-0">
+    <nav className="bg-[#FFF1E5] lg:bg-zinc-800 text-[#2F2F2F] lg:text-white sticky top-0 z-50 py-3 lg:py-0">
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96">
         {/* Desktop & Mobile Header */}
         <div className="flex items-center justify-between h-12 lg:h-auto">
@@ -39,23 +37,26 @@ const NavigationBar: React.FC = () => {
                 className="md:hidden"
               />
 
-
             {/* Desktop text logo */}
-            <span className="hidden lg:block text-xl lg:text-2xl font-bold text-red-500">
+            <Link href="/" className="hidden lg:block text-xl lg:text-2xl font-bold text-red-500">
               EN
-            </span>
+            </Link>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-1">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="px-3 xl:px-4 py-3 text-sm hover:bg-zinc-700 transition whitespace-nowrap"
-              >
-                {item.label}
-              </Link>
+          <div className="hidden lg:flex items-center">
+            {menuItems.map((item, index) => (
+              <React.Fragment key={item.href}>
+                <Link
+                  href={item.href}
+                  className="px-3 xl:px-4 py-3 text-sm hover:bg-zinc-700 transition whitespace-nowrap"
+                >
+                  {item.label}
+                </Link>
+                {index < menuItems.length - 1 && (
+                  <div className="h-5 w-px bg-zinc-700" />
+                )}
+              </React.Fragment>
             ))}
           </div>
 

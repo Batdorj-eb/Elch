@@ -40,7 +40,7 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
     <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
       {/* Page Title */}
       <div className="mb-6 lg:mb-8">
-        <h1 className="text-3xl lg:text-4xl font-bold text-zinc-800 inline-block relative">
+        <h1 className="text-3xl lg:text-4xl font-bold text-[#2F2F2F] inline-block relative">
           {title}
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-500 transform translate-y-2" />
         </h1>
@@ -56,7 +56,7 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
               className={`px-4 py-2 text-sm whitespace-nowrap transition ${
                 activeFilter === filter
                   ? 'text-red-500 font-medium border-b-2 border-red-500'
-                  : 'text-zinc-600 hover:text-zinc-800'
+                  : 'text-zinc-600 hover:text-[#2F2F2F]'
               }`}
             >
               {filter}
@@ -81,7 +81,7 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
                       className="object-cover group-hover:scale-105 transition duration-300"
                     />
                   </div>
-                  <h3 className="text-sm lg:text-base font-semibold text-zinc-800 leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2">
+                  <h3 className="text-sm lg:text-base font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2">
                     {news.title}
                   </h3>
                   <div className="flex items-center gap-3 text-xs text-zinc-500">
@@ -137,7 +137,7 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm lg:text-lg font-semibold text-zinc-800 leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2 lg:line-clamp-3">
+                    <h3 className="text-sm lg:text-lg font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2 lg:line-clamp-3">
                       {news.title}
                     </h3>
                     <div className="flex items-center gap-3 text-xs lg:text-sm text-zinc-500">

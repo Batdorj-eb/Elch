@@ -44,7 +44,7 @@ export default function ArticleDetailPage() {
           <ChevronRight className="w-4 h-4" />
           <a href="/politics" className="hover:text-red-500 transition">{article.category}</a>
           <ChevronRight className="w-4 h-4" />
-          <span className="text-zinc-800 line-clamp-1">Мэдээ</span>
+          <span className="text-[#2F2F2F] line-clamp-1">Мэдээ</span>
         </nav>
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
@@ -56,7 +56,7 @@ export default function ArticleDetailPage() {
             </div>
 
             {/* Article Title */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-800 leading-tight mb-4 lg:mb-6">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#2F2F2F] leading-tight mb-4 lg:mb-6">
               {article.title}
             </h1>
 
@@ -98,7 +98,7 @@ export default function ArticleDetailPage() {
 
               {/* Blockquote */}
               <blockquote className="my-6 lg:my-8 pl-4 lg:pl-6 border-l-4 border-red-500 bg-neutral-50 p-4 lg:p-6 rounded-r-lg">
-                <p className="text-base lg:text-lg font-semibold text-zinc-800 italic leading-relaxed mb-2">
+                <p className="text-base lg:text-lg font-semibold text-[#2F2F2F] italic leading-relaxed mb-2">
                   "In sem justo, commodo ut, suscipit at, pharetra vitae, orci. Donec odio elit, dictum in, hendrerit sit amet, egestas sed, leo. Nulham dictum felis eu pede mollis pretium."
                 </p>
                 <cite className="text-xs lg:text-sm text-zinc-600 not-italic">

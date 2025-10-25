@@ -59,7 +59,7 @@ const CommentSection: React.FC = () => {
 
   return (
     <section className="mt-8 lg:mt-10 pt-8 lg:pt-10 border-t border-neutral-200">
-      <h2 className="text-xl lg:text-2xl font-bold text-zinc-800 mb-6">
+      <h2 className="text-xl lg:text-2xl font-bold text-[#2F2F2F] mb-6">
         Сэтгэгдэл (15)
       </h2>
 
@@ -70,7 +70,7 @@ const CommentSection: React.FC = () => {
           className={`pb-3 text-sm lg:text-base font-medium transition ${
             activeTab === 'popular'
               ? 'text-red-500 border-b-2 border-red-500'
-              : 'text-zinc-600 hover:text-zinc-800'
+              : 'text-zinc-600 hover:text-[#2F2F2F]'
           }`}
         >
           Эрэмбэлэх
@@ -80,7 +80,7 @@ const CommentSection: React.FC = () => {
           className={`pb-3 text-sm lg:text-base font-medium transition ${
             activeTab === 'newest'
               ? 'text-red-500 border-b-2 border-red-500'
-              : 'text-zinc-600 hover:text-zinc-800'
+              : 'text-zinc-600 hover:text-[#2F2F2F]'
           }`}
         >
           Шинэ эхэндээ
@@ -121,7 +121,7 @@ const CommentSection: React.FC = () => {
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-sm lg:text-base font-semibold text-zinc-800">
+                <span className="text-sm lg:text-base font-semibold text-[#2F2F2F]">
                   {comment.author}
                 </span>
                 <span className="text-xs lg:text-sm text-zinc-500">

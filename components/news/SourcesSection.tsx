@@ -33,15 +33,15 @@ const SourcesSection: React.FC = () => {
     <section className="my-8 lg:my-10">
       <h2 className="flex items-center gap-3 lg:gap-4 mb-6">
         <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
-        <span className="text-xl lg:text-2xl font-bold text-zinc-800">
-          Сурвалж:бага
+        <span className="text-xl lg:text-2xl font-bold text-[#2F2F2F]">
+          Сурвалжлага
         </span>
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {sources.map((source) => (
           <article key={source.id} className="group cursor-pointer">
-            <div className="relative w-full h-[180px] lg:h-[200px] mb-3 lg:mb-4 rounded-lg overflow-hidden">
+            <div className="relative w-full h-[180px] lg:h-[200px] mb-3 lg:mb-4 overflow-hidden">
               <Image
                 src={source.imageUrl}
                 alt={source.title}
@@ -58,7 +58,7 @@ const SourcesSection: React.FC = () => {
             <span className="text-[11px] lg:text-xs text-red-500 font-medium">
               {source.category}
             </span>
-            <h3 className="text-xs lg:text-sm font-medium text-zinc-800 mt-1.5 lg:mt-2 leading-snug group-hover:text-red-500 transition line-clamp-2">
+            <h3 className="text-xs lg:text-sm font-medium text-[#2F2F2F] mt-1.5 lg:mt-2 leading-snug group-hover:text-red-500 transition line-clamp-2">
               {source.title}
             </h3>
             <p className="text-[10px] lg:text-xs text-zinc-500 mt-1.5 lg:mt-2">{source.author}</p>
@@ -66,9 +66,11 @@ const SourcesSection: React.FC = () => {
         ))}
       </div>
 
-      <button className="w-full mt-5 lg:mt-6 px-6 py-2.5 lg:py-3 bg-red-500 text-white text-sm lg:text-base font-medium rounded hover:bg-red-600 transition">
-        Дэлгэрэнгүй үзэх
-      </button>
+      <div className="flex justify-center">
+        <button className="w-[366px] mt-5 lg:mt-6 px-6 py-2.5 lg:py-3 bg-red-500 text-white text-sm lg:text-base font-medium rounded hover:bg-red-600 transition">
+          Дэлгэрэнгүй үзэх
+        </button>
+      </div>
     </section>
   );
 };

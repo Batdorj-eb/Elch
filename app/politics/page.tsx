@@ -8,7 +8,7 @@ import BreakingNewsBanner from '@/components/news/BreakingNewsBanner';
 import CategoryLayout from '@/components/category/CategoryLayout';
 
 export default function PoliticsPage() {
-  const categoryFilters = ['Бүгд', 'Спорт 2028', 'Нүүрсний хүчил', 'Ногоон автобус'];
+  const categoryFilters = ['Улс төр', 'Эдийн засаг', 'Нийгэм', 'Ардын элч', 'Товч тойм', 'Fact-checking', 'Поп мэдээ', 'Дэлхийд', '126 ирц', 'Бусад' ];
 
   const featuredNews = [
     {

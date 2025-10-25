@@ -14,7 +14,7 @@ const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
     id: '1',
     title: 'Pudam iuntur aut alite ahonror het aspelit volo dolor auta liguam dolessit aspelit volo dolor',
     category: 'Улс төр',
-    imageUrl: 'https://placehold.co/800x400/3b82f6/white?text=Hero+Article',
+    imageUrl: '/huk.png',
     timeAgo: '2 цаг 30 минутын өмнө',
     featured: true
   };
@@ -38,8 +38,8 @@ const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
         {/* Content Box */}
         <div className="bg-[#FFE4CC] p-4 sm:p-6 lg:p-8">
           {/* Title */}
-          <h1 
-            className="font-bold text-zinc-800 leading-tight group-hover:text-red-500 transition cursor-pointer mb-3 lg:mb-4"
+           <h1 
+            className="font-serif font-bold text-[#2F2F2F] leading-tight group-hover:text-red-500 transition cursor-pointer mb-3 lg:mb-4"
             style={{ fontSize: 'clamp(20px, 4vw, 30px)' }}
           >
             {data.title}
@@ -48,7 +48,7 @@ const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
           {/* Meta Info */}
           <div className="flex items-center gap-2 text-zinc-600">
             <span 
-              className="font-medium text-zinc-800"
+              className="font-medium text-[#2F2F2F]"
               style={{ fontSize: '15px' }}
             >
               {data.category}

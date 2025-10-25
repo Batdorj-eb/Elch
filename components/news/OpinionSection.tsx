@@ -30,7 +30,7 @@ const OpinionSection: React.FC = () => {
     <section className="my-10">
       <h2 className="flex items-center gap-4 mb-6">
         <div className="w-[7px] h-[22px] bg-red-500" />
-        <span className="text-2xl font-bold text-zinc-800">
+        <span className="text-2xl font-bold text-[#2F2F2F]">
           Ардын Элч
         </span>
       </h2>
@@ -48,13 +48,13 @@ const OpinionSection: React.FC = () => {
                 />
               </div>
               <div className="flex-1">
-                <p className="text-sm font-medium text-zinc-800">
+                <p className="text-sm font-medium text-[#2F2F2F]">
                   {opinion.author}
                 </p>
               </div>
             </div>
             
-            <h3 className="text-base font-semibold text-zinc-800 leading-snug group-hover:text-red-500 transition">
+            <h3 className="text-base font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition">
               {opinion.title}
             </h3>
             
@@ -64,10 +64,11 @@ const OpinionSection: React.FC = () => {
           </article>
         ))}
       </div>
-
-      <button className="w-full mt-6 px-6 py-3 bg-red-500 text-white font-medium rounded hover:bg-red-600 transition">
-        Дэлгэрэнгүй үзэх
-      </button>
+     <div className="flex justify-center">
+        <button className="w-[366px] mt-5 lg:mt-6 px-6 py-2.5 lg:py-3 bg-red-500 text-white text-sm lg:text-base font-medium rounded hover:bg-red-600 transition">
+          Дэлгэрэнгүй үзэх
+        </button>
+      </div>
     </section>
   );
 };

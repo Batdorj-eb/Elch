@@ -17,7 +17,7 @@ import Advertisement from '@/components/common/Advertisement';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FFF1E5]">
       {/* Header Section */}
       <header>
         <BreakingNewsBanner />
@@ -25,43 +25,56 @@ export default function HomePage() {
         <NavigationBar />
       </header>
 
-      <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
-          {/* Left Column - Main Content */}
-          <section className="flex-1 w-full lg:max-w-[773px]">
-            <HeroArticle />
-            
-            <h2 className="flex items-center gap-3 lg:gap-4 mb-6 lg:mb-8 mt-8 lg:mt-10">
-              <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
-              <span className="text-2xl lg:text-3xl font-bold text-zinc-800">
-                Онцлох мэдээ
-              </span>
-            </h2>
-            
-            <NewsGrid />
-            
-            <Advertisement 
-              className="my-8 lg:my-10"
-              imageUrl="https://placehold.co/800x200/10b981/white?text=Advertisement"
-            />
-            
-            <WeeklySummary />
-            <SourcesSection />
-            <OpinionSection />
-          </section>
+      <main className='bg-[#FFF1E5]'>
+        {/* Main Content Section */}
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+            {/* Left Column - Main Content */}
+            <section className="flex-1 w-full lg:max-w-[773px]">
+              <HeroArticle />
+              
+              <h2 className="flex items-center gap-3 lg:gap-4 mb-6 lg:mb-8 mt-8 lg:mt-10">
+                <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
+                <span className="text-2xl font-serif lg:text-3xl font-semibold text-[#2F2F2F]">
+                  Онцлох мэдээ
+                </span>
+              </h2>
+              
+              <NewsGrid />
+              
+              <Advertisement 
+                className="my-8 lg:my-10 p-10 bg-[#FFE4CC] object-cover"
+                imageUrl="/banner1.png"
+              />
+              
+              <WeeklySummary />
+            </section>
+            <aside className="w-full lg:w-[367px] flex flex-col justify-between min-h-[1200px]">
+              <div className="space-y-8 lg:space-y-10">
+                <NewsFeed />
+                <div className="lg:sticky lg:top-4">
+                  <Advertisement 
+                    imageUrl="/banner2.png"
+                    isVertical
+                  />
+                </div>
+              </div>
+              <div className="space-y-8 lg:space-y-10 bg-white relative z-10">
+                <TopicsSection />
+                <NewsletterSignup />
+              </div>
+            </aside>
+          </div>
+        </div>
 
-          <aside className="w-full lg:w-[367px]">
-            <NewsFeed />
-            
-            <Advertisement 
-              className="my-8 lg:my-10"
-              imageUrl="https://placehold.co/400x600/f43f5e/white?text=Advertisement"
-              isVertical
-            />
-            
-            <TopicsSection />
-            <NewsletterSignup />
-          </aside>
+        <div className="bg-[#FFE4CC] py-1">
+          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96">
+            <SourcesSection />
+          </div>
+        </div>
+
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
+          <OpinionSection />
         </div>
       </main>
 

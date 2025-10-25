@@ -41,7 +41,7 @@ const NewsletterSignup: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="И-мэйл хаяг"
-            className="w-full px-4 py-3 rounded-lg bg-white text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full px-4 py-3 rounded-lg bg-white text-[#2F2F2F] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-white"
             required
           />
           

@@ -35,7 +35,7 @@ const RelatedNews: React.FC = () => {
     <section className="my-8 lg:my-10">
       <h2 className="flex items-center gap-3 lg:gap-4 mb-6">
         <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
-        <span className="text-xl lg:text-2xl font-bold text-zinc-800">
+        <span className="text-xl lg:text-2xl font-bold text-[#2F2F2F]">
           Санал болгох мэдээ
         </span>
       </h2>
@@ -52,7 +52,7 @@ const RelatedNews: React.FC = () => {
                   className="object-cover group-hover:scale-105 transition duration-300"
                 />
               </div>
-              <h3 className="text-sm lg:text-base font-semibold text-zinc-800 leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2">
+              <h3 className="text-sm lg:text-base font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2">
                 {article.title}
               </h3>
               <div className="flex items-center gap-3 text-xs text-zinc-500">

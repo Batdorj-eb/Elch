@@ -120,7 +120,10 @@ const NewsFeed: React.FC = () => {
     <section className="mb-10">
       <h2 className="flex items-center gap-4 mb-6">
         <div className="w-[7px] h-[22px] bg-red-500" />
-        <span className="text-2xl font-bold text-zinc-800">
+        <span 
+          className="font-serif font-bold text-[#2F2F2F]"
+          style={{ fontSize: 'clamp(20px, 5vw, 30px)' }}
+        >
           Мэдээний урсгал
         </span>
       </h2>
@@ -145,7 +148,7 @@ const NewsFeed: React.FC = () => {
               : 'bg-neutral-200 text-zinc-700 hover:bg-neutral-300'
           }`}
         >
-          Trending мэдээ
+          Трэнд мэдээ
         </button>
       </div>
 
@@ -157,12 +160,12 @@ const NewsFeed: React.FC = () => {
             {currentNews.map((item, index) => (
               <div key={item.id}>
                 <article className="cursor-pointer group">
-                  <h3 className="text-sm font-medium text-zinc-800 leading-snug group-hover:text-red-500 transition mb-2">
+                  <h3 className="font-sans text-sm font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2">
                     {item.title}
                   </h3>
                   
-                  <div className="flex items-center gap-2 text-xs text-zinc-500">
-                    <span className="font-medium">{item.category}</span>
+                  <div className="flex items-center gap-2 text-xs text-zinc-500 font-sans">
+                    <span className="font-bold text-[#2F2F2F]">{item.category}</span>
                     <span>•</span>
                     <time>{item.timeAgo}</time>
                   </div>
