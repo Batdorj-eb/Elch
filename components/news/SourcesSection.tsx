@@ -9,23 +9,26 @@ const SourcesSection: React.FC = () => {
     {
       id: '1',
       title: 'Mongolia asinvenderum intureius que quas et aspelit volo dolor autaspe world...',
-      category: 'Сурвалж',
+      category: 'Сурвалжлага',
       imageUrl: 'https://placehold.co/400x300/ef4444/white?text=Source+1',
-      author: 'Tseegmid'
+      timeAgo: '2 цаг 30 минутын өмнө',
+      // author: 'Tseegmid'
     },
     {
       id: '2',
       title: 'Dollar asinvenderum intureius que quas et aspelit volo dolor autaspe world...',
-      category: 'Сурвалж',
+      category: 'Сурвалжлага',
       imageUrl: 'https://placehold.co/400x300/3b82f6/white?text=Source+2',
-      author: 'Tseegmid'
+      timeAgo: '2 цаг 30 минутын өмнө',
+      // author: 'Tseegmid'
     },
     {
       id: '3',
       title: 'Trump asinvenderum intureius que quas et aspelit volo dolor autaspe...',
-      category: 'Сурвалж',
+      category: 'Сурвалжлага',
       imageUrl: 'https://placehold.co/400x300/10b981/white?text=Source+3',
-      author: 'Tseegmid'
+      timeAgo: '2 цаг 30 минутын өмнө',
+      // author: 'Tseegmid'
     }
   ];
 
@@ -54,14 +57,35 @@ const SourcesSection: React.FC = () => {
                 </div>
               </div>
             </div>
-            
-            <span className="text-[11px] lg:text-xs text-red-500 font-medium">
-              {source.category}
-            </span>
+
             <h3 className="text-xs lg:text-sm font-medium text-[#2F2F2F] mt-1.5 lg:mt-2 leading-snug group-hover:text-red-500 transition line-clamp-2">
               {source.title}
             </h3>
-            <p className="text-[10px] lg:text-xs text-zinc-500 mt-1.5 lg:mt-2">{source.author}</p>
+            {/* <p className="text-[10px] lg:text-xs text-zinc-500 mt-1.5 lg:mt-2">{source.author}</p> */}
+          {/* Meta Info */}
+          <div className="flex justify-between gap-2 text-zinc-600 mt-2">
+            <span 
+              className="font-medium text-[#2F2F2F]"
+              style={{ fontSize: '12px' }}
+            >
+              {source.category}
+            </span>
+            <svg 
+              width="4" 
+              height="4" 
+              viewBox="0 0 4 4" 
+              fill="currentColor"
+              className="text-zinc-400"
+            >
+              <circle cx="2" cy="2" r="2" />
+            </svg>
+            <time 
+              className="text-zinc-600"
+              style={{ fontSize: '12px' }}
+            >
+              {source.timeAgo}
+            </time>
+          </div>
           </article>
         ))}
       </div>
