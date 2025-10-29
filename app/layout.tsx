@@ -1,14 +1,42 @@
 // app/layout.tsx
 
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local'
 import './globals.css';
 
-const inter = Inter({ 
-  subsets: ['latin', 'cyrillic'],
-  display: 'swap',
-  weight: ['400', '500', '600', '700']
-});
+// Inter font - үндсэн текстэд
+const inter = localFont({
+  src: [
+    {
+      path: '../public/fonts/Inter-Regular.woff2',  // Path-г засав
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Inter-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-inter',
+})
+
+// Playfair Display - гарчиг, title-д
+const playfair = localFont({
+  src: [
+    {
+      path: '../public/fonts/PlayfairDisplay-SemiBold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/PlayfairDisplay-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-playfair',
+})
 
 export const metadata: Metadata = {
   title: 'ELCH NEWS - Монголын мэдээний портал',
@@ -29,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="mn">
+    <html lang="mn" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
         {children}
       </body>

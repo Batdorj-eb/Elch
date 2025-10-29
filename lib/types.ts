@@ -15,6 +15,24 @@ export interface NewsArticle {
   views?: number;
 }
 
+export interface ArticleDetail extends NewsArticle {
+  content: string;
+  imageCaption?: string;
+  tags?: string[];
+  comments?: number;
+}
+
+export interface Comment {
+  id: string;
+  author: string;
+  avatar: string;
+  date: string;
+  text: string;
+  likes: number;
+  replies?: Comment[];
+  replyCount?: number;
+}
+
 export interface Topic {
   id: string;
   name: string;
@@ -37,6 +55,7 @@ export interface Author {
   id: string;
   name: string;
   imageUrl: string;
+  bio?: string;
 }
 
 export interface OpinionArticle extends NewsArticle {

@@ -40,7 +40,7 @@ const NewsGrid: React.FC = () => {
   return (
     <div className="space-y-4 lg:space-y-6">
       {/* First Two in Grid - Single column on mobile */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 font-serif">
         {featuredNews.slice(0, 4).map((article) => (
           <NewsCard 
             key={article.id} 

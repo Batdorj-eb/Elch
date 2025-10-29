@@ -19,7 +19,12 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Гарчигууд Playfair Display ашиглана */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), serif;
 }
 
 @layer utilities {
@@ -69,4 +74,36 @@ body {
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: #a3a3a3;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* sticky контейнерын хязгаар тавих */
+.sticky-container {
+  position: relative;
+}
+.sticky-ad {
+  position: sticky;
+  top: 1rem; /* distance from top while scrolling */
+}
+.stop-at-bottom {
+  position: relative;
+  z-index: 1;
 }
