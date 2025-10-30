@@ -1,40 +1,18 @@
-// next.config.ts
-
-import type { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    remotePatterns: [
+    // 🔥 ШИЙДЭЛ: Image optimization бүрэн унтраах
+    unoptimized: true,
+  },
+  // 🔥 /uploads requests-ийг backend руу чиглүүлэх
+  async rewrites() {
+    return [
       {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        pathname: '/**',
+        source: '/uploads/:path*',
+        destination: 'http://localhost:5000/uploads/:path*',
       },
-      {
-        protocol: 'https',
-        hostname: 'i.pravatar.cc',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'api.builder.io',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        pathname: '/**',
-      },
-    ],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    ];
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;

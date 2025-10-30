@@ -15,12 +15,32 @@ import TopicsSection from '@/components/sidebar/TopicsSection';
 import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
 import Advertisement from '@/components/common/Advertisement';
 
-export default function HomePage() {
+// ✅ Backend API import
+import { getArticles, getFeaturedArticles, getBreakingNews } from '@/lib/api';
+
+export default async function HomePage() {
+  // ✅ Backend-с өгөгдөл татах
+  const [allArticles, featuredArticles, breakingArticles] = await Promise.all([
+    getArticles({ limit: 20 }),
+    getFeaturedArticles(),
+    getBreakingNews()
+  ]);
+
+  // ✅ Hero article - Featured-ийн эхний нийтлэл
+  const heroArticle = featuredArticles[0] || allArticles[0];
+  
+  // ✅ Grid articles - Featured-ээс 2-5 нийтлэл
+  const gridArticles = featuredArticles.slice(1, 5);
+  
+  // ✅ NewsFeed articles - Бүх нийтлэлүүдийн эхний 10
+  const newsFeedArticles = allArticles.slice(0, 10);
+
   return (
     <div className="min-h-screen bg-[#FFF1E5]">
       {/* Header Section */}
       <header>
-        <BreakingNewsBanner />
+        {/* ✅ Breaking news backend-с */}
+        <BreakingNewsBanner articles={breakingArticles} />
         <Header />
         <NavigationBar />
       </header>
@@ -31,7 +51,8 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
             {/* Left Column - Main Content */}
             <section className="flex-1 w-full lg:max-w-[773px]">
-              <HeroArticle />
+              {/* ✅ Hero article backend-с */}
+              {heroArticle && <HeroArticle article={heroArticle} />}
               
               <h2 className="flex items-center gap-3 lg:gap-4 mb-6 lg:mb-8 mt-8 lg:mt-10">
                 <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
@@ -40,7 +61,8 @@ export default function HomePage() {
                 </span>
               </h2>
               
-              <NewsGrid />
+              {/* ✅ Grid articles backend-с */}
+              <NewsGrid articles={gridArticles} />
               
               <Advertisement 
                 className="my-8 lg:my-10 p-10 bg-[#FFE4CC] object-cover"
@@ -49,9 +71,11 @@ export default function HomePage() {
               
               <WeeklySummary />
             </section>
+
             <aside className="w-full lg:w-[367px] flex flex-col justify-between min-h-[1200px]">
               <div className="space-y-8 lg:space-y-10">
-                <NewsFeed />
+                {/* ✅ NewsFeed backend-с */}
+                <NewsFeed articles={newsFeedArticles} />
                 <div className="lg:sticky lg:top-4">
                   <Advertisement 
                     imageUrl="/banner2.png"

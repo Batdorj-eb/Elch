@@ -165,7 +165,7 @@ const CategoryLayout: React.FC<CategoryLayoutProps> = ({
 
         {/* Sidebar */}
         <aside className="w-full lg:w-[367px]">
-          <NewsFeed />
+          <NewsFeed articles={[]} />
           
           <Advertisement
             imageUrl="https://placehold.co/400x600/f43f5e/white?text=Fashion+Sale"

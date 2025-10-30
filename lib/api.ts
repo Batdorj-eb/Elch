@@ -2,7 +2,7 @@ import {
   ApiResponse, 
   BackendArticle, 
   Category, 
-  Comment, 
+  ArticleComment, 
   ArticlesResponse,
   convertToNewsArticle,
   NewsArticle
@@ -30,11 +30,19 @@ export async function getArticles(params?: {
     const url = `${API_URL}/articles${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
     const res = await fetch(url, { cache: 'no-store' });
     
-    if (!res.ok) throw new Error('Failed to fetch articles');
+    if (!res.ok) {
+      console.error('Failed to fetch articles:', res.status);
+      return [];
+    }
     
     const data: ApiResponse<ArticlesResponse> = await res.json();
     
-    // Backend articles-ийг Frontend NewsArticle болгон хөрвүүлэх
+    // ✅ Safety check
+    if (!data.data || !data.data.articles) {
+      console.error('Invalid articles response:', data);
+      return [];
+    }
+    
     return data.data.articles.map(convertToNewsArticle);
   } catch (error) {
     console.error('getArticles error:', error);
@@ -45,9 +53,14 @@ export async function getArticles(params?: {
 export async function getFeaturedArticles(): Promise<NewsArticle[]> {
   try {
     const res = await fetch(`${API_URL}/articles/featured`, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch featured articles');
+    
+    if (!res.ok) {
+      console.error('Failed to fetch featured articles:', res.status);
+      return [];
+    }
     
     const data: ApiResponse<ArticlesResponse> = await res.json();
+    
     return data.data.articles.map(convertToNewsArticle);
   } catch (error) {
     console.error('getFeaturedArticles error:', error);
@@ -58,9 +71,20 @@ export async function getFeaturedArticles(): Promise<NewsArticle[]> {
 export async function getBreakingNews(): Promise<NewsArticle[]> {
   try {
     const res = await fetch(`${API_URL}/articles/breaking`, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch breaking news');
+    
+    if (!res.ok) {
+      console.error('Failed to fetch breaking news:', res.status);
+      return [];
+    }
     
     const data: ApiResponse<ArticlesResponse> = await res.json();
+    
+    // ✅ Safety check
+    if (!data.data || !data.data.articles) {
+      console.error('Invalid breaking news response:', data);
+      return [];
+    }
+    
     return data.data.articles.map(convertToNewsArticle);
   } catch (error) {
     console.error('getBreakingNews error:', error);
@@ -71,9 +95,20 @@ export async function getBreakingNews(): Promise<NewsArticle[]> {
 export async function getArticleBySlug(slug: string): Promise<BackendArticle | null> {
   try {
     const res = await fetch(`${API_URL}/articles/${slug}`, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch article');
+    
+    if (!res.ok) {
+      console.error('Failed to fetch article:', res.status);
+      return null;
+    }
     
     const data: ApiResponse<BackendArticle> = await res.json();
+    
+    // ✅ Safety check
+    if (!data.data) {
+      console.error('Invalid article response:', data);
+      return null;
+    }
+    
     return data.data;
   } catch (error) {
     console.error('getArticleBySlug error:', error);
@@ -86,9 +121,20 @@ export async function getArticlesByCategory(categorySlug: string, limit = 20): P
     const res = await fetch(`${API_URL}/articles?category=${categorySlug}&limit=${limit}`, { 
       cache: 'no-store' 
     });
-    if (!res.ok) throw new Error('Failed to fetch articles by category');
+    
+    if (!res.ok) {
+      console.error('Failed to fetch articles by category:', res.status);
+      return [];
+    }
     
     const data: ApiResponse<ArticlesResponse> = await res.json();
+    
+    // ✅ Safety check
+    if (!data.data || !data.data.articles) {
+      console.error('Invalid category articles response:', data);
+      return [];
+    }
+    
     return data.data.articles.map(convertToNewsArticle);
   } catch (error) {
     console.error('getArticlesByCategory error:', error);
@@ -103,10 +149,33 @@ export async function getArticlesByCategory(categorySlug: string, limit = 20): P
 export async function getCategories(): Promise<Category[]> {
   try {
     const res = await fetch(`${API_URL}/categories`, { next: { revalidate: 60 } });
-    if (!res.ok) throw new Error('Failed to fetch categories');
     
-    const data: ApiResponse<Category[]> = await res.json();
-    return data.data;
+    if (!res.ok) {
+      console.error('Failed to fetch categories:', res.status);
+      return [];
+    }
+    
+    const data = await res.json();
+    
+    // 🔥 ШИНЭЧЛЭГДСЭН: Backend { success, data: { categories, total } } format буцаана
+    if (data.success && data.data) {
+      // Check if data.data.categories exists (new format)
+      if (Array.isArray(data.data.categories)) {
+        return data.data.categories;
+      }
+      // Check if data.data is array (old format)
+      if (Array.isArray(data.data)) {
+        return data.data;
+      }
+    }
+    
+    // Fallback: if direct array
+    if (Array.isArray(data)) {
+      return data;
+    }
+    
+    console.error('Invalid categories response:', data);
+    return [];
   } catch (error) {
     console.error('getCategories error:', error);
     return [];
@@ -116,9 +185,20 @@ export async function getCategories(): Promise<Category[]> {
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   try {
     const res = await fetch(`${API_URL}/categories/${slug}`);
-    if (!res.ok) throw new Error('Failed to fetch category');
+    
+    if (!res.ok) {
+      console.error('Failed to fetch category:', res.status);
+      return null;
+    }
     
     const data: ApiResponse<Category> = await res.json();
+    
+    // ✅ Safety check
+    if (!data.data) {
+      console.error('Invalid category response:', data);
+      return null;
+    }
+    
     return data.data;
   } catch (error) {
     console.error('getCategoryBySlug error:', error);
@@ -130,12 +210,23 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 // СЭТГЭГДЭЛ
 // ============================================
 
-export async function getComments(articleId: number): Promise<Comment[]> {
+export async function getComments(articleId: number): Promise<ArticleComment[]> {
   try {
     const res = await fetch(`${API_URL}/comments/article/${articleId}`, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch comments');
     
-    const data: ApiResponse<{ comments: Comment[]; total: number }> = await res.json();
+    if (!res.ok) {
+      console.error('Failed to fetch comments:', res.status);
+      return [];
+    }
+    
+    const data: ApiResponse<{ comments: ArticleComment[]; total: number }> = await res.json();
+    
+    // ✅ Safety check
+    if (!data.data || !data.data.comments) {
+      console.error('Invalid comments response:', data);
+      return [];
+    }
+    
     return data.data.comments;
   } catch (error) {
     console.error('getComments error:', error);
