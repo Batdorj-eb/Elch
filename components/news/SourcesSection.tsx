@@ -2,35 +2,39 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Play } from 'lucide-react';
+import type { NewsArticle } from '@/lib/types';
 
-const SourcesSection: React.FC = () => {
-  const sources = [
-    {
-      id: '1',
-      title: 'Mongolia asinvenderum intureius que quas et aspelit volo dolor autaspe world...',
-      category: 'Сурвалжлага',
-      imageUrl: 'https://placehold.co/400x300/ef4444/white?text=Source+1',
-      timeAgo: '2 цаг 30 минутын өмнө',
-      // author: 'Tseegmid'
-    },
-    {
-      id: '2',
-      title: 'Dollar asinvenderum intureius que quas et aspelit volo dolor autaspe world...',
-      category: 'Сурвалжлага',
-      imageUrl: 'https://placehold.co/400x300/3b82f6/white?text=Source+2',
-      timeAgo: '2 цаг 30 минутын өмнө',
-      // author: 'Tseegmid'
-    },
-    {
-      id: '3',
-      title: 'Trump asinvenderum intureius que quas et aspelit volo dolor autaspe...',
-      category: 'Сурвалжлага',
-      imageUrl: 'https://placehold.co/400x300/10b981/white?text=Source+3',
-      timeAgo: '2 цаг 30 минутын өмнө',
-      // author: 'Tseegmid'
-    }
-  ];
+interface SourcesSectionProps {
+  articles: NewsArticle[];
+}
+
+const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
+  // 🔥 "Сурвалжлага" (slug: video) категорийн мэдээнүүд
+  const videoArticles = articles.filter(article => 
+    article.categorySlug === 'video' || 
+    article.category === 'Сурвалжлага'
+  ).slice(0, 3); // Эхний 3-ийг авах
+
+  if (videoArticles.length === 0) {
+    return null;
+  }
+
+  // 🔥 Цагийн форматчлуур
+  const getTimeAgo = (dateString: string) => {
+    const now = new Date();
+    const published = new Date(dateString);
+    const diffMs = now.getTime() - published.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays > 0) return `${diffDays} өдрийн өмнө`;
+    if (diffHours > 0) return `${diffHours} цагийн өмнө`;
+    if (diffMins > 0) return `${diffMins} минутын өмнө`;
+    return 'Саяхан';
+  };
 
   return (
     <section className="my-8 lg:my-10">
@@ -42,15 +46,27 @@ const SourcesSection: React.FC = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-        {sources.map((source) => (
-          <article key={source.id} className="group cursor-pointer">
-            <div className="relative w-full h-[180px] lg:h-[200px] mb-3 lg:mb-4 overflow-hidden">
-              <Image
-                src={source.imageUrl}
-                alt={source.title}
-                fill
-                className="object-cover group-hover:scale-105 transition"
-              />
+        {videoArticles.map((article) => (
+          <Link
+            key={article.id}
+            href={`${article.slug || article.id}`}
+            className="group cursor-pointer"
+          >
+            <div className="relative w-full h-[180px] lg:h-[200px] mb-3 lg:mb-4 overflow-hidden rounded-lg">
+              {article.coverImage ? (
+                <Image
+                  src={article.coverImage}
+                  alt={article.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center">
+                  <Play className="w-12 h-12 text-white" fill="currentColor" />
+                </div>
+              )}
+              
+              {/* Play Button Overlay */}
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                 <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center">
                   <Play className="w-5 h-5 lg:w-6 lg:h-6 text-red-500 ml-1" fill="currentColor" />
@@ -59,42 +75,47 @@ const SourcesSection: React.FC = () => {
             </div>
 
             <h3 className="text-xs lg:text-sm font-medium text-[#2F2F2F] mt-1.5 lg:mt-2 leading-snug group-hover:text-red-500 transition line-clamp-2">
-              {source.title}
+              {article.title}
             </h3>
-            {/* <p className="text-[10px] lg:text-xs text-zinc-500 mt-1.5 lg:mt-2">{source.author}</p> */}
-          {/* Meta Info */}
-          <div className="flex justify-between gap-2 text-zinc-600 mt-2">
-            <span 
-              className="font-medium text-[#2F2F2F]"
-              style={{ fontSize: '12px' }}
-            >
-              {source.category}
-            </span>
-            <svg 
-              width="4" 
-              height="4" 
-              viewBox="0 0 4 4" 
-              fill="currentColor"
-              className="text-zinc-400"
-            >
-              <circle cx="2" cy="2" r="2" />
-            </svg>
-            <time 
-              className="text-zinc-600"
-              style={{ fontSize: '12px' }}
-            >
-              {source.timeAgo}
-            </time>
-          </div>
-          </article>
+
+            {/* Meta Info */}
+            <div className="flex items-center gap-2 text-zinc-600 mt-2">
+              <span 
+                className="font-medium text-[#2F2F2F]"
+                style={{ fontSize: '12px' }}
+              >
+                {article.category}
+              </span>
+              <svg 
+                width="4" 
+                height="4" 
+                viewBox="0 0 4 4" 
+                fill="currentColor"
+                className="text-zinc-400"
+              >
+                <circle cx="2" cy="2" r="2" />
+              </svg>
+              <time 
+                className="text-zinc-600"
+                style={{ fontSize: '12px' }}
+              >
+                {getTimeAgo(article.publishedAt || '')}
+              </time>
+            </div>
+          </Link>
         ))}
       </div>
 
-      <div className="flex justify-center">
-        <button className="w-[366px] mt-5 lg:mt-6 px-6 py-2.5 lg:py-3 bg-red-500 text-white text-sm lg:text-base font-medium rounded hover:bg-red-600 transition">
-          Дэлгэрэнгүй үзэх
-        </button>
-      </div>
+      {videoArticles.length >= 3 && (
+        <div className="flex justify-center">
+          <Link
+            href="/category/video"
+            className="w-full sm:w-[366px] mt-5 lg:mt-6 px-6 py-2.5 lg:py-3 bg-red-500 text-white text-sm lg:text-base font-medium rounded hover:bg-red-600 transition text-center block"
+          >
+            Дэлгэрэнгүй үзэх
+          </Link>
+        </div>
+      )}
     </section>
   );
 };

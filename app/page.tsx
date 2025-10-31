@@ -35,6 +35,8 @@ export default async function HomePage() {
   // ✅ NewsFeed articles - Бүх нийтлэлүүдийн эхний 10
   const newsFeedArticles = allArticles.slice(0, 10);
 
+  const articles = await getArticles({ limit: 100 });
+  
   return (
     <div className="min-h-screen bg-[#FFF1E5]">
       {/* Header Section */}
@@ -69,7 +71,7 @@ export default async function HomePage() {
                 imageUrl="/banner1.png"
               />
               
-              <WeeklySummary />
+              <WeeklySummary articles={articles} />
             </section>
 
             <aside className="w-full lg:w-[367px] flex flex-col justify-between min-h-[1200px]">
@@ -91,14 +93,14 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <div className="bg-[#FFE4CC] py-1">
-          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96">
-            <SourcesSection />
-          </div>
+      <div className="bg-[#FFE4CC] py-1">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96">
+          <SourcesSection articles={articles} />
         </div>
+      </div>
 
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
-          <OpinionSection />
+          <OpinionSection articles={articles} />
         </div>
       </main>
 

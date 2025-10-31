@@ -17,6 +17,10 @@ export interface NewsArticle {
   timeAgo: string;
   featured?: boolean;
   views?: number;
+  categorySlug?: string;
+  content?: string;
+  excerpt?: string;
+  authorImage?: string;
 }
 
 export interface Topic {

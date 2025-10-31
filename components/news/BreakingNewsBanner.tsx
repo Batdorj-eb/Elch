@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import type { NewsArticle } from '@/lib/types';
 
 interface BreakingNewsBannerProps {
@@ -8,40 +8,24 @@ interface BreakingNewsBannerProps {
 }
 
 const BreakingNewsBanner: React.FC<BreakingNewsBannerProps> = ({ articles }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Auto-rotate breaking news every 5 seconds
-  useEffect(() => {
-    if (articles.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % articles.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [articles.length]);
-
   if (!articles || articles.length === 0) {
     return null;
   }
 
-  const currentArticle = articles[currentIndex];
+  const latestArticle = articles[articles.length - 1];
 
   return (
-    <div className="bg-white border-b border-stone-300">
-      <div className="max-w-[1920px] mx-auto px-4 lg:px-96 py-2">
-        <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-sm font-bold text-red-500 uppercase whitespace-nowrap">
+      <div className="bg-white border-b border-stone-300 overflow-hidden">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-2">
+        <div className="flex items-center gap-3">
+          <span className="text-xs sm:text-sm font-bold text-red-500 uppercase whitespace-nowrap">
             ШУУРХАЙ МЭДЭЭ:
           </span>
-          <p className="text-sm text-zinc-800">
-            {currentArticle.title}
-          </p>
-          {articles.length > 1 && (
-            <span className="text-xs text-zinc-500 ml-auto">
-              {currentIndex + 1}/{articles.length}
-            </span>
-          )}
+          <div className="flex-1 overflow-hidden">
+            <p className="text-xs sm:text-sm text-[#2F2F2F] whitespace-nowrap animate-marquee">
+               {latestArticle.title}
+            </p>
+          </div>
         </div>
       </div>
     </div>
