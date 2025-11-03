@@ -13,26 +13,71 @@ import NewsFeed from '@/components/news/NewsFeed';
 import Advertisement from '@/components/common/Advertisement';
 import RelatedNews from '@/components/article/RelatedNews';
 import CommentSection from '@/components/article/CommentSection';
-import SocialShare from '@/components/article/SocialShare';
+import ShareButtons from '@/components/social/ShareButtons';
+import CompactShareButtons from '@/components/social/CompactShareButtons';
 import { getArticleBySlug, getComments, getArticles, getBreakingNews } from '@/lib/api';
+import type { Metadata } from 'next';
+
+// 🔥 Open Graph Meta Tags
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
+
+  if (!article) {
+    return {
+      title: 'Мэдээ олдсонгүй',
+    };
+  }
+
+  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
+
+  return {
+    title: `${article.title} - ELCH News`,
+    description: article.excerpt || article.title,
+    openGraph: {
+      title: article.title,
+      description: article.excerpt || article.title,
+      url: articleUrl,
+      siteName: 'ELCH News',
+      images: [
+        {
+          url: article.featured_image || '/default-og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+      locale: 'mn_MN',
+      type: 'article',
+      publishedTime: article.published_at,
+      authors: [article.author_name],
+      section: article.category_name,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt || article.title,
+      images: [article.featured_image || '/default-og-image.jpg'],
+    },
+  };
+}
 
 export default async function ArticleDetailPage({
   params
 }: {
-  params: Promise<{ slug: string }>  // ✅ Promise type
+  params: Promise<{ slug: string }>
 }) {
-  // ✅ params await хийх
   const { slug } = await params;
-
-  // ✅ Backend-с өгөгдөл татах
   const article = await getArticleBySlug(slug);
 
-  // Article олдохгүй бол 404
   if (!article) {
     notFound();
   }
 
-  // Comments болон бусад өгөгдөл татах
   const [comments, relatedArticles, breakingNews, sidebarArticles] = await Promise.all([
     getComments(article.id),
     getArticles({ limit: 4 }),
@@ -40,7 +85,9 @@ export default async function ArticleDetailPage({
     getArticles({ limit: 10 })
   ]);
 
-  // Date formatting
+  // 🔥 Full URL үүсгэх
+  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
+
   const formattedDate = new Date(article.published_at).toLocaleDateString('mn-MN', {
     year: 'numeric',
     month: 'long',
@@ -99,28 +146,34 @@ export default async function ArticleDetailPage({
               {article.title}
             </h1>
 
-            {/* Meta Info */}
-            <div className="flex flex-wrap items-center gap-3 lg:gap-4 text-sm text-zinc-600 mb-6 lg:mb-8 pb-4 lg:pb-6 border-b border-neutral-200">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                  {article.author_name[0]}
+            {/* Meta Info with Share */}
+            <div className="flex flex-wrap items-center justify-between gap-3 lg:gap-4 text-sm text-zinc-600 mb-6 lg:mb-8 pb-4 lg:pb-6 border-b border-neutral-200">
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                    {article.author_name[0]}
+                  </div>
+                  <span className="font-medium text-[#2F2F2F]">{article.author_name}</span>
                 </div>
-                <span className="font-medium text-[#2F2F2F]">{article.author_name}</span>
+                <span>•</span>
+                <time className="flex items-center gap-1">
+                  <Clock className="w-4 h-4" />
+                  {formattedDate}
+                </time>
+                <span>•</span>
+                <span className="flex items-center gap-1">
+                  <Eye className="w-4 h-4" />
+                  {article.views} үзсэн
+                </span>
               </div>
-              <span>•</span>
-              <time className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                {formattedDate}
-              </time>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <Eye className="w-4 h-4" />
-                {article.views} үзсэн
-              </span>
-            </div>
 
-            {/* Social Share */}
-            <SocialShare />
+              {/* 🔥 Share Button */}
+              <ShareButtons 
+                title={article.title}
+                url={articleUrl}
+                description={article.excerpt}
+              />
+            </div>
 
             {/* Featured Image */}
             {article.featured_image && (
@@ -172,6 +225,18 @@ export default async function ArticleDetailPage({
               >
                 {article.category_name}
               </Link>
+            </div>
+
+            {/* 🔥 Footer Share - Compact version */}
+            <div className="mt-8 pt-6 border-t border-neutral-200">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-zinc-600 font-medium">Энэ мэдээг хуваалцах:</p>
+                <CompactShareButtons 
+                  title={article.title}
+                  url={articleUrl}
+                  description={article.excerpt}
+                />
+              </div>
             </div>
 
             {/* Related News */}

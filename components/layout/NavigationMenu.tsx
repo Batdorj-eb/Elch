@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
-import Logo from '../../app/mobile_logo.png';
 import type { Category } from '@/lib/types';
 
 interface NavigationMenuProps {
@@ -15,6 +14,11 @@ interface NavigationMenuProps {
 
 const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // 🔥 Навигацад харуулахгүй category-г шүүх
+  const visibleCategories = categories.filter(
+    (cat) => cat.slug !== 'video' && cat.slug !== 'peoples-representative'
+  );
 
   return (
     <nav className="bg-[#FFF1E5] lg:bg-zinc-800 text-[#2F2F2F] lg:text-white sticky top-0 z-50 py-3 lg:py-0">
@@ -25,9 +29,10 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
           <div className="shrink-0">
             {/* Mobile logo image */}
             <Image
-              src={Logo}
+              src="/mobile_logo.png"
               alt="Logo"
               width={200}
+              height={50}
               className="md:hidden"
             />
 
@@ -39,7 +44,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center">
-            {categories.map((category, index) => (
+            {visibleCategories.map((category, index) => (
               <React.Fragment key={category.id}>
                 <Link
                   href={`/${category.slug}`}
@@ -47,7 +52,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
                 >
                   {category.name}
                 </Link>
-                {index < categories.length - 1 && (
+                {index < visibleCategories.length - 1 && (
                   <div className="h-5 w-px bg-zinc-700" />
                 )}
               </React.Fragment>
@@ -77,7 +82,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-zinc-700 py-2">
-            {categories.map((category) => (
+            {visibleCategories.map((category) => (
               <Link
                 key={category.id}
                 href={`/${category.slug}`}

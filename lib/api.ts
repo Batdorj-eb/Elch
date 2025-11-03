@@ -264,3 +264,56 @@ export async function addComment(
     return false;
   }
 }
+
+// lib/api.ts дээр нэмэх
+
+export async function searchArticles(query: string, options?: {
+  category?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  try {
+    const params = new URLSearchParams({
+      q: query,
+      limit: String(options?.limit || 20),
+      offset: String(options?.offset || 0),
+    });
+
+    if (options?.category) {
+      params.append('category', options.category);
+    }
+
+    const res = await fetch(`${API_URL}/search?${params}`, {
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      throw new Error('Search failed');
+    }
+
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error('Search error:', error);
+    return { articles: [], pagination: { total: 0 }, query };
+  }
+}
+
+export async function getSearchSuggestions(query: string) {
+  try {
+    const res = await fetch(
+      `${API_URL}/search/suggestions?q=${encodeURIComponent(query)}`,
+      { cache: 'no-store' }
+    );
+
+    if (!res.ok) {
+      return [];
+    }
+
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Suggestions error:', error);
+    return [];
+  }
+}
