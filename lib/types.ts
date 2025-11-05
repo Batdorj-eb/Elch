@@ -21,6 +21,7 @@ export interface NewsArticle {
   content?: string;
   excerpt?: string;
   authorImage?: string;
+  length: number;
 }
 
 export interface Topic {
@@ -155,6 +156,7 @@ export function convertToNewsArticle(backendArticle: BackendArticle): NewsArticl
     title: backendArticle.title,
     description: backendArticle.excerpt,
     category: backendArticle.category_name,
+    length: backendArticle.content.length,
     imageUrl: imageUrl,
     coverImage: imageUrl, // 🔥 FIX: Add coverImage field (same as imageUrl)
     author: backendArticle.author_name,

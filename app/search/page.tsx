@@ -12,11 +12,12 @@ import { Search } from 'lucide-react';
 async function SearchResults({ 
   searchParams 
 }: { 
-  searchParams: { q?: string; category?: string; page?: string } 
+  searchParams: Promise<{ q?: string; category?: string; page?: string }> 
 }) {
-  const query = searchParams.q || '';
-  const category = searchParams.category;
-  const page = parseInt(searchParams.page || '1');
+  const params = await searchParams;
+  const query = params.q || '';
+  const category = params.category;
+  const page = parseInt(params.page || '1');
   const limit = 20;
   const offset = (page - 1) * limit;
 
@@ -114,7 +115,7 @@ async function SearchResults({
 export default function SearchPage({
   searchParams
 }: {
-  searchParams: { q?: string; category?: string; page?: string }
+  searchParams: Promise<{ q?: string; category?: string; page?: string }>
 }) {
   return (
     <Suspense fallback={<div>Уншиж байна...</div>}>
@@ -127,9 +128,10 @@ export default function SearchPage({
 export async function generateMetadata({
   searchParams
 }: {
-  searchParams: { q?: string }
+  searchParams: Promise<{ q?: string }>
 }) {
-  const query = searchParams.q || '';
+  const params = await searchParams;
+  const query = params.q || '';
   
   return {
     title: query ? `"${query}" - Хайлтын үр дүн | ELCH News` : 'Хайлт | ELCH News',
