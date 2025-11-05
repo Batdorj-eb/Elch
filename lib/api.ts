@@ -8,7 +8,8 @@ import {
   NewsArticle
 } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+// const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = 'http://72.60.195.81:5000/api';
 
 // ============================================
 // НИЙТЛЭЛҮҮД
@@ -94,28 +95,27 @@ export async function getBreakingNews(): Promise<NewsArticle[]> {
 
 export async function getArticleBySlug(slug: string): Promise<BackendArticle | null> {
   try {
-    const cleanSlug = slug.startsWith('/') ? slug.slice(1) : slug; // '/'-г авч хаях
-    const res = await fetch(`${API_URL}/articles/${cleanSlug}`, { cache: 'no-store' });
-
+    const res = await fetch(`${API_URL}/articles/${slug}`, { cache: 'no-store' });
+    
     if (!res.ok) {
       console.error('Failed to fetch article:', res.status);
       return null;
     }
-
+    
     const data: ApiResponse<BackendArticle> = await res.json();
-
+    
+    // ✅ Safety check
     if (!data.data) {
       console.error('Invalid article response:', data);
       return null;
     }
-
+    
     return data.data;
   } catch (error) {
     console.error('getArticleBySlug error:', error);
     return null;
   }
 }
-
 
 export async function getArticlesByCategory(categorySlug: string, limit = 20): Promise<NewsArticle[]> {
   try {
