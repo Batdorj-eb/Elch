@@ -105,17 +105,6 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
           </Link>
         ))}
       </div>
-
-      {videoArticles.length >= 3 && (
-        <div className="flex justify-center">
-          <Link
-            href="/category/video"
-            className="w-full sm:w-[366px] mt-5 lg:mt-6 px-6 py-2.5 lg:py-3 bg-red-500 text-white text-sm lg:text-base font-medium rounded hover:bg-red-600 transition text-center block"
-          >
-            Дэлгэрэнгүй үзэх
-          </Link>
-        </div>
-      )}
     </section>
   );
 };
