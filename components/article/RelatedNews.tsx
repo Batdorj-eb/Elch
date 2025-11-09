@@ -15,8 +15,8 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ articles }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-      {articles.slice(0, 4).map((article) => (
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
+      {articles.slice(0, 3).map((article) => (
         <Link 
           key={article.id}
           href={`/articles/${article.id}`}

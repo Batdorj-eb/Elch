@@ -74,12 +74,12 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
               </div>
             </div>
 
-            <h3 className="text-xs lg:text-sm font-medium text-[#2F2F2F] mt-1.5 lg:mt-2 leading-snug group-hover:text-red-500 transition line-clamp-2">
+            <h3 className="text-xs lg:text-lg font-bold text-[#2F2F2F] mt-1.5 lg:mt-2 leading-snug group-hover:text-red-500 transition line-clamp-2">
               {article.title}
             </h3>
 
             {/* Meta Info */}
-            <div className="flex items-center gap-2 text-zinc-600 mt-2">
+            <div className="flex justify-between gap-2 text-zinc-600 mt-2 border-t border-b py-1.5" style={{ borderColor: '#C8C8C8' }}>
               <span 
                 className="font-medium text-[#2F2F2F]"
                 style={{ fontSize: '12px' }}

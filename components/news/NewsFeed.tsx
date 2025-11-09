@@ -62,9 +62,9 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
         </button>
       </div>
 
-      <div className="bg-white border border-neutral-200 rounded-b-lg">
+      <div>
         <div className="max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100">
-          <div className="p-6 space-y-4">
+          <div className="space-y-4">
             {currentNews.map((item, index) => (
               <div key={item.id}>
                 <Link href={`/articles/${item.slug || item.id}`}>{/* ✅ article → articles */}
@@ -73,16 +73,9 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
                       {item.title}
                     </h3>
                     
-                    <div className="flex items-center gap-2 text-xs text-zinc-500 font-sans">
+                    <div className="flex justify-between gap-2 text-xs text-zinc-500 font-sans">
                       <span className="font-bold text-[#2F2F2F]">{item.category}</span>
-                      <span>•</span>
                       <time>{item.timeAgo}</time>
-                      {item.views && (
-                        <>
-                          <span>•</span>
-                          <span>{item.views} үзсэн</span>
-                        </>
-                      )}
                     </div>
                   </article>
                 </Link>

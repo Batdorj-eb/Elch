@@ -18,15 +18,14 @@ const NewsletterSignup: React.FC = () => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-red-500 to-red-600 rounded-lg p-8 text-white">
-      <div className="flex items-center gap-3 mb-4">
-        <Mail className="w-8 h-8" />
-        <h2 className="text-2xl font-bold">
+    <section className="bg-[#FFE4CC] p-8 text-white">
+      <div className="flex justify-center gap-3 mb-4">
+        <h2 className="text-2xl font-bold text-[#FF3336] text-center">
           Мэдээлэл авах
         </h2>
       </div>
       
-      <p className="text-sm mb-6 text-red-50">
+      <p className="text-sm  mb-6 text-[#2F2F2F]">
          7 Хоногийн мэдээлэл, нийтлэл, өдөр бүрийн шинэчлэл хүлээн авна уу.
       </p>
 
@@ -41,15 +40,15 @@ const NewsletterSignup: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="И-мэйл хаяг"
-            className="w-full px-4 py-3 rounded-lg bg-white text-[#2F2F2F] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-white"
+            className="w-full px-4 py-3 bg-white text-[#2F2F2F] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-white" 
             required
           />
           
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-white text-red-500 font-medium rounded-lg hover:bg-red-50 transition"
+            className="w-full px-6 py-3 bg-[#FF3336] text-white font-medium hover:bg-red-50 transition"
           >
-            Бүртгүүлэх
+            Илгээх
           </button>
         </form>
       )}

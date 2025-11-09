@@ -1,4 +1,4 @@
-// app/articles/[slug]/page.tsx
+// app/articles/[slug]/page.tsx - RESPONSIVE VERSION
 
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -26,7 +26,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-
+  console.log(article)
   if (!article) {
     return {
       title: 'Мэдээ олдсонгүй',
@@ -104,70 +104,45 @@ export default async function ArticleDetailPage({
         <NavigationBar />
       </header>
 
-      <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-zinc-600 mb-4 lg:mb-6">
-          <Link href="/" className="hover:text-red-500 transition">
-            Нүүр
-          </Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link 
-            href={`/${article.category_slug}`} 
-            className="hover:text-red-500 transition"
-          >
-            {article.category_name}
-          </Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-[#2F2F2F] line-clamp-1">Мэдээ</span>
-        </nav>
-
-        {/* Back Button */}
-        <Link 
-          href="/"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-red-500 mb-6 transition font-medium"
-        >
-          <ChevronLeft className="w-5 h-5" />
-          Буцах
-        </Link>
-
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+      <main className="max-w-[1500px] mx-auto px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-48 py-6 md:py-8 lg:py-10">
+        {/* 📱 MAIN LAYOUT - Mobile: Stack, Desktop (md+): Sidebar */}
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-10">
           {/* Main Article Content */}
-          <article className="flex-1 max-w-[800px]">
+          <article className="flex-1 lg:max-w-[800px]">
             {/* Category Badge */}
             <Link
               href={`/${article.category_slug}`}
-              className="inline-block px-4 py-1.5 bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition mb-4"
+              className="inline-block px-3 py-1 md:px-4 md:py-1.5 text-[#FF3336] text-xs md:text-sm font-bold border border-[#FF3336] hover:bg-red-600 transition mb-3 md:mb-4"
             >
               {article.category_name}
             </Link>
 
-            {/* Article Title */}
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#2F2F2F] leading-tight mb-4 lg:mb-6">
+            {/* Article Title - Responsive sizes */}
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-[#2F2F2F] leading-tight mb-3 md:mb-4 lg:mb-6">
               {article.title}
             </h1>
 
-            {/* Meta Info with Share */}
-            <div className="flex flex-wrap items-center justify-between gap-3 lg:gap-4 text-sm text-zinc-600 mb-6 lg:mb-8 pb-4 lg:pb-6 border-b border-neutral-200">
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                    {article.author_name[0]}
-                  </div>
-                  <span className="font-medium text-[#2F2F2F]">{article.author_name}</span>
-                </div>
-                <span>•</span>
+            {/* Meta Info with Share - Responsive layout */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 lg:gap-4 text-xs md:text-sm text-zinc-600 mb-4 md:mb-6 lg:mb-8 pb-3 md:pb-4 lg:pb-6 border-b border-neutral-200">
+              <div className="flex flex-wrap items-center gap-2 md:gap-3">
                 <time className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  {formattedDate}
+                  <Clock className="w-3 h-3 md:w-4 md:h-4" />
+                  <span className="hidden sm:inline">{formattedDate}</span>
+                  <span className="sm:hidden">
+                    {new Date(article.published_at).toLocaleDateString('mn-MN', {
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </span>
                 </time>
-                <span>•</span>
+                <span className="hidden sm:inline">•</span>
                 <span className="flex items-center gap-1">
-                  <Eye className="w-4 h-4" />
-                  {article.views} үзсэн
+                  <Eye className="w-3 h-3 md:w-4 md:h-4" />
+                  {article.views}
                 </span>
               </div>
 
-              {/* 🔥 Share Button */}
+              {/* Share Button */}
               <ShareButtons 
                 title={article.title}
                 url={articleUrl}
@@ -175,10 +150,10 @@ export default async function ArticleDetailPage({
               />
             </div>
 
-            {/* Featured Image */}
+            {/* Featured Image - Responsive heights */}
             {article.featured_image && (
-              <div className="mb-6 lg:mb-8">
-                <div className="relative w-full h-[250px] sm:h-[350px] lg:h-[500px] mb-3 lg:mb-4 rounded-lg overflow-hidden border border-neutral-200">
+              <div className="mb-4 md:mb-6 lg:mb-8">
+                <div className="relative w-full h-[200px] sm:h-[280px] md:h-[350px] lg:h-[500px] mb-2 md:mb-3 lg:mb-4 rounded-lg overflow-hidden border border-neutral-200">
                   <Image
                     src={article.featured_image}
                     alt={article.title}
@@ -188,49 +163,65 @@ export default async function ArticleDetailPage({
                   />
                 </div>
                 {article.excerpt && (
-                  <p className="text-xs lg:text-sm text-zinc-500 text-center italic">
+                  <p className="text-xs md:text-sm text-zinc-500 text-center italic px-2">
                     {article.excerpt}
                   </p>
                 )}
               </div>
             )}
 
-            {/* Article Excerpt */}
-            {article.excerpt && (
-              <div className="mb-6 lg:mb-8 p-4 lg:p-6 bg-neutral-50 border-l-4 border-red-500 rounded-r-lg">
-                <p className="text-base lg:text-lg font-medium text-[#2F2F2F] leading-relaxed">
-                  {article.excerpt}
-                </p>
+            {/* 📱 AUTHOR + CONTENT SECTION - Mobile: Stack, Desktop (md+): Side by side */}
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
+              {/* Author Section - Mobile: horizontal, Desktop: vertical */}
+              <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base shrink-0">
+                  {article.author_name[0]}
+                </div>
+                <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
+                  {article.author_name}
+                </div>
               </div>
-            )}
 
-            {/* Article Body */}
-            <div className="prose prose-lg max-w-none mb-8 lg:mb-12">
-              <div
-                className="text-[#2F2F2F] leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-                style={{
-                  fontSize: '18px',
-                  lineHeight: '1.8'
-                }}
-              />
+              {/* Article Content */}
+              <div className="flex-1">
+                {/* Article Excerpt */}
+                {article.excerpt && (
+                  <div className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-neutral-50 border-l-4 border-red-500 rounded-r-lg">
+                    <p className="text-sm md:text-base lg:text-lg font-medium text-[#2F2F2F] leading-relaxed">
+                      {article.excerpt}
+                    </p>
+                  </div>
+                )}
+
+                {/* Article Body - Responsive text size */}
+                <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
+                  <div
+                    className="text-[#2F2F2F] leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: article.content }}
+                    style={{
+                      fontSize: 'clamp(16px, 2vw, 18px)',
+                      lineHeight: '1.75'
+                    }}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mt-8 lg:mt-10 pt-6 lg:pt-8 border-t border-neutral-200">
-              <span className="text-sm text-zinc-600 font-medium">Холбоотой:</span>
+            {/* Tags - Responsive */}
+            <div className="flex flex-wrap gap-2 mt-6 md:mt-8 lg:mt-10 pt-4 md:pt-6 lg:pt-8 border-t border-neutral-200">
+              <span className="text-xs md:text-sm text-zinc-600 font-medium">Холбоотой:</span>
               <Link 
                 href={`/${article.category_slug}`}
-                className="px-3 py-1 bg-neutral-100 text-zinc-700 text-xs rounded-full hover:bg-red-500 hover:text-white transition"
+                className="px-2 md:px-3 py-1 bg-neutral-100 text-zinc-700 text-xs rounded-full hover:bg-red-500 hover:text-white transition"
               >
                 {article.category_name}
               </Link>
             </div>
 
-            {/* 🔥 Footer Share - Compact version */}
-            <div className="mt-8 pt-6 border-t border-neutral-200">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-zinc-600 font-medium">Энэ мэдээг хуваалцах:</p>
+            {/* Footer Share - Compact version */}
+            <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-neutral-200">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <p className="text-xs md:text-sm text-zinc-600 font-medium">Энэ мэдээг хуваалцах:</p>
                 <CompactShareButtons 
                   title={article.title}
                   url={articleUrl}
@@ -238,19 +229,34 @@ export default async function ArticleDetailPage({
                 />
               </div>
             </div>
+          </article>
 
+          {/* 📱 SIDEBAR - Mobile: Full width below, Desktop (lg+): Fixed width sidebar */}
+          <aside className="hidden sm:block w-full lg:w-[320px] xl:w-[367px]">
+            <div className="lg:top-4">
+              <NewsFeed articles={sidebarArticles} />
+              
+              <Advertisement
+                imageUrl="/banner2.png"
+                isVertical
+                className="my-6 md:my-8 lg:my-10"
+              />
+            </div>
+          </aside>
+        </div>
+        
             {/* Related News */}
-            <div className="mt-8 lg:mt-12">
-              <h2 className="text-xl lg:text-2xl font-serif font-bold text-[#2F2F2F] mb-6">
-                Холбоотой мэдээ
+            <div className="mt-8 md:mt-10 lg:mt-12 ">
+              <h2 className="text-lg md:text-xl lg:text-2xl font-serif font-bold text-[#2F2F2F] mb-4 md:mb-6">
+                Санал болгох мэдээ
               </h2>
               <RelatedNews articles={relatedArticles} />
             </div>
 
-            {/* Advertisement */}
+            {/* Advertisement - Responsive */}
             <Advertisement
               imageUrl="/banner1.png"
-              className="my-8 lg:my-10"
+              className="my-6 md:my-8 lg:my-10"
             />
 
             {/* Comment Section */}
@@ -258,20 +264,7 @@ export default async function ArticleDetailPage({
               articleId={article.id} 
               comments={comments}
             />
-          </article>
-
-          {/* Sidebar */}
-          <aside className="w-full lg:w-[367px]">
-            <NewsFeed articles={sidebarArticles} />
-            
-            <Advertisement
-              imageUrl="/banner2.png"
-              isVertical
-              className="my-8 lg:my-10"
-            />
-          </aside>
-        </div>
-      </main>
+        </main>
 
       <Footer />
     </div>

@@ -86,7 +86,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
         body: JSON.stringify({
           user_name: replyUserName,
           content: replyText,
-          parent_id: parentId, // 🎯 Reply хийх гэж байгааг backend-д мэдэгдэх
+          parent_id: parentId, 
         }),
       });
 
@@ -139,15 +139,13 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
   };
 
   return (
-    <div className="mt-8 lg:mt-12 bg-white border border-neutral-200 p-6 lg:p-10">
-      <h2 className="text-2xl lg:text-3xl font-serif font-bold text-[#2F2F2F] mb-6">
+    <div className="mt-8 lg:mt-12 p-6 lg:p-10">
+      <h2 className="text-2xl lg:text-3xl font-bold text-black mb-6">
         Сэтгэгдэл ({comments.length})
       </h2>
 
       {/* Main Comment Form */}
-      <div className="mb-8 pb-8 border-b border-neutral-200">
-        <h3 className="font-bold text-lg mb-4 text-[#2F2F2F]">Сэтгэгдэл бичих</h3>
-        
+      <div className="mb-8 pb-8">
         {submitMessage && (
           <div className={`mb-4 p-4 rounded ${
             submitMessage.includes('✅') 
@@ -159,29 +157,23 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2 text-[#2F2F2F]">
-              Нэр *
-            </label>
+          <div className='max-w-[370px]'>
             <input
               type="text"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
-              placeholder="Таны нэр"
-              className="w-full px-4 py-3 border border-neutral-300 focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none"
+              placeholder="Нэр"
+              className="w-full px-4 py-3 border border-neutral-300 focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none text-black bg-[#FFF7EF]"
               disabled={isSubmitting}
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2 text-[#2F2F2F]">
-              Сэтгэгдэл *
-            </label>
             <textarea
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              placeholder="Таны сэтгэгдэл..."
-              className="w-full px-4 py-3 border border-neutral-300 focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none outline-none"
+              placeholder="Сэтгэгдэл..."
+              className="w-full px-4 py-3 border border-neutral-300 focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none outline-none  bg-[#FFF7EF] text-black"
               rows={4}
               disabled={isSubmitting}
               required
@@ -190,7 +182,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-6 py-3 bg-red-500 text-white font-medium hover:bg-red-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="px-6 py-3 bg-red-500 text-white font-medium hover:bg-red-600 transition disabled:bg-gray-400 disabled:cursor-not-allowed float-right lg:w-[163px]"
           >
             {isSubmitting ? 'Илгээж байна...' : 'Илгээх'}
           </button>

@@ -27,13 +27,13 @@ const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
         {/* Content Box */}
         <div className="bg-[#FFE4CC] p-4 sm:p-6 lg:p-8">
           <h1 
-            className="font-serif font-bold text-[#2F2F2F] leading-tight group-hover:text-red-500 transition cursor-pointer mb-3 lg:mb-4"
+            className="font-serif font-bold text-[#2F2F2F] leading-tight group-hover:text-red-500 transition cursor-pointer mb-3 lg:mb-4 uppercase"
             style={{ fontSize: 'clamp(20px, 4vw, 30px)' }}
           >
             {article.title}
           </h1>
           
-          <div className="flex items-center gap-2 text-zinc-600">
+          <div className="flex justify-between gap-2 text-zinc-600 border-t pt-3" style={{ borderColor: '#5D5D5D' }}>
             <span 
               className="font-medium text-[#2F2F2F]"
               style={{ fontSize: '15px' }}

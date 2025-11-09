@@ -65,7 +65,7 @@ const OpinionSection: React.FC<OpinionSectionProps> = ({ articles }) => {
             href={`/articles/${article.slug || article.id}`}
             className="group cursor-pointer bg-[#FFF7EF] p-6 block hover:shadow-md transition"
           >
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3 mb-3 pb-3 border-b" style={{ borderColor: '#C8C8C8' }}>
               <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200">
                 {article.authorImage ? (
                   <Image
@@ -87,15 +87,17 @@ const OpinionSection: React.FC<OpinionSectionProps> = ({ articles }) => {
               </div>
             </div>
             
-            <h3 className="text-base font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
-              {article.title}
-            </h3>
+            <div className='py-4'>
+              <h3 className="lg:text-lg font-bold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
+                {article.title}
+              </h3>
 
-            <p className="text-[#2F2F2F] text-sm mt-3 line-clamp-3 overflow-hidden text-ellipsis">
-              {getExcerpt(article)}
-            </p>
+              <p className="text-[#2F2F2F] line-clamp-3 overflow-hidden text-ellipsis" style={{ fontSize: '12px' }}>
+                {getExcerpt(article)}
+              </p>
+            </div>
 
-            <div className="flex justify-between gap-2 text-zinc-600 mt-4 mb-4 border-t border-[#C8C8C8] pt-2">
+            <div className="flex justify-between gap-2 text-zinc-600 border-t border-[#C8C8C8] pt-2">
               <span 
                 className="font-medium text-[#2F2F2F]"
                 style={{ fontSize: '12px' }}

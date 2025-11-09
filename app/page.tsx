@@ -14,97 +14,122 @@ import OpinionSection from '@/components/news/OpinionSection';
 import TopicsSection from '@/components/sidebar/TopicsSection';
 import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
 import Advertisement from '@/components/common/Advertisement';
-
-// ✅ Backend API import
 import { getArticles, getFeaturedArticles, getBreakingNews } from '@/lib/api';
+import Link from 'next/link';
 
 export default async function HomePage() {
-  // ✅ Backend-с өгөгдөл татах
   const [allArticles, featuredArticles, breakingArticles] = await Promise.all([
     getArticles({ limit: 20 }),
     getFeaturedArticles(),
     getBreakingNews()
   ]);
 
-  // ✅ Hero article - Featured-ийн эхний нийтлэл
   const heroArticle = featuredArticles[0] || allArticles[0];
-  
-  // ✅ Grid articles - Featured-ээс 2-5 нийтлэл
   const gridArticles = featuredArticles.slice(1, 5);
-  
-  // ✅ NewsFeed articles - Бүх нийтлэлүүдийн эхний 10
   const newsFeedArticles = allArticles.slice(0, 10);
-
   const articles = await getArticles({ limit: 100 });
-  
+
   return (
     <div className="min-h-screen bg-[#FFF1E5]">
       {/* Header Section */}
       <header>
-        {/* ✅ Breaking news backend-с */}
         <BreakingNewsBanner articles={breakingArticles} />
         <Header />
         <NavigationBar />
       </header>
 
-      <main className='bg-[#FFF1E5]'>
-        {/* Main Content Section */}
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
+      <main className="bg-[#FFF1E5]">
+        <div className="max-w-[1325px] mx-auto px-4 sm:px-6 md:px-8 lg:px-24 py-6 lg:py-10">
+
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
-            {/* Left Column - Main Content */}
-            <section className="flex-1 w-full lg:max-w-[773px]">
-              {/* ✅ Hero article backend-с */}
-              {heroArticle && <HeroArticle article={heroArticle} />}
-              
-              <h2 className="flex items-center gap-3 lg:gap-4 mb-6 lg:mb-8 mt-8 lg:mt-10">
-                <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
-                <span className="text-2xl font-serif lg:text-3xl font-semibold text-[#2F2F2F]">
-                  Онцлох мэдээ
-                </span>
-              </h2>
-              
-              {/* ✅ Grid articles backend-с */}
-              <NewsGrid articles={gridArticles} />
-              
-              <Advertisement 
-                className="my-8 lg:my-10 p-10 bg-[#FFE4CC] object-cover"
-                imageUrl="/banner1.png"
-              />
-              
-              <WeeklySummary articles={articles} />
+            {/* Left Column */}
+            <section className="flex-1 flex flex-col gap-6">
+              {/* Mobile order */}
+              <div className="lg:hidden flex flex-col gap-6">
+                {heroArticle && <HeroArticle article={heroArticle} />}
+                <NewsFeed articles={newsFeedArticles} />
+                <Advertisement imageUrl="/banner2.png" isVertical />
+                <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
+                  <div className="w-[5px] h-[18px] bg-red-500" />
+                  <span className="text-xl font-serif font-semibold text-[#2F2F2F]">
+                    Онцлох мэдээ
+                  </span>
+                </h2>
+                <NewsGrid articles={gridArticles} />
+                <Advertisement imageUrl="/banner1.png" className="p-6 bg-[#FFE4CC]" />
+                <WeeklySummary articles={articles} />
+              </div>
+
+              {/* Desktop order */}
+              <div className="hidden lg:flex flex-col gap-6">
+                {heroArticle && <HeroArticle article={heroArticle} />}
+                <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
+                  <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
+                  <span className="text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-[#2F2F2F]">
+                    Онцлох мэдээ
+                  </span>
+                </h2>
+                <NewsGrid articles={gridArticles} />
+                <Advertisement imageUrl="/banner1.png" className="p-6 bg-[#FFE4CC]" />
+                <WeeklySummary articles={articles} />
+              </div>
             </section>
 
-            <aside className="w-full lg:w-[367px] flex flex-col justify-between min-h-[1200px]">
-              <div className="space-y-8 lg:space-y-10">
-                {/* ✅ NewsFeed backend-с */}
-                <NewsFeed articles={newsFeedArticles} />
-                <div className="lg:sticky lg:top-4">
-                  <Advertisement 
-                    imageUrl="/banner2.png"
-                    isVertical
-                  />
+            {/* Right Sidebar */}
+            <aside className="hidden lg:flex w-[367px] flex-col lg:shrink-0 min-h-[1200px]">
+              <div className="flex flex-col justify-between h-full gap-6">
+                {/* Top section */}
+                <div>     
+                  <NewsFeed articles={newsFeedArticles} />
+                  <Advertisement imageUrl="/banner2.png" isVertical />
+                </div>
+
+                {/* Bottom section */}
+                <div>
+                  <TopicsSection />
+                  <NewsletterSignup />
                 </div>
               </div>
-              <div className="space-y-8 lg:space-y-10 relative z-10">
-                <TopicsSection />
-                <NewsletterSignup />
-              </div>
             </aside>
+
           </div>
         </div>
-
-      <div className="bg-[#FFE4CC] py-1">
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96">
-          <SourcesSection articles={articles} />
+        <div className="bg-[#FFE4CC] p-4">
+          <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-96">
+            <SourcesSection articles={articles} />
+            <div className="flex justify-center mt-6 pb-4 md:pb-6 lg:pb-8">
+              <Link
+                href="/video"
+                className="text-white text-sm md:text-base font-medium rounded hover:bg-red-600 transition flex items-center justify-center w-full max-w-[366px]"
+                style={{ 
+                  height: '40px', 
+                  backgroundColor: '#FF3336' 
+                }}
+              >
+                Дэлгэрэнгүй үзэх
+              </Link>
+            </div>
+          </div>  
         </div>
-      </div>
 
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-6 lg:py-10">
+        {/* Opinion Section - Responsive */}
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-96 py-6 lg:py-10">
           <OpinionSection articles={articles} />
+          <div className="flex justify-center mt-6">
+            <Link
+              href="/peoples-representative"
+              className="text-white text-sm md:text-base font-medium rounded hover:bg-red-600 transition flex items-center justify-center w-full max-w-[366px]"
+              style={{ 
+                height: '40px', 
+                backgroundColor: '#FF3336' 
+              }}
+            >
+              Дэлгэрэнгүй үзэх
+            </Link>
+          </div>
         </div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
