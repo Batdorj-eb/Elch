@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { NewsArticle } from '@/lib/types';
 
 interface NewsFeedProps {
@@ -67,15 +68,33 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
           <div className="space-y-4">
             {currentNews.map((item, index) => (
               <div key={item.id}>
-                <Link href={`/articles/${item.slug || item.id}`}>{/* ✅ article → articles */}
-                  <article className="cursor-pointer group">
-                    <h3 className="font-sans text-sm font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2">
-                      {item.title}
-                    </h3>
-                    
-                    <div className="flex justify-between gap-2 text-xs text-zinc-500 font-sans">
-                      <span className="font-bold text-[#2F2F2F]">{item.category}</span>
-                      <time>{item.timeAgo}</time>
+                <Link href={`/articles/${item.slug || item.id}`}>
+                  <article className="cursor-pointer group flex gap-3">
+                    {/* Article Image */}
+                    {item.coverImage && (
+                      <div className="relative w-24 h-20 sm:w-28 sm:h-24 flex-shrink-0 rounded overflow-hidden border border-neutral-200">
+                        <Image
+                          src={item.coverImage}
+                          alt={item.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 96px, 120px"
+                        />
+                      </div>
+                    )}
+
+                    {/* Article Content */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-sans text-sm font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2">
+                        {item.title}
+                      </h3>
+                      
+                      <div className="flex justify-between gap-2 text-xs text-zinc-500 font-sans">
+                        <span className="font-bold text-[#2F2F2F] py-1 border-t border-b border-[#C8C8C8] inline-block">
+                          {item.category}
+                        </span>
+                        <time className="whitespace-nowrap">{item.timeAgo}</time>
+                      </div>
                     </div>
                   </article>
                 </Link>

@@ -72,7 +72,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
             <h3 className="text-sm sm:text-base font-serif font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-3">
               {article.title}
             </h3>
-            <div className="flex justify-between gap-2 mt-1.5 sm:mb-2 text-[11px] sm:text-xs text-zinc-600 font-sans">
+            <div className="flex justify-between gap-2 mt-1.5 sm:mb-2 text-[11px] sm:text-xs text-zinc-600 font-sans py-2 border-t border-b border-[#C8C8C8] inline-block">
               <span className="font-medium">{article.category}</span>
               <div className="flex items-center gap-1">
                 <Image 

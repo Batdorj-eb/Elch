@@ -123,7 +123,7 @@ export default async function ArticleDetailPage({
             </h1>
 
             {/* Meta Info with Share - Responsive layout */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 lg:gap-4 text-xs md:text-sm text-zinc-600 mb-4 md:mb-6 lg:mb-8 pb-3 md:pb-4 lg:pb-6 border-b border-neutral-200">
+            <div className="flex sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 lg:gap-4 text-xs md:text-sm text-zinc-600 mb-4 md:mb-6 lg:mb-8 pb-3 md:pb-4 lg:pb-6 border-b border-neutral-200">
               <div className="flex flex-wrap items-center gap-2 md:gap-3">
                 <time className="flex items-center gap-1">
                   <Clock className="w-3 h-3 md:w-4 md:h-4" />
@@ -135,11 +135,6 @@ export default async function ArticleDetailPage({
                     })}
                   </span>
                 </time>
-                <span className="hidden sm:inline">•</span>
-                <span className="flex items-center gap-1">
-                  <Eye className="w-3 h-3 md:w-4 md:h-4" />
-                  {article.views}
-                </span>
               </div>
 
               {/* Share Button */}
