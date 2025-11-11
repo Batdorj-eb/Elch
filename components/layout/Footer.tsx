@@ -1,5 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import Footer_logo from '@/public/footer_logo.png';
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -9,40 +11,60 @@ const Footer: React.FC = () => {
         {/* Logo */}
         <div className="mb-6 lg:mb-8 text-center lg:text-left">
           <div className="text-3xl lg:text-4xl font-bold inline-block">
-            <span className="text-red-500">E</span>
-            <span className="text-white">LCH NEWS</span>
+            <Image 
+              src={Footer_logo} 
+              alt="Elch News Logo" 
+              width={150} 
+              height={40} 
+              className="inline-block"
+            />
           </div>
         </div>
 
         {/* Links & Social */}
         <div className="border-t border-zinc-700 pt-6 lg:pt-8">
           {/* Links */}
-          <nav className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4 sm:gap-6 lg:gap-8 mb-6 lg:mb-8">
-            <Link 
-              href="/about" 
-              className="text-sm text-center hover:text-red-500 transition"
-            >
-              Бидний тухай
-            </Link>
-            <Link 
-              href="/privacy" 
-              className="text-sm text-center hover:text-red-500 transition"
-            >
-              Нууцлалын бодлого
-            </Link>
-            <Link 
-              href="/contact" 
-              className="text-sm text-center hover:text-red-500 transition"
-            >
-              Холбоо барих
-            </Link>
-            <Link 
-              href="/careers" 
-              className="text-sm text-center hover:text-red-500 transition"
-            >
-              Ажлын байр
-            </Link>
+          <nav className="flex justify-end">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-right">
+              <Link 
+                href="/about" 
+                className="text-sm hover:text-red-500 transition"
+              >
+                Бидний тухай
+              </Link>
+              <Link 
+                href="/about" 
+                className="text-sm hover:text-red-500 transition"
+              >
+               Нийтлэлийн бодлого
+              </Link>
+              <Link 
+                href="/about" 
+                className="text-sm hover:text-red-500 transition"
+              >
+                Хамтран ажиллах
+              </Link>
+              <Link 
+                href="/about" 
+                className="text-sm hover:text-red-500 transition"
+              >
+                Редакцийн бодлого
+              </Link>
+              <Link 
+                href="/privacy" 
+                className="text-sm hover:text-red-500 transition"
+              >
+                Холбоо барих
+              </Link>
+              <Link 
+                href="/contact" 
+                className="text-sm hover:text-red-500 transition"
+              >
+                Нууцын бодлого
+              </Link>
+            </div>
           </nav>
+
 
           {/* Social Media */}
           <div className="flex items-center justify-center lg:justify-start gap-3 lg:gap-4 mb-6 lg:mb-8">
@@ -78,7 +100,7 @@ const Footer: React.FC = () => {
 
           {/* Copyright */}
           <p className="text-xs text-zinc-400 text-center lg:text-left">
-            © 2025 Elch News. All Rights Reserved.
+            © 2025 Элч Ньюс. Бүх эрх хуулиар хамгаалагдсан.
           </p>
         </div>
       </div>

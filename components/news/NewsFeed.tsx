@@ -59,7 +59,7 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
               : 'bg-neutral-200 text-zinc-700 hover:bg-neutral-300'
           }`}
         >
-          Трэнд мэдээ
+          Их уншсан
         </button>
       </div>
 
