@@ -266,7 +266,9 @@ export async function addComment(
   }
 }
 
-// lib/api.ts дээр нэмэх
+// ============================================
+// ХАЙЛТ
+// ============================================
 
 export async function searchArticles(query: string, options?: {
   category?: string;
@@ -317,4 +319,51 @@ export async function getSearchSuggestions(query: string) {
     console.error('Suggestions error:', error);
     return [];
   }
+}
+
+// ============================================
+// BANNER
+// ============================================
+
+export interface Banner {
+  id: number;
+  title: string;
+  type: 'vertical' | 'horizontal';
+  image_url: string;
+  link_url?: string;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export async function getBanners(type?: 'vertical' | 'horizontal'): Promise<Banner[]> {
+  try {
+    const url = type 
+      ? `${API_URL}/banners?type=${type}`
+      : `${API_URL}/banners`;
+    
+    const response = await fetch(url, {
+      next: { revalidate: 60 } // Cache 60 секунд
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch banners:', response.status);
+      return [];
+    }
+
+    const data = await response.json();
+    return data.success ? data.data : [];
+  } catch (error) {
+    console.error('getBanners error:', error);
+    return [];
+  }
+}
+
+export async function getVerticalBanners(): Promise<Banner[]> {
+  return getBanners('vertical');
+}
+
+export async function getHorizontalBanners(): Promise<Banner[]> {
+  return getBanners('horizontal');
 }

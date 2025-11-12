@@ -13,9 +13,9 @@ import SourcesSection from '@/components/news/SourcesSection';
 import OpinionSection from '@/components/news/OpinionSection';
 import TopicsSection from '@/components/sidebar/TopicsSection';
 import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
-import Advertisement from '@/components/common/Advertisement';
 import { getArticles, getFeaturedArticles, getBreakingNews } from '@/lib/api';
 import Link from 'next/link';
+import BannerSection from '@/components/common/BannerSection';
 
 export default async function HomePage() {
   const [allArticles, featuredArticles, breakingArticles] = await Promise.all([
@@ -48,7 +48,10 @@ export default async function HomePage() {
               <div className="lg:hidden flex flex-col gap-6">
                 {heroArticle && <HeroArticle article={heroArticle} />}
                 <NewsFeed articles={newsFeedArticles} />
-                <Advertisement imageUrl="/banner2.png" isVertical />
+                <BannerSection 
+                    type="vertical" 
+                    className="sticky top-4"
+                  />
                 <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
                   <div className="w-[5px] h-[18px] bg-red-500" />
                   <span className="text-xl font-serif font-semibold text-[#2F2F2F]">
@@ -56,7 +59,7 @@ export default async function HomePage() {
                   </span>
                 </h2>
                 <NewsGrid articles={gridArticles} />
-                <Advertisement imageUrl="/banner1.png" className="p-6 bg-[#FFE4CC]" />
+                <BannerSection type="horizontal" />
                 <WeeklySummary articles={articles} />
               </div>
 
@@ -70,7 +73,7 @@ export default async function HomePage() {
                   </span>
                 </h2>
                 <NewsGrid articles={gridArticles} />
-                <Advertisement imageUrl="/banner1.png" className="p-6 bg-[#FFE4CC]" />
+                <BannerSection type="horizontal" />
                 <WeeklySummary articles={articles} />
               </div>
             </section>
@@ -81,7 +84,10 @@ export default async function HomePage() {
                 {/* Top section */}
                 <div>     
                   <NewsFeed articles={newsFeedArticles} />
-                  <Advertisement imageUrl="/banner2.png" isVertical />
+                  <BannerSection 
+                    type="vertical" 
+                    className="sticky top-4"
+                  />
                 </div>
 
                 {/* Bottom section */}

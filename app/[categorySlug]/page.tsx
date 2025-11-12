@@ -8,7 +8,6 @@ import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
 import BreakingNewsBanner from '@/components/news/BreakingNewsBanner';
 import NewsFeed from '@/components/news/NewsFeed';
-import Advertisement from '@/components/common/Advertisement';
 import { 
   getArticlesByCategory, 
   getBreakingNews, 
@@ -16,6 +15,7 @@ import {
   getCategoryBySlug 
 } from '@/lib/api';
 import MonthlySummary from '@/components/news/Monthly';
+import BannerSection from '@/components/common/BannerSection';
 
 export default async function CategoryPage({
   params
@@ -138,10 +138,7 @@ export default async function CategoryPage({
           <div className="flex flex-col lg:flex-row gap-4 md:gap-6 lg:gap-10">
             {/* Main Content - LG-аас хойш 773px fixed */}
             <section className="flex-1 w-full lg:max-w-[773px]">
-              <Advertisement 
-                className="my-3 md:my-4"
-                imageUrl="/banner1.png"
-              />
+              <BannerSection className="my-3 md:my-4" type={'horizontal'}  />
               <MonthlySummary articles={articles} />
             </section>
 
@@ -152,10 +149,7 @@ export default async function CategoryPage({
               </div>
 
               <div>
-                <Advertisement 
-                  imageUrl="/banner2.png"
-                  isVertical
-                />
+                <BannerSection type="vertical" />
               </div>
             </aside>
 

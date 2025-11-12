@@ -10,13 +10,13 @@ import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
 import BreakingNewsBanner from '@/components/news/BreakingNewsBanner';
 import NewsFeed from '@/components/news/NewsFeed';
-import Advertisement from '@/components/common/Advertisement';
 import RelatedNews from '@/components/article/RelatedNews';
 import CommentSection from '@/components/article/CommentSection';
 import ShareButtons from '@/components/social/ShareButtons';
 import CompactShareButtons from '@/components/social/CompactShareButtons';
 import { getArticleBySlug, getComments, getArticles, getBreakingNews } from '@/lib/api';
 import type { Metadata } from 'next';
+import BannerSection from '@/components/common/BannerSection';
 
 // 🔥 Open Graph Meta Tags
 export async function generateMetadata({
@@ -231,9 +231,8 @@ export default async function ArticleDetailPage({
             <div className="lg:top-4">
               <NewsFeed articles={sidebarArticles} />
               
-              <Advertisement
-                imageUrl="/banner2.png"
-                isVertical
+              <BannerSection 
+                type="vertical"
                 className="my-6 md:my-8 lg:my-10"
               />
             </div>
@@ -248,9 +247,8 @@ export default async function ArticleDetailPage({
               <RelatedNews articles={relatedArticles} />
             </div>
 
-            {/* Advertisement - Responsive */}
-            <Advertisement
-              imageUrl="/banner1.png"
+            <BannerSection 
+              type="horizontal"
               className="my-6 md:my-8 lg:my-10"
             />
 
