@@ -17,19 +17,63 @@ export default function SubmissionPopup({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="popup-backdrop">
-      <div className="popup">
-        <button onClick={onClose}>X</button>
-        <h2>Санал илгээх</h2>
-        <form onSubmit={handleSubmit}>
-          <input name="name" placeholder="Нэр" value={form.name} onChange={handleChange} required />
-          <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-          <input name="phone" placeholder="Утас" value={form.phone} onChange={handleChange} />
-          <input name="title" placeholder="Гарчиг" value={form.title} onChange={handleChange} required />
-          <textarea name="content" placeholder="Агуулга" value={form.content} onChange={handleChange} required />
-          <button type="submit">Илгээх</button>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 font-bold"
+        >
+          ✕
+        </button>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Санал илгээх</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            name="name"
+            placeholder="Нэр"
+            value={form.name}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <input
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <input
+            name="phone"
+            placeholder="Утас"
+            value={form.phone}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <input
+            name="title"
+            placeholder="Гарчиг"
+            value={form.title}
+            onChange={handleChange}
+            required
+            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <textarea
+            name="content"
+            placeholder="Агуулга"
+            value={form.content}
+            onChange={handleChange}
+            required
+            rows={5}
+            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+          <button
+            type="submit"
+            className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-md transition"
+          >
+            Илгээх
+          </button>
         </form>
-        {message && <p>{message}</p>}
+        {message && <p className="mt-4 text-center text-gray-700">{message}</p>}
       </div>
     </div>
   );

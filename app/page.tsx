@@ -1,6 +1,6 @@
 // app/page.tsx
 
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '@/components/layout/Header';
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
@@ -16,7 +16,7 @@ import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
 import { getArticles, getFeaturedArticles, getBreakingNews } from '@/lib/api';
 import Link from 'next/link';
 import BannerSection from '@/components/common/BannerSection';
-import SubmissionPopup from '@/components/common/Submissions';
+import SubmissionButton from '@/components/common/SubmissionButton';
 
 export default async function HomePage() {
   const [allArticles, featuredArticles, breakingArticles] = await Promise.all([
@@ -24,7 +24,7 @@ export default async function HomePage() {
     getFeaturedArticles(),
     getBreakingNews()
   ]);
-  const [isOpen, setIsOpen] = useState(false);
+
   const heroArticle = featuredArticles[0] || allArticles[0];
   const gridArticles = featuredArticles.slice(1, 5);
   const newsFeedArticles = allArticles.slice(0, 10);
@@ -123,17 +123,7 @@ export default async function HomePage() {
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-96 py-6 lg:py-10">
           <OpinionSection articles={articles} />
           <div className="flex justify-center mt-6">
-            <Link
-              href="/peoples-representative"
-              className="text-white text-sm md:text-base font-medium rounded hover:bg-red-600 transition flex items-center justify-center w-full max-w-[366px]"
-              style={{ 
-                height: '40px', 
-                backgroundColor: '#FF3336' 
-              }}
-              onClick={()=> setIsOpen(true)}
-            > Илгээх
-              {isOpen && <SubmissionPopup onClose={() => setIsOpen(false)} />}
-            </Link>
+            <SubmissionButton />
           </div>
         </div>
       </main>
