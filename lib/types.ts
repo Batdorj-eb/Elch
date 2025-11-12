@@ -65,6 +65,7 @@ export interface ApiResponse<T> {
 }
 
 export interface BackendArticle {
+  avatar: string;
   id: number;
   title: string;
   slug: string;

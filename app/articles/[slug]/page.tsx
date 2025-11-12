@@ -4,7 +4,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Eye, Share2, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
@@ -170,7 +170,7 @@ export default async function ArticleDetailPage({
               {/* Author Section - Mobile: horizontal, Desktop: vertical */}
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
                 <div className="w-10 h-10 md:w-12 md:h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base shrink-0">
-                  {article.author_name[0]}
+                  {article.avatar}
                 </div>
                 <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
                   {article.author_name}
