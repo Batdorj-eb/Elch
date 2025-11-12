@@ -1,7 +1,11 @@
+'use client';
 import { useState } from 'react';
-import { submitSubmission } from '@/lib/api';
 
-export default function SubmissionPopup({ onClose }: { onClose: () => void }) {
+interface SubmissionPopupProps {
+  onClose: () => void;
+}
+
+export default function SubmissionPopup({ onClose }: SubmissionPopupProps) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', title: '', content: '' });
   const [message, setMessage] = useState('');
 
@@ -11,9 +15,29 @@ export default function SubmissionPopup({ onClose }: { onClose: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await submitSubmission(form);
-    setMessage(success ? 'Амжилттай илгээв' : 'Алдаа гарлаа');
-    if (success) setForm({ name: '', email: '', phone: '', title: '', content: '' });
+
+    try {
+      const res = await fetch('http://72.60.195.81:5000/api/submissions', { // VPS IP
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          category_id: 7, // "Ардын элч" category id
+          ...form,
+        }),
+      });
+
+      if (!res.ok) throw new Error('Failed to submit');
+
+      setMessage('Амжилттай илгээв');
+      setForm({ name: '', email: '', phone: '', title: '', content: '' });
+      // Хүсвэл popup-ыг хааж болно
+      // onClose();
+    } catch (error) {
+      console.error(error);
+      setMessage('Алдаа гарлаа, дахин оролдоно уу');
+    }
   };
 
   return (
