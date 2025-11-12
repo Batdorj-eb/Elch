@@ -367,3 +367,23 @@ export async function getVerticalBanners(): Promise<Banner[]> {
 export async function getHorizontalBanners(): Promise<Banner[]> {
   return getBanners('horizontal');
 }
+
+export async function submitSubmission(data: {
+  name: string;
+  email?: string;
+  phone?: string;
+  title: string;
+  content: string;
+}): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_URL}/submissions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    return res.ok;
+  } catch (err) {
+    console.error('submitSubmission error:', err);
+    return false;
+  }
+}

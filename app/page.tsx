@@ -1,6 +1,6 @@
 // app/page.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '@/components/layout/Header';
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
@@ -16,6 +16,7 @@ import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
 import { getArticles, getFeaturedArticles, getBreakingNews } from '@/lib/api';
 import Link from 'next/link';
 import BannerSection from '@/components/common/BannerSection';
+import SubmissionPopup from '@/components/common/Submissions';
 
 export default async function HomePage() {
   const [allArticles, featuredArticles, breakingArticles] = await Promise.all([
@@ -23,7 +24,7 @@ export default async function HomePage() {
     getFeaturedArticles(),
     getBreakingNews()
   ]);
-
+  const [isOpen, setIsOpen] = useState(false);
   const heroArticle = featuredArticles[0] || allArticles[0];
   const gridArticles = featuredArticles.slice(1, 5);
   const newsFeedArticles = allArticles.slice(0, 10);
@@ -129,8 +130,9 @@ export default async function HomePage() {
                 height: '40px', 
                 backgroundColor: '#FF3336' 
               }}
-            >
-              Дэлгэрэнгүй үзэх
+              onClick={()=> setIsOpen(true)}
+            > Илгээх
+              {isOpen && <SubmissionPopup onClose={() => setIsOpen(false)} />}
             </Link>
           </div>
         </div>
