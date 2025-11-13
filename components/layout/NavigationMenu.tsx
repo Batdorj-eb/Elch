@@ -20,9 +20,11 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
   const visibleCategories = categories.filter(
     (cat) => cat.slug !== 'video' 
   );
-  const sortedCategories = visibleCategories.sort(
-    (a, b) => a.display_order - b.display_order
-  );
+  const sortedCategories = categories
+    .filter(cat => cat.is_active)  // идэвхтэй category-ууд
+    .sort((a, b) => a.display_order - b.display_order);
+
+  
     const [dateString, setDateString] = useState('');
     const [dayString, setDayString] = useState('');
     const [weather, setWeather] = useState<{ temp: number; wind: number } | null>(null);
