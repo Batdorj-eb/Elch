@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // 🔥 ШИЙДЭЛ: Image optimization бүрэн унтраах
+    domains: ['elch.mn'],
     unoptimized: true,
   },
   // 🔥 /uploads requests-ийг backend руу чиглүүлэх

@@ -19,6 +19,7 @@ import type { Metadata } from 'next';
 import BannerSection from '@/components/common/BannerSection';
 
 // 🔥 Open Graph Meta Tags
+// 🔥 Open Graph Meta Tags
 export async function generateMetadata({
   params
 }: {
@@ -26,14 +27,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  console.log(article)
   if (!article) {
     return {
       title: 'Мэдээ олдсонгүй',
     };
   }
 
-  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://elch.mn';
+  const articleUrl = `${siteUrl}/articles/${article.slug}`;
+
+  // Ensure featured image is absolute (fallback)
+  let featuredImage = article.featured_image || '/default-og-image.jpg';
+  if (!featuredImage.startsWith('http')) {
+    // If relative path, prefix siteUrl
+    featuredImage = featuredImage.startsWith('/') ? `${siteUrl}${featuredImage}` : `${siteUrl}/${featuredImage}`;
+  }
 
   return {
     title: `${article.title} - ELCH News`,
@@ -45,7 +53,7 @@ export async function generateMetadata({
       siteName: 'ELCH News',
       images: [
         {
-          url: article.featured_image || '/default-og-image.jpg',
+          url: featuredImage,
           width: 1200,
           height: 630,
           alt: article.title,
@@ -61,10 +69,11 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: article.title,
       description: article.excerpt || article.title,
-      images: [article.featured_image || '/default-og-image.jpg'],
+      images: [featuredImage],
     },
   };
 }
+
 
 export default async function ArticleDetailPage({
   params
