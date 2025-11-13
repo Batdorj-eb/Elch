@@ -18,8 +18,6 @@ import { getArticleBySlug, getComments, getArticles, getBreakingNews } from '@/l
 import type { Metadata } from 'next';
 import BannerSection from '@/components/common/BannerSection';
 
-// 🔥 Open Graph Meta Tags
-// 🔥 Open Graph Meta Tags
 export async function generateMetadata({
   params
 }: {
