@@ -90,6 +90,7 @@ export interface BackendArticle {
 }
 
 export interface Category {
+  display_order: number;
   id: number;
   name: string;
   slug: string;

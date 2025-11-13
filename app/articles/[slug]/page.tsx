@@ -18,6 +18,7 @@ import { getArticleBySlug, getComments, getArticles, getBreakingNews } from '@/l
 import type { Metadata } from 'next';
 import BannerSection from '@/components/common/BannerSection';
 
+// 🔥 Open Graph Meta Tags
 export async function generateMetadata({
   params
 }: {
@@ -25,21 +26,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
+  console.log(article)
   if (!article) {
     return {
       title: 'Мэдээ олдсонгүй',
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://elch.mn';
-  const articleUrl = `${siteUrl}/articles/${article.slug}`;
-
-  // Ensure featured image is absolute (fallback)
-  let featuredImage = article.featured_image || '/default-og-image.jpg';
-  if (!featuredImage.startsWith('http')) {
-    // If relative path, prefix siteUrl
-    featuredImage = featuredImage.startsWith('/') ? `${siteUrl}${featuredImage}` : `${siteUrl}/${featuredImage}`;
-  }
+  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
 
   return {
     title: `${article.title} - ELCH News`,
@@ -51,7 +45,7 @@ export async function generateMetadata({
       siteName: 'ELCH News',
       images: [
         {
-          url: featuredImage,
+          url: article.featured_image || '/default-og-image.jpg',
           width: 1200,
           height: 630,
           alt: article.title,
@@ -67,11 +61,10 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: article.title,
       description: article.excerpt || article.title,
-      images: [featuredImage],
+      images: [article.featured_image || '/default-og-image.jpg'],
     },
   };
 }
-
 
 export default async function ArticleDetailPage({
   params
@@ -176,14 +169,9 @@ export default async function ArticleDetailPage({
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
               {/* Author Section - Mobile: horizontal, Desktop: vertical */}
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
-                <Image
-                  src={article.avatar}
-                  width={70}  
-                  height={70} 
-                  className="rounded-full"
-                  alt={article.author_name || ''}
-                />
-
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base shrink-0">
+                  {article.avatar}
+                </div>
                 <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
                   {article.author_name}
                 </div>
