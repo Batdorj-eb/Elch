@@ -20,11 +20,6 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
   const visibleCategories = categories.filter(
     (cat) => cat.slug !== 'video' 
   );
-  const sortedCategories = categories
-    .filter(cat => cat.is_active)  // идэвхтэй category-ууд
-    .sort((a, b) => a.display_order - b.display_order);
-
-  
     const [dateString, setDateString] = useState('');
     const [dayString, setDayString] = useState('');
     const [weather, setWeather] = useState<{ temp: number; wind: number } | null>(null);
@@ -76,7 +71,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
 
           {/* Desktop Menu - CENTER */}
           <div className="hidden lg:flex items-center justify-center flex-1 max-w-[1000px] mx-4">
-            {sortedCategories.map((category, index) => (
+            {visibleCategories.map((category, index) => (
               <React.Fragment key={category.id}>
                 <Link
                   href={`/${category.slug}`}
@@ -84,7 +79,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
                 >
                   {category.name}
                 </Link>
-                {index < sortedCategories.length - 1 && (
+                {index < visibleCategories.length - 1 && (
                   <div className="h-4 lg:h-5 w-px bg-zinc-700" />
                 )}
               </React.Fragment>
