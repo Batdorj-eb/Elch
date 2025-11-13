@@ -157,10 +157,9 @@ export async function getCategories(): Promise<Category[]> {
     }
     
     const data = await res.json();
-    
     let categories: Category[] = [];
 
-    // 🔥 ШИНЭЧЛЭГДСЭН: Backend { success, data: { categories, total } } format буцаана
+    // Backend response format шалгах
     if (data.success && data.data) {
       if (Array.isArray(data.data.categories)) {
         categories = data.data.categories;
@@ -174,18 +173,20 @@ export async function getCategories(): Promise<Category[]> {
       return [];
     }
 
-    // 🔥 ШИНЭ LOGIC: идэвхтэй category-г filter хийж display_order-оор эрэмбэлэх
-    const activeSortedCategories = categories
-      .filter(cat => cat.is_active)       // идэвхтэй category-г авах
-      .sort((a, b) => a.display_order - b.display_order); // display_order-оор эрэмбэлэх
+    // 🔹 display_order-оор эрэмбэлэх, filter хийхгүй
+    const sortedCategories = categories.sort((a, b) => a.display_order - b.display_order);
 
-    return activeSortedCategories;
+    // 🔹 Debug: console-д шалгах
+    console.log('Fetched categories:', sortedCategories);
+
+    return sortedCategories;
 
   } catch (error) {
     console.error('getCategories error:', error);
     return [];
   }
 }
+
 
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
