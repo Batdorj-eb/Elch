@@ -17,12 +17,21 @@ const WEATHER_API = 'https://api.open-meteo.com/v1/forecast?latitude=47.9167&lon
 const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const visibleCategories = categories.filter(
-    (cat) => cat.slug !== 'video' 
-  );
+  const visibleCategories = categories
+  .filter(cat => cat.slug !== 'video')
+  .sort((a, b) => a.display_order - b.display_order);
     const [dateString, setDateString] = useState('');
     const [dayString, setDayString] = useState('');
     const [weather, setWeather] = useState<{ temp: number; wind: number } | null>(null);
+    const [menuCategories, setMenuCategories] = useState<Category[]>([]);
+
+    useEffect(() => {
+      setMenuCategories(
+        categories
+          .filter(cat => cat.slug !== 'video')
+          .sort((a, b) => a.display_order - b.display_order)
+      );
+    }, [categories]);
   
     useEffect(() => {
       const now = new Date();
@@ -71,7 +80,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
 
           {/* Desktop Menu - CENTER */}
           <div className="hidden lg:flex items-center justify-center flex-1 max-w-[1000px] mx-4">
-            {visibleCategories.map((category, index) => (
+            {menuCategories.map((category, index) => (
               <React.Fragment key={category.id}>
                 <Link
                   href={`/${category.slug}`}
@@ -79,7 +88,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
                 >
                   {category.name}
                 </Link>
-                {index < visibleCategories.length - 1 && (
+                {index < menuCategories.length - 1 && (
                   <div className="h-4 lg:h-5 w-px bg-zinc-700" />
                 )}
               </React.Fragment>
