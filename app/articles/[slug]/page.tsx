@@ -178,9 +178,14 @@ export default async function ArticleDetailPage({
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
               {/* Author Section - Mobile: horizontal, Desktop: vertical */}
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base shrink-0">
-                  {article.avatar}
-                </div>
+                <Image
+                  src={article.avatar}
+                  width={70}  
+                  height={70} 
+                  className="rounded-full"
+                  alt={article.author_name || ''}
+                />
+
                 <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
                   {article.author_name}
                 </div>
