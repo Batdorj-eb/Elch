@@ -158,30 +158,35 @@ export async function getCategories(): Promise<Category[]> {
     
     const data = await res.json();
     
+    let categories: Category[] = [];
+
     // 🔥 ШИНЭЧЛЭГДСЭН: Backend { success, data: { categories, total } } format буцаана
     if (data.success && data.data) {
-      // Check if data.data.categories exists (new format)
       if (Array.isArray(data.data.categories)) {
-        return data.data.categories;
+        categories = data.data.categories;
+      } else if (Array.isArray(data.data)) {
+        categories = data.data;
       }
-      // Check if data.data is array (old format)
-      if (Array.isArray(data.data)) {
-        return data.data;
-      }
+    } else if (Array.isArray(data)) {
+      categories = data;
+    } else {
+      console.error('Invalid categories response:', data);
+      return [];
     }
-    
-    // Fallback: if direct array
-    if (Array.isArray(data)) {
-      return data;
-    }
-    
-    console.error('Invalid categories response:', data);
-    return [];
+
+    // 🔥 ШИНЭ LOGIC: идэвхтэй category-г filter хийж display_order-оор эрэмбэлэх
+    const activeSortedCategories = categories
+      .filter(cat => cat.is_active)       // идэвхтэй category-г авах
+      .sort((a, b) => a.display_order - b.display_order); // display_order-оор эрэмбэлэх
+
+    return activeSortedCategories;
+
   } catch (error) {
     console.error('getCategories error:', error);
     return [];
   }
 }
+
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   try {

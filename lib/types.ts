@@ -90,6 +90,7 @@ export interface BackendArticle {
 }
 
 export interface Category {
+  is_active: boolean;
   display_order: number;
   id: number;
   name: string;
