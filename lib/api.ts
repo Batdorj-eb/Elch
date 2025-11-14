@@ -7,9 +7,8 @@ import {
   convertToNewsArticle,
   NewsArticle
 } from './types';
-
-// const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const API_URL = 'http://localhost:5000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+// const API_URL = 'http://localhost:5000/api';
 
 // ============================================
 // НИЙТЛЭЛҮҮД
@@ -147,45 +146,67 @@ export async function getArticlesByCategory(categorySlug: string, limit = 20): P
 // АНГИЛАЛУУД
 // ============================================
 
+// lib/api.ts (эсвэл таны байгаа файлд хэсгийн оронд солино)
 export async function getCategories(): Promise<Category[]> {
   try {
     const res = await fetch(`${API_URL}/categories`, { next: { revalidate: 60 } });
-    
+    console.log('Fetching categories from API:', `${API_URL}/categories`);
     if (!res.ok) {
       console.error('Failed to fetch categories:', res.status);
       return [];
     }
-    
+
     const data = await res.json();
     let categories: Category[] = [];
 
-    // Backend response format шалгах
-    if (data.success && data.data) {
-      if (Array.isArray(data.data.categories)) {
+    // Backend response format шалгах (үргэлж олон хувилбарыг дагана)
+    if (data && typeof data === 'object') {
+      if (data.success && data.data) {
+        if (Array.isArray(data.data.categories)) {
+          categories = data.data.categories;
+        } else if (Array.isArray(data.data)) {
+          categories = data.data;
+        }
+      } else if (Array.isArray(data)) {
+        categories = data;
+      } else if (Array.isArray(data.data?.categories)) {
         categories = data.data.categories;
-      } else if (Array.isArray(data.data)) {
-        categories = data.data;
       }
-    } else if (Array.isArray(data)) {
-      categories = data;
-    } else {
-      console.error('Invalid categories response:', data);
+    }
+
+    if (!Array.isArray(categories)) {
+      console.error('Invalid categories response shape:', data);
       return [];
     }
 
-    // 🔹 display_order-оор эрэмбэлэх, filter хийхгүй
-    const sortedCategories = categories.sort((a, b) => a.display_order - b.display_order);
+    // Ensure display_order exists and is a number — default 0
+    categories = categories.map((c) => ({
+      ...c,
+      display_order: typeof c.display_order === 'number' ? c.display_order : 0,
+    }));
 
-    // 🔹 Debug: console-д шалгах
-    console.log('Fetched categories:', sortedCategories);
+    // Stable sort by display_order ascending (smaller => earlier)
+    const sortedCategories = categories.slice().sort((a, b) => {
+      if (a.display_order === b.display_order) {
+        // fallback: article_count desc, then name
+        if ((b.article_count ?? 0) !== (a.article_count ?? 0)) {
+          return (b.article_count ?? 0) - (a.article_count ?? 0);
+        }
+        return a.name.localeCompare(b.name);
+      }
+      return a.display_order - b.display_order;
+    });
+
+    // Debug only — убрать in production if noisy
+    // console.log('Fetched categories (sorted):', sortedCategories);
 
     return sortedCategories;
-
   } catch (error) {
     console.error('getCategories error:', error);
     return [];
   }
 }
+
 
 
 
