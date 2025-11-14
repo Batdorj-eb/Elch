@@ -18,7 +18,7 @@ import { getArticleBySlug, getComments, getArticles, getBreakingNews } from '@/l
 import type { Metadata } from 'next';
 import BannerSection from '@/components/common/BannerSection';
 
-// 🔥 Open Graph Meta Tags
+
 export async function generateMetadata({
   params
 }: {
@@ -26,18 +26,38 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  console.log(article)
+  
   if (!article) {
     return {
       title: 'Мэдээ олдсонгүй',
     };
   }
 
-  const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const articleUrl = `${siteUrl}/articles/${article.slug}`;
+  
+  // ✅ FIXED: Absolute URL үүсгэх
+  const getAbsoluteUrl = (imageUrl: string | null) => {
+    if (!imageUrl) {
+      return `${siteUrl}/default-og-image.jpg`;
+    }
+    
+    // Хэрэв URL аль хэдийн absolute байвал
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+    
+    // Хэрэв relative URL бол absolute болгох
+    return `${siteUrl}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+  };
+
+  const ogImageUrl = getAbsoluteUrl(article.featured_image);
 
   return {
     title: `${article.title} - ELCH News`,
     description: article.excerpt || article.title,
+    
+    // Open Graph
     openGraph: {
       title: article.title,
       description: article.excerpt || article.title,
@@ -45,7 +65,7 @@ export async function generateMetadata({
       siteName: 'ELCH News',
       images: [
         {
-          url: article.featured_image || '/default-og-image.jpg',
+          url: ogImageUrl,  // ✅ Absolute URL
           width: 1200,
           height: 630,
           alt: article.title,
@@ -54,17 +74,21 @@ export async function generateMetadata({
       locale: 'mn_MN',
       type: 'article',
       publishedTime: article.published_at,
-      authors: [article.author_name],
+      authors: article.author_name ? [article.author_name] : undefined,
       section: article.category_name,
     },
+    
+    // Twitter Card
     twitter: {
       card: 'summary_large_image',
       title: article.title,
       description: article.excerpt || article.title,
-      images: [article.featured_image || '/default-og-image.jpg'],
+      images: [ogImageUrl],  // ✅ Absolute URL
     },
   };
 }
+
+
 
 export default async function ArticleDetailPage({
   params
@@ -87,7 +111,7 @@ export default async function ArticleDetailPage({
 
   // 🔥 Full URL үүсгэх
   const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
-
+  console.log('Article URL:', article);
   const formattedDate = new Date(article.published_at).toLocaleDateString('mn-MN', {
     year: 'numeric',
     month: 'long',
@@ -169,9 +193,21 @@ export default async function ArticleDetailPage({
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
               {/* Author Section - Mobile: horizontal, Desktop: vertical */}
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
-                <div className="w-10 h-10 md:w-12 md:h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base shrink-0">
-                  {article.avatar}
-                </div>
+                 {article.avatar ? (
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0">
+                    <Image
+                      src={article.avatar}
+                      alt="Avatar"
+                      width={80} // md байхад 48, base 40
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base shrink-0">
+                    {article.avatar?.[0] || '?'}
+                  </div>
+                )}
                 <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
                   {article.author_name}
                 </div>
