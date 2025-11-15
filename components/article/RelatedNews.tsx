@@ -34,7 +34,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ articles }) => {
             </div>
 
             {/* Content */}
-            <div className="p-4 bg-white">
+            <div className="p-4">
               <span className="text-xs font-bold text-red-500 mb-2 block">
                 {article.category}
               </span>

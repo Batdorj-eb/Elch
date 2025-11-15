@@ -21,6 +21,15 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
     return null;
   }
 
+  const buildArticleHref = (slug?: string | null, id?: string | number) => {
+    const value = slug || String(id || '');
+    if (!value) return '/articles';
+    const normalized = value.startsWith('/') ? value.slice(1) : value; // remove leading slash
+    // if slug already contains 'articles/' don't prefix again
+    if (normalized.startsWith('articles/')) return `/${normalized}`;
+    return `/articles/${normalized}`;
+  };
+
   // 🔥 Цагийн форматчлуур
   const getTimeAgo = (dateString: string) => {
     const now = new Date();
@@ -49,7 +58,7 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
         {videoArticles.map((article) => (
           <Link
             key={article.id}
-            href={`${article.slug || article.id}`}
+            href={buildArticleHref(article.slug, article.id)}
             className="group cursor-pointer"
           >
             <div className="relative w-full h-[180px] lg:h-[200px] mb-3 lg:mb-4 overflow-hidden rounded-lg">

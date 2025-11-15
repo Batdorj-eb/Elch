@@ -157,7 +157,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className='max-w-[370px]'>
+          <div>
             <input
               type="text"
               value={userName}

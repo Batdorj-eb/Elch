@@ -17,6 +17,8 @@ import CompactShareButtons from '@/components/social/CompactShareButtons';
 import { getArticleBySlug, getComments, getArticles, getBreakingNews } from '@/lib/api';
 import type { Metadata } from 'next';
 import BannerSection from '@/components/common/BannerSection';
+import { processVideoContent } from '@/lib/utils';
+import VideoContent from '@/components/article/VideoContent';
 
 
 export async function generateMetadata({
@@ -112,13 +114,15 @@ export default async function ArticleDetailPage({
   // 🔥 Full URL үүсгэх
   const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
   console.log('Article URL:', article);
-  const formattedDate = new Date(article.published_at).toLocaleDateString('mn-MN', {
+  const formattedDate = new Date(article.created_at).toLocaleDateString('mn-MN', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit'
   });
+
+  const processedContent = processVideoContent(article.content);
 
   return (
     <div className="min-h-screen bg-[#FFF1E5]">
@@ -153,7 +157,7 @@ export default async function ArticleDetailPage({
                   <Clock className="w-3 h-3 md:w-4 md:h-4" />
                   <span className="hidden sm:inline">{formattedDate}</span>
                   <span className="sm:hidden">
-                    {new Date(article.published_at).toLocaleDateString('mn-MN', {
+                    {new Date(article.created_at).toLocaleDateString('mn-MN', {
                       month: 'short',
                       day: 'numeric'
                     })}
@@ -226,14 +230,15 @@ export default async function ArticleDetailPage({
 
                 {/* Article Body - Responsive text size */}
                 <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
-                  <div
+                  {/* <div
                     className="text-[#2F2F2F] leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: article.content }}
+                    dangerouslySetInnerHTML={{ __html: processedContent  }}
                     style={{
                       fontSize: 'clamp(16px, 2vw, 18px)',
                       lineHeight: '1.75'
                     }}
-                  />
+                  /> */}
+                  <VideoContent html={article.content} />
                 </div>
               </div>
             </div>

@@ -15,7 +15,7 @@ export interface NewsArticle {
   author?: string;
   publishedAt?: string;
   timeAgo: string;
-  featured?: boolean;
+  featured: number | null;
   views?: number;
   categorySlug?: string;
   content?: string;
@@ -82,7 +82,7 @@ export interface BackendArticle {
   view_count?: number;               // 🔥 ADD: Alternative field name
   likes: number;
   status: 'draft' | 'published' | 'archived';
-  is_featured: boolean | number;     // 🔥 FIX: Can be 0/1 from MySQL
+  is_featured: number | null;    // 🔥 FIX: Can be 0/1 from MySQL
   is_breaking: boolean | number;     // 🔥 FIX: Can be 0/1 from MySQL
   published_at: string;
   created_at: string;
@@ -129,7 +129,6 @@ export interface ArticlesResponse {
 // ============================================
 
 export function convertToNewsArticle(backendArticle: BackendArticle): NewsArticle {
-  // Calculate time ago
   const publishedDate = new Date(backendArticle.published_at || backendArticle.created_at);
   const now = new Date();
   const diffMs = now.getTime() - publishedDate.getTime();
@@ -148,9 +147,8 @@ export function convertToNewsArticle(backendArticle: BackendArticle): NewsArticl
     timeAgo = publishedDate.toLocaleDateString('mn-MN');
   }
 
-  // 🔥 FIX: Get image URL properly
-  const imageUrl = backendArticle.cover_image || 
-                   backendArticle.featured_image || 
+  const imageUrl = backendArticle.featured_image || 
+                   backendArticle.cover_image || 
                    'https://placehold.co/800x400/3b82f6/white?text=No+Image';
 
   return {
@@ -161,12 +159,20 @@ export function convertToNewsArticle(backendArticle: BackendArticle): NewsArticl
     category: backendArticle.category_name,
     length: backendArticle.content.length,
     imageUrl: imageUrl,
-    coverImage: imageUrl, // 🔥 FIX: Add coverImage field (same as imageUrl)
+    coverImage: imageUrl,
     author: backendArticle.author_name,
     publishedAt: backendArticle.published_at || backendArticle.created_at,
     timeAgo,
-    featured: backendArticle.is_featured === 1 || backendArticle.is_featured === true,
+    // ✅ FIXED: Properly handle featured priority
+    featured: typeof backendArticle.is_featured === 'number' 
+      ? backendArticle.is_featured 
+      : null,
+    // ✅ FIXED: Convert to boolean
     isBreaking: backendArticle.is_breaking === 1 || backendArticle.is_breaking === true,
-    views: backendArticle.views || backendArticle.view_count || 0
+    views: backendArticle.views || backendArticle.view_count || 0,
+    categorySlug: backendArticle.category_slug,
+    content: backendArticle.content,
+    excerpt: backendArticle.excerpt,
+    authorImage: backendArticle.avatar
   };
 }

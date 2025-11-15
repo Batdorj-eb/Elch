@@ -414,3 +414,91 @@ export async function submitSubmission(data: {
     return false;
   }
 }
+
+
+
+
+// lib/api.ts
+
+// ✅ Get main featured article (is_featured = 1)
+export async function getMainFeaturedArticle() {
+  try {
+    const url = `${API_URL}/articles/featured/main`;
+    console.log('🔍 Fetching main featured from:', url);
+    
+    const response = await fetch(url, {
+      next: { revalidate: 60 },
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    console.log('📡 Main Featured Response Status:', response.status);
+    
+    if (!response.ok) {
+      console.error('❌ Main Featured API failed:', response.status);
+      return null;
+    }
+    
+    const data = await response.json();
+    console.log('📦 Main Featured Raw Data:', data);
+    
+    if (!data.success) {
+      console.warn('⚠️ API returned success: false');
+      return null;
+    }
+    
+    if (!data.data) {
+      console.warn('⚠️ No main featured article found in response');
+      return null;
+    }
+    
+    console.log('🎯 Converting article:', data.data.title);
+    const article = convertToNewsArticle(data.data);
+    console.log('✅ Converted article:', article);
+    
+    return article;
+  } catch (error) {
+    console.error('❌ Error fetching main featured article:', error);
+    return null;
+  }
+}
+
+// ✅ Get secondary featured articles (is_featured = 2-5)
+export async function getSecondaryFeaturedArticles() {
+  try {
+    const url = `${API_URL}/articles/featured/secondary?limit=4`;
+    console.log('🔍 Fetching secondary featured from:', url);
+    
+    const response = await fetch(url, {
+      next: { revalidate: 60 },
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    
+    console.log('📡 Secondary Featured Response Status:', response.status);
+    
+    if (!response.ok) {
+      console.error('❌ Secondary Featured API failed:', response.status);
+      return [];
+    }
+    
+    const data = await response.json();
+    console.log('📦 Secondary Featured Raw Data:', data);
+    
+    if (!data.success || !data.data?.articles) {
+      console.warn('⚠️ No secondary featured articles found');
+      return [];
+    }
+    
+    console.log('🎯 Converting', data.data.articles.length, 'articles');
+    const articles = data.data.articles.map(convertToNewsArticle);
+    console.log('✅ Converted articles:', articles.length);
+    
+    return articles;
+  } catch (error) {
+    console.error('❌ Error fetching secondary featured articles:', error);
+    return [];
+  }
+}

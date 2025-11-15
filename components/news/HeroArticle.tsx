@@ -11,7 +11,7 @@ interface HeroArticleProps {
 
 const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
   return (
-    <Link href={`/articles/${article.slug || article.id}`}> {/* ✅ article → articles */}
+    <Link href={`/articles/${article.slug || article.id}`}>
       <article className="mb-10 border border-neutral-200 overflow-hidden group">
         {/* Image */}
         <div className="relative w-full h-[250px] sm:h-[350px] lg:h-[450px]">
@@ -26,13 +26,25 @@ const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
         
         {/* Content Box */}
         <div className="bg-[#FFE4CC] p-4 sm:p-6 lg:p-8">
+          {/* Title */}
           <h1 
             className="font-serif font-bold text-[#2F2F2F] leading-tight group-hover:text-red-500 transition cursor-pointer mb-3 lg:mb-4 uppercase"
             style={{ fontSize: 'clamp(20px, 4vw, 30px)' }}
           >
             {article.title}
           </h1>
+
+          {/* Excerpt (optional) */}
+          {article.description && (
+            <p 
+              className="text-[#2F2F2F] mb-3 lg:mb-4 line-clamp-2"
+              style={{ fontSize: 'clamp(14px, 2vw, 16px)' }}
+            >
+              {article.description}
+            </p>
+          )}
           
+          {/* Meta Info */}
           <div className="flex justify-between gap-2 text-zinc-600 border-t pt-3" style={{ borderColor: '#5D5D5D' }}>
             <span 
               className="font-medium text-[#2F2F2F]"

@@ -13,22 +13,35 @@ import SourcesSection from '@/components/news/SourcesSection';
 import OpinionSection from '@/components/news/OpinionSection';
 import TopicsSection from '@/components/sidebar/TopicsSection';
 import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
-import { getArticles, getFeaturedArticles, getBreakingNews } from '@/lib/api';
+import { 
+  getArticles, 
+  getBreakingNews,
+  getMainFeaturedArticle,      // ✅ НЭМЭХ
+  getSecondaryFeaturedArticles  // ✅ НЭМЭХ
+} from '@/lib/api';
 import Link from 'next/link';
 import BannerSection from '@/components/common/BannerSection';
 import SubmissionButton from '@/components/common/SubmissionButton';
 
 export default async function HomePage() {
-  const [allArticles, featuredArticles, breakingArticles] = await Promise.all([
+  const [
+    allArticles, 
+    breakingArticles, 
+    mainArticle,        // is_featured = 1
+    secondaryArticles   // is_featured = 2-5
+  ] = await Promise.all([
     getArticles({ limit: 20 }),
-    getFeaturedArticles(),
-    getBreakingNews()
+    getBreakingNews(),
+    getMainFeaturedArticle(),
+    getSecondaryFeaturedArticles()
   ]);
-
-  const heroArticle = featuredArticles[0] || allArticles[0];
-  const gridArticles = featuredArticles.slice(1, 5);
+  console.log(allArticles)
+  const heroArticle = mainArticle || allArticles[0];
+  const gridArticles = secondaryArticles.length > 0 ? secondaryArticles : allArticles.slice(1, 5);
   const newsFeedArticles = allArticles.slice(0, 10);
   const articles = await getArticles({ limit: 100 });
+
+  
 
   return (
     <div className="min-h-screen bg-[#FFF1E5]">
@@ -51,15 +64,18 @@ export default async function HomePage() {
                 <NewsFeed articles={newsFeedArticles} />
                 <BannerSection 
                     type="vertical" 
-                    className="sticky top-4"
                   />
-                <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
-                  <div className="w-[5px] h-[18px] bg-red-500" />
-                  <span className="text-xl font-serif font-semibold text-[#2F2F2F]">
-                    Онцлох мэдээ
-                  </span>
-                </h2>
-                <NewsGrid articles={gridArticles} />
+                {gridArticles.length > 0 && (
+                  <>
+                    <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
+                      <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
+                      <span className="text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-[#2F2F2F]">
+                        Онцлох мэдээ
+                      </span>
+                    </h2>
+                    <NewsGrid articles={gridArticles} />
+                  </>
+                )}
                 <BannerSection type="horizontal" />
                 <WeeklySummary articles={articles} />
               </div>
@@ -67,13 +83,18 @@ export default async function HomePage() {
               {/* Desktop order */}
               <div className="hidden lg:flex flex-col gap-6">
                 {heroArticle && <HeroArticle article={heroArticle} />}
-                <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
-                  <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
-                  <span className="text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-[#2F2F2F]">
-                    Онцлох мэдээ
-                  </span>
-                </h2>
-                <NewsGrid articles={gridArticles} />
+                {gridArticles.length > 0 && (
+                  <>
+                    <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
+                      <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
+                      <span className="text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-[#2F2F2F]">
+                        Онцлох мэдээ
+                      </span>
+                    </h2>
+                    {/* ✅ Дэд онцлох grid (is_featured = 2-5) */}
+                    <NewsGrid articles={gridArticles} />
+                  </>
+                )}
                 <BannerSection type="horizontal" />
                 <WeeklySummary articles={articles} />
               </div>
@@ -87,7 +108,6 @@ export default async function HomePage() {
                   <NewsFeed articles={newsFeedArticles} />
                   <BannerSection 
                     type="vertical" 
-                    className="sticky top-4"
                   />
                 </div>
 

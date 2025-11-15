@@ -1,5 +1,4 @@
 // components/news/NewsGrid.tsx
-// ============================================
 
 import React from 'react';
 import NewsCard from './NewsCard';
@@ -20,7 +19,7 @@ const NewsGrid: React.FC<NewsGridProps> = ({ articles }) => {
 
   return (
     <div className="space-y-4 lg:space-y-6">
-      {/* First Two in Grid - Single column on mobile */}
+      {/* ✅ 2x2 Grid for secondary featured (is_featured = 2-5) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 font-serif">
         {articles.slice(0, 4).map((article) => (
           <NewsCard 
@@ -30,15 +29,6 @@ const NewsGrid: React.FC<NewsGridProps> = ({ articles }) => {
           />
         ))}
       </div>
-
-      {/* Rest in Single Column */}
-      {/* {articles.slice(2).map((article) => (
-        <NewsCard 
-          key={article.id} 
-          article={article}
-          layout="horizontal"
-        />
-      ))} */}
     </div>
   );
 };
