@@ -395,28 +395,6 @@ export async function getHorizontalBanners(): Promise<Banner[]> {
   return getBanners('horizontal');
 }
 
-export async function submitSubmission(data: {
-  name: string;
-  email?: string;
-  phone?: string;
-  title: string;
-  content: string;
-}): Promise<boolean> {
-  try {
-    const res = await fetch(`${API_URL}/submissions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    return res.ok;
-  } catch (err) {
-    console.error('submitSubmission error:', err);
-    return false;
-  }
-}
-
-
-
 
 // lib/api.ts
 
@@ -500,5 +478,47 @@ export async function getSecondaryFeaturedArticles() {
   } catch (error) {
     console.error('❌ Error fetching secondary featured articles:', error);
     return [];
+  }
+}
+
+
+export interface Submission {
+  id: number;
+  name: string;
+  title: string;
+  content: string;
+  created_at: string;
+}
+
+export async function getSubmissions(limit = 50): Promise<Submission[]> {
+  try {
+    const response = await fetch(`${API_URL}/submissions/approved?limit=${limit}`, {
+      cache: 'no-store',
+    });
+
+    if (!response.ok) return [];
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching submissions:', error);
+    return [];
+  }
+}
+
+export async function getSubmission(id: string): Promise<Submission | null> {
+  try {
+    const response = await fetch(`${API_URL}/submissions/approved`, {
+      cache: 'no-store',
+    });
+
+    if (!response.ok) return null;
+
+    const submissions: Submission[] = await response.json();
+    const submission = submissions.find(s => s.id === parseInt(id));
+    return submission || null;
+  } catch (error) {
+    console.error('Error fetching submission:', error);
+    return null;
   }
 }

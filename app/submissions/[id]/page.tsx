@@ -1,40 +1,10 @@
-// app/submissions/[id]/page.tsx
-
 import React from 'react';
 import { notFound } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
+import { getSubmission, Submission } from '@/lib/api';
 
-interface Submission {
-  id: number;
-  name: string;
-  title: string;
-  content: string;
-  created_at: string;
-}
-
-async function getSubmission(id: string): Promise<Submission | null> {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-  
-  try {
-    const response = await fetch(`${API_URL}/submissions/approved`, {
-      cache: 'no-store'
-    });
-    
-    if (!response.ok) return null;
-    
-    const submissions: Submission[] = await response.json();
-    const submission = submissions.find(s => s.id === parseInt(id));
-    
-    return submission || null;
-  } catch (error) {
-    console.error('Error fetching submission:', error);
-    return null;
-  }
-}
-
-// Next.js 15: params is now a Promise
 export default async function SubmissionDetailPage({
   params,
 }: {
@@ -43,11 +13,8 @@ export default async function SubmissionDetailPage({
   const { id } = await params;
   const submission = await getSubmission(id);
 
-  if (!submission) {
-    notFound();
-  }
+  if (!submission) notFound();
 
-  // Цагийн форматчлуур
   const getTimeAgo = (dateString: string) => {
     const now = new Date();
     const published = new Date(dateString);
@@ -86,23 +53,18 @@ export default async function SubmissionDetailPage({
           <span className="text-gray-900">{submission.title}</span>
         </nav>
 
-        {/* Article Container */}
         <article className="bg-white rounded-lg shadow-lg p-6 lg:p-10">
-          {/* Category Badge */}
           <div className="mb-4">
             <span className="inline-block bg-red-500 text-white px-4 py-1 rounded-full text-sm font-medium">
               Иргэний санал
             </span>
           </div>
 
-          {/* Title */}
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
             {submission.title}
           </h1>
 
-          {/* Meta Information */}
           <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-200">
-            {/* Author */}
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center font-bold text-lg">
                 {submission.name[0].toUpperCase()}
@@ -113,14 +75,12 @@ export default async function SubmissionDetailPage({
               </div>
             </div>
 
-            {/* Date */}
             <div className="ml-auto text-right">
               <p className="text-sm text-gray-600">{formatDate(submission.created_at)}</p>
               <p className="text-xs text-gray-500">{getTimeAgo(submission.created_at)}</p>
             </div>
           </div>
 
-          {/* Content */}
           <div className="prose prose-lg max-w-none">
             <div 
               className="text-gray-800 leading-relaxed whitespace-pre-wrap"
@@ -130,7 +90,6 @@ export default async function SubmissionDetailPage({
             </div>
           </div>
 
-          {/* Footer Actions */}
           <div className="mt-8 pt-6 border-t border-gray-200">
             <div className="flex justify-between items-center">
               <a
@@ -146,7 +105,6 @@ export default async function SubmissionDetailPage({
           </div>
         </article>
 
-        {/* Call to Action */}
         <div className="mt-8 bg-gray-50 rounded-lg p-6 text-center">
           <h3 className="text-xl font-bold text-gray-900 mb-2">
             Танд ч санал байна уу?
@@ -168,7 +126,6 @@ export default async function SubmissionDetailPage({
   );
 }
 
-// Next.js 15: generateMetadata params is also a Promise
 export async function generateMetadata({
   params,
 }: {

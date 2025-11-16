@@ -113,7 +113,6 @@ export default async function ArticleDetailPage({
 
   // 🔥 Full URL үүсгэх
   const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
-  console.log('Article URL:', article);
   const formattedDate = new Date(article.created_at).toLocaleDateString('mn-MN', {
     year: 'numeric',
     month: 'long',
