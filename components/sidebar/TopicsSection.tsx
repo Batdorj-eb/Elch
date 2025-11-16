@@ -21,7 +21,7 @@ const TopicsSection: React.FC = () => {
         {topics.map((topic, index) => (
           <button
             key={`${topic}-${index}`}
-            className="px-4 py-2 text-sm bg-neutral-100 text-[#2F2F2F] rounded-full hover:bg-red-500 hover:text-white transition"
+            className="px-4 py-2 text-sm text-[#2F2F2F] rounded-full border border-[#C8C8C8] hover:bg-red-500 hover:text-white transition"
           >
             {topic}
           </button>

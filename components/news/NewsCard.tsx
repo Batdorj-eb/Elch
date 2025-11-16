@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { NewsArticle } from '@/lib/types';
 import { formatDate } from '@/lib/utils';
+import time from '@/public/icons/time.svg'
 
 interface NewsCardProps {
   article: NewsArticle;
@@ -69,20 +70,19 @@ const NewsCard: React.FC<NewsCardProps> = ({
           </div>
 
           <div className="flex-1">
-            <h3 className="text-sm sm:text-base font-serif font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-3">
+            <h3 className="text-sm sm:text-base font-serif font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
               {article.title}
             </h3>
+
             <div className="flex justify-between gap-2 mt-1.5 sm:mb-2 text-[11px] sm:text-xs text-zinc-600 font-sans py-2 border-t border-b border-[#C8C8C8] inline-block">
               <span className="font-medium">{article.category}</span>
-              <div className="flex items-center gap-1">
-                <Image 
-                  src="/Vector.png" 
-                  alt="clock icon" 
-                  width={12} 
-                  height={12}
-                />
-                {timeAgo}
-              </div>
+              <time 
+                  className="text-zinc-600 flex items-center gap-1"
+                  style={{ fontSize: '12px' }}
+                >
+                <Image src={time} alt="" width={14} height={14} />
+                {article.timeAgo}
+              </time>
             </div>
           </div>
         </div>

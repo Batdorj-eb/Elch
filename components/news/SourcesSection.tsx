@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Play } from 'lucide-react';
 import type { NewsArticle } from '@/lib/types';
+import time from '@/public/icons/time.svg'
 
 interface SourcesSectionProps {
   articles: NewsArticle[];
@@ -46,7 +47,7 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
   };
 
   return (
-    <section className="my-8 lg:my-10">
+    <section className="my-4">
       <h2 className="flex items-center gap-3 lg:gap-4 mb-6">
         <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
         <span className="text-xl lg:text-2xl font-bold text-[#2F2F2F]">
@@ -61,7 +62,7 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
             href={buildArticleHref(article.slug, article.id)}
             className="group cursor-pointer"
           >
-            <div className="relative w-full h-[180px] lg:h-[200px] mb-3 lg:mb-4 overflow-hidden rounded-lg">
+            <div className="relative w-full h-[180px] lg:h-[200px] mb-3 lg:mb-4 overflow-hidden">
               {article.coverImage ? (
                 <Image
                   src={article.coverImage}
@@ -95,19 +96,11 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
               >
                 {article.category}
               </span>
-              <svg 
-                width="4" 
-                height="4" 
-                viewBox="0 0 4 4" 
-                fill="currentColor"
-                className="text-zinc-400"
-              >
-                <circle cx="2" cy="2" r="2" />
-              </svg>
-              <time 
-                className="text-zinc-600"
-                style={{ fontSize: '12px' }}
-              >
+                <time 
+                  className="text-zinc-600 flex items-center gap-1"
+                  style={{ fontSize: '12px' }}
+                >
+                <Image src={time} alt="" width={14} height={14} />
                 {getTimeAgo(article.publishedAt || '')}
               </time>
             </div>

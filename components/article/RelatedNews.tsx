@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { NewsArticle } from '@/lib/types';
+import time from '@/public/icons/time.svg'
 
 interface RelatedNewsProps {
   articles: NewsArticle[];
@@ -22,7 +23,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ articles }) => {
           href={`/articles/${article.id}`}
           className="group"
         >
-          <article className="border border-neutral-200 overflow-hidden hover:shadow-lg transition-all duration-300">
+          <article className="overflow-hidden transition-all duration-300">
             {/* Image */}
             <div className="relative w-full h-[180px]">
               <Image
@@ -34,14 +35,18 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ articles }) => {
             </div>
 
             {/* Content */}
-            <div className="p-4">
+            <div className='pt-2'>
               <span className="text-xs font-bold text-red-500 mb-2 block">
                 {article.category}
               </span>
               <h3 className="text-sm font-bold text-[#2F2F2F] line-clamp-2 group-hover:text-red-500 transition leading-snug">
                 {article.title}
               </h3>
-              <time className="text-xs text-zinc-500 mt-2 block">
+              <time 
+                  className="text-zinc-600 flex items-center mt-3 gap-1 border-y py-2 border-[#c8c8c8]"
+                  style={{ fontSize: '12px' }}
+                >
+                <Image src={time} alt="" width={14} height={14} />
                 {article.timeAgo}
               </time>
             </div>

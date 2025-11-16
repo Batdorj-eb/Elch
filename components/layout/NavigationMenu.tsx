@@ -8,6 +8,7 @@ import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import type { Category } from '@/lib/types';
 import sm_logo from '../../public/sm_logo.png';
+import Logo from '@/public/EN.svg'
 
 interface NavigationMenuProps {
   categories: Category[];
@@ -81,8 +82,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
 
   useEffect(() => {
     const now = new Date();
-    setDateString(`${now.getFullYear()} оны ${now.getMonth() + 1}-р сарын ${now.getDate()}`);
-    setDayString(now.toLocaleDateString('mn-MN', { weekday: 'long' }));
+    setDateString(`${now.getFullYear()}${now.getMonth() + 1} ${now.getDate()}`);
   }, []);
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
               className="lg:hidden h-7 md:h-8 w-auto"
             />
             <Link href="/" className="hidden lg:block text-xl xl:text-2xl font-bold text-red-500">
-              EN
+              <Image src={Logo} alt='logo'/>
             </Link>
           </div>
 

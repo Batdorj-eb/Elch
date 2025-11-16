@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { NewsArticle } from '@/lib/types';
+import time from '@/public/icons/time.svg'
 
 interface HeroArticleProps {
   article: NewsArticle;
@@ -12,7 +13,7 @@ interface HeroArticleProps {
 const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
   return (
     <Link href={`/articles/${article.slug || article.id}`}>
-      <article className="mb-10 border border-neutral-200 overflow-hidden group">
+      <article className="border border-neutral-200 overflow-hidden group">
         {/* Image */}
         <div className="relative w-full h-[250px] sm:h-[350px] lg:h-[450px]">
           <Image
@@ -52,19 +53,11 @@ const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
             >
               {article.category}
             </span>
-            <svg 
-              width="4" 
-              height="4" 
-              viewBox="0 0 4 4" 
-              fill="currentColor"
-              className="text-zinc-400"
-            >
-              <circle cx="2" cy="2" r="2" />
-            </svg>
             <time 
-              className="text-zinc-600"
+              className="text-zinc-600 flex items-center gap-1"
               style={{ fontSize: '12px' }}
             >
+              <Image src={time} alt="" width={14} height={14} />
               {article.timeAgo}
             </time>
           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { NewsArticle } from '@/lib/types';
-
+import time from '@/public/icons/time.svg'
 interface OpinionSectionProps {
   articles: NewsArticle[];
 }
@@ -50,7 +50,7 @@ const OpinionSection: React.FC<OpinionSectionProps> = ({ articles }) => {
   };
 
   return (
-    <section className="my-10">
+    <section>
       <h2 className="flex items-center gap-4 mb-6">
         <div className="w-[7px] h-[22px] bg-red-500" />
         <span className="text-2xl font-bold text-[#2F2F2F]">
@@ -104,20 +104,12 @@ const OpinionSection: React.FC<OpinionSectionProps> = ({ articles }) => {
               >
                 {article.category}
               </span>
-              <svg 
-                width="4" 
-                height="4" 
-                viewBox="0 0 4 4" 
-                fill="currentColor"
-                className="text-zinc-400"
-              >
-                <circle cx="2" cy="2" r="2" />
-              </svg>
-              <time 
-                className="text-zinc-600"
-                style={{ fontSize: '12px' }}
-              >
-                {getTimeAgo(article.publishedAt || '')}
+                 <time 
+                  className="text-zinc-600 flex items-center gap-1"
+                  style={{ fontSize: '12px' }}
+                >
+                <Image src={time} alt="" width={14} height={14} />
+                {article.timeAgo}
               </time>
             </div>
           </Link>

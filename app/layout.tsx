@@ -39,15 +39,18 @@ const playfair = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'ELCH NEWS - Монголын мэдээний портал',
+  title: 'ELCH NEWS - Ардын Элч',
   description: 'Шуурхай мэдээ, улс төр, эдийн засаг, спорт болон бусад сонирхолтой мэдээллүүд',
   keywords: ['мэдээ', 'монгол', 'улс төр', 'эдийн засаг', 'спорт', 'elch news'],
   authors: [{ name: 'Elch News Team' }],
   openGraph: {
-    title: 'ELCH NEWS',
+    title: 'ELCH NEWS - Ардын Элч',
     description: 'Монголын мэдээний портал',
     type: 'website',
     locale: 'mn_MN',
+  },
+  icons: {
+    icon: '/favicon.svg',
   },
 };
 

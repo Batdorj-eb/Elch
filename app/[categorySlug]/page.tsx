@@ -16,6 +16,7 @@ import {
 } from '@/lib/api';
 import MonthlySummary from '@/components/news/Monthly';
 import BannerSection from '@/components/common/BannerSection';
+import time from '@/public/icons/time.svg'
 
 export default async function CategoryPage({
   params
@@ -119,13 +120,7 @@ export default async function CategoryPage({
                         {article.title}
                       </h3>
                       <div className="flex justify-between gap-2 md:gap-3 text-[10px] md:text-xs text-zinc-500 border-t border-b py-1 md:py-1.5" style={{ borderColor: '#C8C8C8' }}>
-                        <span>{article.timeAgo}</span>
-                        {article.views && (
-                          <>
-                            <span>•</span>
-                            <span>{article.views} үзсэн</span>
-                          </>
-                        )}
+                        <span className='flex gap-2'><Image src={time} alt="" width={14} height={14} />{article.timeAgo}</span>
                       </div>
                     </article>
                   </a>
@@ -142,7 +137,7 @@ export default async function CategoryPage({
               <MonthlySummary articles={articles} />
             </section>
 
-            <aside className="w-full lg:w-[367px] lg:shrink-0 flex flex-col gap-6 md:gap-8 lg:gap-10">
+            <aside className="w-full lg:w-[367px] lg:shrink-0 flex flex-col gap-2">
               {/* md болон түүнээс доош нууна */}
               <div className="hidden md:block">
                 <NewsFeed articles={sidebarArticles} />

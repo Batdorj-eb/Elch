@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { NewsArticle } from '@/lib/types';
+import time from '@/public/icons/time.svg'
 
 interface NewsFeedProps {
   articles: NewsArticle[];
@@ -64,7 +65,7 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
       </div>
 
       <div>
-        <div className="max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100">
+        <div className="max-h-[610px] overflow-y-auto scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-neutral-100">
           <div className="space-y-4">
             {currentNews.map((item, index) => (
               <div key={item.id}>
@@ -72,7 +73,7 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
                   <article className="cursor-pointer group flex gap-3">
                     {/* Article Image */}
                     {item.coverImage && (
-                      <div className="relative w-24 h-20 sm:w-28 sm:h-24 flex-shrink-0 rounded overflow-hidden border border-neutral-200">
+                      <div className="relative w-24 h-20 sm:w-28 sm:h-24 flex-shrink-0 overflow-hidden border border-neutral-200">
                         <Image
                           src={item.coverImage}
                           alt={item.title}
@@ -84,18 +85,25 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
                     )}
 
                     {/* Article Content */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-sans text-sm font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2 line-clamp-2">
-                        {item.title}
-                      </h3>
-                      
-                      <div className="flex justify-between gap-2 text-xs text-zinc-500 font-sans">
-                        <span className="font-bold text-[#2F2F2F] py-1 border-t border-b border-[#C8C8C8] inline-block">
-                          {item.category}
-                        </span>
-                        <time className="whitespace-nowrap">{item.timeAgo}</time>
-                      </div>
+                  <div className="flex-1 min-w-0 flex flex-col justify-between">
+                    <h3 className="font-sans text-sm font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition mb-2 line-clamp-3">
+                      {item.title}
+                    </h3>
+
+                    <div className="flex justify-between gap-2 text-xs text-zinc-500 font-sans">
+                      <span className="font-bold text-[#2F2F2F] border-[#C8C8C8] inline-block">
+                        {item.category}
+                      </span>
+                    <time 
+                        className="text-zinc-600 flex items-center gap-1"
+                        style={{ fontSize: '12px', paddingRight:'10px' }}
+                      >
+                      <Image src={time} alt="" width={14} height={14} />
+                      {item.timeAgo}
+                    </time>
                     </div>
+                  </div>
+
                   </article>
                 </Link>
                 

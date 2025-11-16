@@ -20,7 +20,6 @@ import BannerSection from '@/components/common/BannerSection';
 import { processVideoContent } from '@/lib/utils';
 import VideoContent from '@/components/article/VideoContent';
 
-
 export async function generateMetadata({
   params
 }: {
@@ -145,7 +144,6 @@ export default async function ArticleDetailPage({
               {article.category_name}
             </Link>
 
-            {/* Article Title - Responsive sizes */}
             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-[#2F2F2F] leading-tight mb-3 md:mb-4 lg:mb-6">
               {article.title}
             </h1>
@@ -157,6 +155,7 @@ export default async function ArticleDetailPage({
                   <Clock className="w-3 h-3 md:w-4 md:h-4" />
                   <span className="hidden sm:inline">{formattedDate}</span>
                   <span className="sm:hidden">
+                 
                     {new Date(article.created_at).toLocaleDateString('mn-MN', {
                       month: 'short',
                       day: 'numeric'
@@ -176,7 +175,7 @@ export default async function ArticleDetailPage({
             {/* Featured Image - Responsive heights */}
             {article.featured_image && (
               <div className="mb-4 md:mb-6 lg:mb-8">
-                <div className="relative w-full h-[200px] sm:h-[280px] md:h-[350px] lg:h-[500px] mb-2 md:mb-3 lg:mb-4 rounded-lg overflow-hidden border border-neutral-200">
+                <div className="relative w-full h-[200px] sm:h-[280px] md:h-[350px] lg:h-[500px] mb-2 md:mb-3 lg:mb-4 overflow-hidden border border-neutral-200">
                   <Image
                     src={article.featured_image}
                     alt={article.title}
@@ -248,7 +247,7 @@ export default async function ArticleDetailPage({
               <span className="text-xs md:text-sm text-zinc-600 font-medium">Холбоотой:</span>
               <Link 
                 href={`/${article.category_slug}`}
-                className="px-2 md:px-3 py-1 bg-neutral-100 text-zinc-700 text-xs rounded-full hover:bg-red-500 hover:text-white transition"
+                className="px-2 md:px-3 py-1 border border-[#c8c8c8] text-zinc-700 text-xs rounded-full hover:bg-red-500 hover:text-white transition"
               >
                 {article.category_name}
               </Link>

@@ -16,8 +16,8 @@ import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
 import { 
   getArticles, 
   getBreakingNews,
-  getMainFeaturedArticle,      // ✅ НЭМЭХ
-  getSecondaryFeaturedArticles  // ✅ НЭМЭХ
+  getMainFeaturedArticle,     
+  getSecondaryFeaturedArticles 
 } from '@/lib/api';
 import Link from 'next/link';
 import BannerSection from '@/components/common/BannerSection';
@@ -27,8 +27,8 @@ export default async function HomePage() {
   const [
     allArticles, 
     breakingArticles, 
-    mainArticle,        // is_featured = 1
-    secondaryArticles   // is_featured = 2-5
+    mainArticle,        
+    secondaryArticles   
   ] = await Promise.all([
     getArticles({ limit: 20 }),
     getBreakingNews(),
@@ -53,9 +53,8 @@ export default async function HomePage() {
       </header>
 
       <main className="bg-[#FFF1E5]">
-        <div className="max-w-[1325px] mx-auto px-4 sm:px-6 md:px-8 lg:px-24 py-6 lg:py-10">
-
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+        <div className="max-w-[1325px] mx-auto px-4 sm:px-6 md:px-8 lg:px-24">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 md:mt-10">
             {/* Left Column */}
             <section className="flex-1 flex flex-col gap-6">
               {/* Mobile order */}
@@ -85,7 +84,7 @@ export default async function HomePage() {
                 {heroArticle && <HeroArticle article={heroArticle} />}
                 {gridArticles.length > 0 && (
                   <>
-                    <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
+                    <h2 className="flex items-center gap-3 lg:gap-4 mb-6">
                       <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
                       <span className="text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-[#2F2F2F]">
                         Онцлох мэдээ
@@ -101,8 +100,8 @@ export default async function HomePage() {
             </section>
 
             {/* Right Sidebar */}
-            <aside className="hidden lg:flex w-[367px] flex-col lg:shrink-0 min-h-[1200px]">
-              <div className="flex flex-col justify-between h-full gap-6">
+            <aside className="hidden lg:flex w-[367px] flex-col lg:shrink-0">
+              <div className="flex flex-col justify-between h-full gap-3 mb-11">
                 {/* Top section */}
                 <div>     
                   <NewsFeed articles={newsFeedArticles} />
@@ -112,13 +111,12 @@ export default async function HomePage() {
                 </div>
 
                 {/* Bottom section */}
-                <div>
+                <div style={{marginTop:"-100px"}}>
                   <TopicsSection />
                   <NewsletterSignup />
                 </div>
               </div>
             </aside>
-
           </div>
         </div>
         <div className="bg-[#FFE4CC] p-4">
@@ -140,7 +138,7 @@ export default async function HomePage() {
         </div>
 
         {/* Opinion Section - Responsive */}
-        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-96 py-6 lg:py-10">
+        <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-96 py-6 lg:py-8">
           <OpinionSection articles={articles} />
           <div className="flex justify-center mt-6">
             <SubmissionButton />

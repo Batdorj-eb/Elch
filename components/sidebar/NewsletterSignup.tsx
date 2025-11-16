@@ -25,7 +25,7 @@ const NewsletterSignup: React.FC = () => {
         </h2>
       </div>
       
-      <p className="text-sm  mb-6 text-[#2F2F2F]">
+      <p className="text-sm text-center  mb-6 text-[#2F2F2F]">
          7 Хоногийн мэдээлэл, нийтлэл, өдөр бүрийн шинэчлэл хүлээн авна уу.
       </p>
 
@@ -53,9 +53,6 @@ const NewsletterSignup: React.FC = () => {
         </form>
       )}
 
-      <p className="text-xs text-red-100 mt-4">
-        *By clicking, you agree to our Terms of Service and Privacy Policy
-      </p>
     </section>
   );
 };

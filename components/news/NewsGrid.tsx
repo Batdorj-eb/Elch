@@ -18,9 +18,9 @@ const NewsGrid: React.FC<NewsGridProps> = ({ articles }) => {
   }
 
   return (
-    <div className="space-y-4 lg:space-y-6">
+    <div className="space-y-4 lg:space-y-2">
       {/* ✅ 2x2 Grid for secondary featured (is_featured = 2-5) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 font-serif">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-serif">
         {articles.slice(0, 4).map((article) => (
           <NewsCard 
             key={article.id} 

@@ -23,7 +23,6 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({ articles }) => {
     });
   }, [articles]);
 
-  // 🔥 Категори бүрээс хамгийн сүүлийн мэдээг авах
   const latestByCategory = useMemo(() => {
     const categoryMap = recentArticles.reduce((acc, article) => {
       const category = article.category;
@@ -96,29 +95,33 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({ articles }) => {
     <section className="my-10">
       {/* Tabs */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide mb-6">
-        <button
-          onClick={() => setActiveTab('Бүгд')}
-          className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap ${
-            activeTab === 'Бүгд' ? 'bg-red-500 text-white' : 'bg-neutral-100 text-[#2F2F2F] hover:bg-neutral-200'
-          }`}
-        >
-          Бүгд
-        </button>
-        {tabs.map(tab => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap ${
-              activeTab === tab ? 'bg-red-500 text-white' : 'bg-neutral-100 text-[#2F2F2F] hover:bg-neutral-200'
+         <button
+            onClick={() => setActiveTab('Бүгд')}
+            className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
+              activeTab === 'Бүгд'
+                ? 'bg-red-500 text-white border-[#C8C8C8]'
+                : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
             }`}
           >
-            {tab}
+            Бүгд
           </button>
-        ))}
+        {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
+                tab === activeTab
+                  ? 'bg-red-500 text-white border-[#C8C8C8]'
+                  : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
       </div>
 
       {/* Articles */}
-      <div className="overflow-y-auto h-[530px] space-y-4 pr-2">
+      <div className="overflow-y-auto h-[1043px] space-y-4 pr-2">
         {displayArticles.map((article, index) => {
           const bgColor = colors[index % colors.length];
           const isOdd = index % 2 !== 0;
@@ -128,10 +131,9 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({ articles }) => {
               key={article.id}
               href={`/articles/${article.slug || article.id}`}
               className="flex gap-4 cursor-pointer group"
-              style={{
-                backgroundColor: isOdd ? '#FFE4CC' : 'transparent',
-                borderRadius: isOdd ? '8px' : '0',
-                padding: isOdd ? '' : '0'
+              style={{ 
+                backgroundColor: isOdd ? '#FFE4CC' : '#FFF7EF',
+                padding: isOdd ? '' : '0',
               }}
             >
               <div className={`relative w-[203px] h-[110px] shrink-0 overflow-hidden ${bgColor} flex p-2 items-center justify-center`}>

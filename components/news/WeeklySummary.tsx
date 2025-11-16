@@ -4,7 +4,6 @@ import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { NewsArticle } from '@/lib/types';
-import { formatDateShort } from '@/lib/utils';
 
 interface WeeklySummaryProps {
   articles: NewsArticle[];
@@ -66,10 +65,9 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
     return grouped;
   }, [recentArticles]);
 
-  // 🔥 Tabs - Мэдээ байгаа өдрүүд (огноогоор эрэмбэлэх)
   const tabs = useMemo(() => {
     return Object.keys(articlesByDay).sort((a, b) => {
-      return new Date(b).getTime() - new Date(a).getTime(); // Шинээс хуучин руу
+      return new Date(b).getTime() - new Date(a).getTime(); 
     });
   }, [articlesByDay]);
 
@@ -103,44 +101,46 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
     <section className="my-10">
       <div className="flex items-center gap-4 mb-5">
         <div className="w-[7px] h-[22px] bg-red-500" />
-        <div className="text-2xl font-bold text-[#2F2F2F]">
+        <div className="text-2xl font-serif font-bold text-[#2F2F2F]">
           7 хоногийн тойм
         </div>
       </div>
 
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          <button
+        <button
             onClick={() => setActiveTab('Бүгд')}
-            className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap ${
+            className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
               activeTab === 'Бүгд'
-                ? 'bg-red-500 text-white' 
-                : 'bg-neutral-100 text-[#2F2F2F] hover:bg-neutral-200'
+                ? 'bg-red-500 text-white border-[#C8C8C8]'
+                : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
             }`}
           >
             Бүгд
           </button>
+
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap ${
+              className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
                 tab === activeTab
-                  ? 'bg-red-500 text-white' 
-                  : 'bg-neutral-100 text-[#2F2F2F] hover:bg-neutral-200'
+                  ? 'bg-red-500 text-white border-[#C8C8C8]'
+                  : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
               }`}
             >
               {tab}
             </button>
           ))}
-          <button className="px-4 py-2 text-sm bg-neutral-100 rounded-full hover:bg-neutral-200 whitespace-nowrap">
+
+          <button className="px-4 py-2 border-[#C8C8C8] text-sm rounded-full hover:bg-neutral-200 whitespace-nowrap">
             +++
           </button>
         </div>
       </div>
 
     {/* Scroll Container - 7 мэдээ, харагдах хэсэгт 5 багтана */}
-      <div className="overflow-y-auto h-[530px] space-y-4 pr-2">
+      <div className="overflow-y-auto h-[620px] space-y-4 pr-2">
         {displayArticles.map((article, index) => {
           const bgColor = colors[index % colors.length];
           const isOdd = index % 2 !== 0; // Сондгой дугаар эсэх
@@ -151,9 +151,8 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
               href={`/articles/${article.slug || article.id}`}
               className="flex gap-4 cursor-pointer group"
               style={{ 
-                backgroundColor: isOdd ? '#FFE4CC' : 'transparent',
+                backgroundColor: isOdd ? '#FFE4CC' : '#FFF7EF',
                 padding: isOdd ? '' : '0',
-                borderRadius: isOdd ? '8px' : '0'
               }}
             >
               {/* Image/Badge */}

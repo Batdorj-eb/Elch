@@ -19,8 +19,8 @@ const Advertisement: React.FC<AdvertisementProps> = ({
   title = 'Advertisement'
 }) => {
   const imageContent = (
-    <div className={`${isVertical ? 'h-[680px]' : 'h-[270px]'}`}>
-      <div className="relative w-full h-full overflow-hidden bg-neutral-100 rounded-lg">
+    <div className={`${isVertical ? 'h-[650px]' : 'h-[270px]'}`}>
+      <div className="relative w-full h-full overflow-hidden bg-neutral-100">
         <Image
           src={imageUrl}
           alt={title}
