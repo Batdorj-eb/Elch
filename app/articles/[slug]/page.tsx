@@ -287,13 +287,14 @@ export default async function ArticleDetailPage({
               <RelatedNews articles={relatedArticles} />
             </div>
 
-            <div className="flex flex-row items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-col items-center justify-between gap-4 my-6 md:my-8 lg:my-10">
               <BannerSection 
                 type="horizontal"
-                className="my-6 md:my-8 lg:my-10"
+                className="w-full sm:w-auto"
               />
-              <NewsletterSignup />
+              <NewsletterSignup className="w-full sm:w-auto" />
             </div>
+
 
             {/* Comment Section */}
             <CommentSection 

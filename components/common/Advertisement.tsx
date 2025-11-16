@@ -11,40 +11,56 @@ interface AdvertisementProps {
   title?: string;
 }
 
-const Advertisement: React.FC<AdvertisementProps> = ({ 
-  imageUrl = '',  
+const Advertisement: React.FC<AdvertisementProps> = ({
+  imageUrl = '',
   isVertical = false,
   className = '',
   linkUrl,
   title = 'Advertisement'
 }) => {
-  // Хэмжээ тодорхойлох
-  const dimensions = isVertical 
-    ? 'h-[650px] w-full'  // Vertical: 650px өндөр, full width
-    : 'h-[288px] w-[650px]';  // Horizontal: 270px өндөр, 650px өргөн
+  // Responsive хэмжээ: mobile -> tablet -> desktop. Desktop logic (lg) хэвээр байна.
+  const dimensions = isVertical
+    ? // Vertical: mobile full-width, height grows with breakpoints, lg keeps original 650px
+      'w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px]'
+    : // Horizontal: mobile full-width short height, grows to lg where width becomes 650px & height 288px
+      'w-full h-[160px] sm:h-[200px] md:h-[240px] lg:h-[288px] lg:w-[650px]';
+
+  const wrapperClass = `mx-auto ${dimensions}`;
 
   const imageContent = (
-    <div className={`${dimensions} mx-auto`}>
+    <div className={wrapperClass}>
       <div className="relative w-full h-full overflow-hidden bg-neutral-100">
-        <Image
-          src={imageUrl}
-          alt={title}
-          fill
-          className="object-cover hover:scale-105 transition-transform duration-300"
-        />
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            sizes="(max-width: 1024px) 100vw, 650px"
+            className="object-cover hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          // Placeholder when no image provided (keeps layout stable on mobile)
+          <div
+            role="img"
+            aria-label={title}
+            className="w-full h-full flex items-center justify-center text-sm text-zinc-500"
+          >
+            {title}
+          </div>
+        )}
       </div>
     </div>
   );
 
-  // Холбоос байвал Link-ээр ороох
   if (linkUrl) {
     return (
       <div className={className}>
-        <Link 
+        <Link
           href={linkUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="block"
+          aria-label={title}
         >
           {imageContent}
         </Link>
@@ -52,12 +68,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
     );
   }
 
-  // Холбоосгүй бол зүгээр зураг
-  return (
-    <div className={className}>
-      {imageContent}
-    </div>
-  );
+  return <div className={className}>{imageContent}</div>;
 };
 
 export default Advertisement;

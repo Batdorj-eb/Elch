@@ -106,38 +106,46 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+  <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4 overflow-x-auto md:overflow-visible  /* md-аас доош scroll */">
+    <div
+      className="
+        flex gap-2 
+        pb-2 
+        scrollbar-hide 
+        flex-nowrap        /* жижиг дэлгэц дээр мөр солигдохгүй */
+      "
+    >
+      <button
+        onClick={() => setActiveTab('Бүгд')}
+        className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
+          activeTab === 'Бүгд'
+            ? 'bg-red-500 text-white border-[#C8C8C8]'
+            : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
+        }`}
+      >
+        Бүгд
+      </button>
+
+      {tabs.map((tab) => (
         <button
-            onClick={() => setActiveTab('Бүгд')}
-            className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
-              activeTab === 'Бүгд'
-                ? 'bg-red-500 text-white border-[#C8C8C8]'
-                : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
-            }`}
-          >
-            Бүгд
-          </button>
+          key={tab}
+          onClick={() => setActiveTab(tab)}
+          className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
+            tab === activeTab
+              ? 'bg-red-500 text-white border-[#C8C8C8]'
+              : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
+          }`}
+        >
+          {tab}
+        </button>
+      ))}
 
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
-                tab === activeTab
-                  ? 'bg-red-500 text-white border-[#C8C8C8]'
-                  : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+      <button className="px-4 py-2 border-[#C8C8C8] text-sm rounded-full hover:bg-neutral-200 whitespace-nowrap">
+        +++
+      </button>
+    </div>
+  </div>
 
-          <button className="px-4 py-2 border-[#C8C8C8] text-sm rounded-full hover:bg-neutral-200 whitespace-nowrap">
-            +++
-          </button>
-        </div>
-      </div>
 
     {/* Scroll Container - 7 мэдээ, харагдах хэсэгт 5 багтана */}
       <div className="overflow-y-auto h-[620px] space-y-4 pr-2">

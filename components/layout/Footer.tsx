@@ -20,80 +20,45 @@ const Footer: React.FC = () => {
             />
           </div>
         </div>
-
         {/* Links & Social */}
         <div className="border-t border-zinc-700 pt-6 lg:pt-8">
+
           {/* Links */}
-          <nav className="flex justify-end">
-            <div className="grid grid-cols-2 gap-x-8 gap-y-4 text-right">
-              <Link 
-                href="/about" 
-                className="text-sm hover:text-red-500 transition"
-              >
+          <nav className="flex justify-center lg:justify-end">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-center sm:text-right">
+              <Link href="/about" className="text-sm hover:text-red-500 transition">
                 Бидний тухай
               </Link>
-              <Link 
-                href="/about" 
-                className="text-sm hover:text-red-500 transition"
-              >
-               Нийтлэлийн бодлого
+              <Link href="/about" className="text-sm hover:text-red-500 transition">
+                Нийтлэлийн бодлого
               </Link>
-              <Link 
-                href="/about" 
-                className="text-sm hover:text-red-500 transition"
-              >
+              <Link href="/about" className="text-sm hover:text-red-500 transition">
                 Хамтран ажиллах
               </Link>
-              <Link 
-                href="/about" 
-                className="text-sm hover:text-red-500 transition"
-              >
+              <Link href="/about" className="text-sm hover:text-red-500 transition">
                 Редакцийн бодлого
               </Link>
-              <Link 
-                href="/privacy" 
-                className="text-sm hover:text-red-500 transition"
-              >
+              <Link href="/privacy" className="text-sm hover:text-red-500 transition">
                 Холбоо барих
               </Link>
-              <Link 
-                href="/contact" 
-                className="text-sm hover:text-red-500 transition"
-              >
+              <Link href="/contact" className="text-sm hover:text-red-500 transition">
                 Нууцын бодлого
               </Link>
             </div>
           </nav>
 
-
           {/* Social Media */}
-          <div className="flex items-center justify-center lg:justify-start gap-3 lg:gap-4 mb-6 lg:mb-8">
-            <a 
-              href="#" 
-              className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition"
-              aria-label="Facebook"
-            >
+          <div className="flex items-center justify-center lg:justify-start gap-3 lg:gap-4 mb-6 lg:mb-8 mt-6">
+            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
               <Facebook className="w-4 h-4 lg:w-5 lg:h-5" />
             </a>
-            <a 
-              href="#" 
-              className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition"
-              aria-label="Instagram"
-            >
+            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
               <Instagram className="w-4 h-4 lg:w-5 lg:h-5" />
             </a>
-            <a 
-              href="#" 
-              className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition"
-              aria-label="Twitter"
-            >
+            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
               <Twitter className="w-4 h-4 lg:w-5 lg:h-5" />
             </a>
-            <a 
-              href="#" 
-              className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition"
-              aria-label="YouTube"
-            >
+            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
               <Youtube className="w-4 h-4 lg:w-5 lg:h-5" />
             </a>
           </div>

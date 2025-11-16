@@ -3,7 +3,11 @@
 import React, { useState } from 'react';
 import { Mail } from 'lucide-react';
 
-const NewsletterSignup: React.FC = () => {
+interface NewsletterSignupProps {
+  className?: string; // ✅ className prop нэмлээ
+}
+
+const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ className }) => {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -18,14 +22,14 @@ const NewsletterSignup: React.FC = () => {
   };
 
   return (
-    <section className="bg-[#FFE4CC] p-8 text-white max-w-[367px]">
+    <section className={`bg-[#FFE4CC] p-8 text-white max-w-[367px] ${className ?? ''}`}>
       <div className="flex justify-center gap-3 mb-4">
         <h2 className="text-2xl font-bold text-[#FF3336] text-center">
           Мэдээлэл авах
         </h2>
       </div>
       
-      <p className="text-sm text-center  mb-6 text-[#2F2F2F]">
+      <p className="text-sm text-center mb-6 text-[#2F2F2F]">
          7 Хоногийн мэдээлэл, нийтлэл, өдөр бүрийн шинэчлэл хүлээн авна уу.
       </p>
 
@@ -52,7 +56,6 @@ const NewsletterSignup: React.FC = () => {
           </button>
         </form>
       )}
-
     </section>
   );
 };
