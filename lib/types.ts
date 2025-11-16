@@ -5,7 +5,7 @@
 
 export interface NewsArticle {
   isBreaking: any;
-  coverImage: string; // 🔥 FIX: boolean → string
+  coverImage: string;
   id: string;
   slug?: string; 
   title: string;
@@ -71,7 +71,7 @@ export interface BackendArticle {
   slug: string;
   excerpt: string;
   content: string;
-  cover_image?: string | null;       // 🔥 ADD: cover_image field
+  cover_image?: string | null;
   featured_image: string | null;
   category_id: number;
   category_name: string;
@@ -79,11 +79,11 @@ export interface BackendArticle {
   author_id: number;
   author_name: string;
   views: number;
-  view_count?: number;               // 🔥 ADD: Alternative field name
+  view_count?: number;
   likes: number;
   status: 'draft' | 'published' | 'archived';
-  is_featured: number | null;    // 🔥 FIX: Can be 0/1 from MySQL
-  is_breaking: boolean | number;     // 🔥 FIX: Can be 0/1 from MySQL
+  is_featured: number | null;
+  is_breaking: boolean | number;
   published_at: string;
   created_at: string;
   updated_at: string;
@@ -99,7 +99,6 @@ export interface Category {
   article_count: number;
 }
 
-// ✅ Backend Comment-ийг өөр нэрээр өгнө
 export interface ArticleComment {
   id: number;
   article_id: number;
@@ -115,13 +114,34 @@ export interface ArticleComment {
 
 export interface ArticlesResponse {
   articles: BackendArticle[];
-  total?: number;  // 🔥 ADD: Simple total count
-  pagination?: {   // Make pagination optional
+  total?: number;
+  pagination?: {
     total: number;
     limit: number;
     offset: number;
     hasMore: boolean;
   };
+}
+
+// ============================================
+// SUBMISSION TYPES (Ардын элч)
+// ============================================
+
+export interface SubmissionFormData {
+  name: string;
+  email: string;
+  phone: string;
+  title: string;
+  content: string;
+}
+
+export interface SubmissionResponse {
+  message: string;
+  submissionId: number;
+}
+
+export interface SubmissionError {
+  error: string;
 }
 
 // ============================================
@@ -163,11 +183,9 @@ export function convertToNewsArticle(backendArticle: BackendArticle): NewsArticl
     author: backendArticle.author_name,
     publishedAt: backendArticle.published_at || backendArticle.created_at,
     timeAgo,
-    // ✅ FIXED: Properly handle featured priority
     featured: typeof backendArticle.is_featured === 'number' 
       ? backendArticle.is_featured 
       : null,
-    // ✅ FIXED: Convert to boolean
     isBreaking: backendArticle.is_breaking === 1 || backendArticle.is_breaking === true,
     views: backendArticle.views || backendArticle.view_count || 0,
     categorySlug: backendArticle.category_slug,
