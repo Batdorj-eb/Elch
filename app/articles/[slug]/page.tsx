@@ -19,6 +19,7 @@ import type { Metadata } from 'next';
 import BannerSection from '@/components/common/BannerSection';
 import { processVideoContent } from '@/lib/utils';
 import VideoContent from '@/components/article/VideoContent';
+import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
 
 export async function generateMetadata({
   params
@@ -287,10 +288,13 @@ export default async function ArticleDetailPage({
               <RelatedNews articles={relatedArticles} />
             </div>
 
-            <BannerSection 
-              type="horizontal"
-              className="my-6 md:my-8 lg:my-10"
-            />
+            <div className="flex flex-row items-center justify-between gap-4">
+              <BannerSection 
+                type="horizontal"
+                className="my-6 md:my-8 lg:my-10"
+              />
+              <NewsletterSignup />
+            </div>
 
             {/* Comment Section */}
             <CommentSection 

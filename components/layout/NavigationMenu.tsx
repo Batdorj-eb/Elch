@@ -105,8 +105,8 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories }) => {
       <div
         className="max-w-[1325px] mx-auto"
         style={{
-          paddingLeft: 'clamp(16px, 5vw, 384px)',
-          paddingRight: 'clamp(16px, 5vw, 384px)',
+          paddingLeft: 'clamp(16px,  95px, 384px)',
+          paddingRight: 'clamp(16px, 95px, 384px)',
         }}
       >
         <div className="flex items-center justify-between h-12 lg:h-auto">

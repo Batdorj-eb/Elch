@@ -125,7 +125,7 @@ export default async function HomePage() {
             <div className="flex justify-center mt-6 pb-4 md:pb-6 lg:pb-8">
               <Link
                 href="/video"
-                className="text-white text-sm md:text-base font-medium rounded hover:bg-red-600 transition flex items-center justify-center w-full max-w-[366px]"
+                className="text-white text-sm md:text-base font-medium hover:bg-red-600 transition flex items-center justify-center w-full max-w-[366px]"
                 style={{ 
                   height: '40px', 
                   backgroundColor: '#FF3336' 
@@ -139,10 +139,7 @@ export default async function HomePage() {
 
         {/* Opinion Section - Responsive */}
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 2xl:px-96 py-6 lg:py-8">
-          <OpinionSection articles={articles} />
-          <div className="flex justify-center mt-6">
-            <SubmissionButton />
-          </div>
+          <OpinionSection/>
         </div>
       </main>
 

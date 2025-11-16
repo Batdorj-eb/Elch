@@ -7,7 +7,7 @@ interface AdvertisementProps {
   imageUrl?: string;
   isVertical?: boolean;
   className?: string;
-  linkUrl?: string;  // ✅ Холбоос нэмсэн
+  linkUrl?: string;
   title?: string;
 }
 
@@ -18,8 +18,13 @@ const Advertisement: React.FC<AdvertisementProps> = ({
   linkUrl,
   title = 'Advertisement'
 }) => {
+  // Хэмжээ тодорхойлох
+  const dimensions = isVertical 
+    ? 'h-[650px] w-full'  // Vertical: 650px өндөр, full width
+    : 'h-[288px] w-[650px]';  // Horizontal: 270px өндөр, 650px өргөн
+
   const imageContent = (
-    <div className={`${isVertical ? 'h-[650px]' : 'h-[270px]'}`}>
+    <div className={`${dimensions} mx-auto`}>
       <div className="relative w-full h-full overflow-hidden bg-neutral-100">
         <Image
           src={imageUrl}

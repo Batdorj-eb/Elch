@@ -1,28 +1,33 @@
+// app/components/SubmissionButton.tsx
 'use client';
+
 import { useState } from 'react';
-import SubmissionPopup from '@/components/common/Submissions';
+import SubmissionModal from './SubmissionModal';
 
 interface SubmissionButtonProps {
-  // хэрэгтэй props-аар дамжуулж болно
+  buttonText?: string;
+  buttonClass?: string;
 }
 
-export default function SubmissionButton(props: SubmissionButtonProps) {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+export default function SubmissionButton({ 
+  buttonText = 'Санал илгээх',
+  buttonClass = 'bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors font-medium'
+}: SubmissionButtonProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
       <button
-        onClick={() => setIsPopupOpen(true)}
-        className="text-white text-sm md:text-base font-medium rounded hover:bg-red-600 transition flex items-center justify-center w-full max-w-[366px]"
-        style={{ 
-          height: '40px', 
-          backgroundColor: '#FF3336' 
-        }}
+        onClick={() => setIsModalOpen(true)}
+        className={buttonClass}
       >
-        Санал илгээх
+        {buttonText}
       </button>
 
-      {isPopupOpen && <SubmissionPopup onClose={() => setIsPopupOpen(false)} />}
+      <SubmissionModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </>
   );
 }
