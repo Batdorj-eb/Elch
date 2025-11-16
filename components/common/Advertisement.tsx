@@ -23,7 +23,7 @@ const Advertisement: React.FC<AdvertisementProps> = ({
     ? // Vertical: mobile full-width, height grows with breakpoints, lg keeps original 650px
       'w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px]'
     : // Horizontal: mobile full-width short height, grows to lg where width becomes 650px & height 288px
-      'w-full h-[160px] sm:h-[200px] md:h-[240px] lg:h-[288px] lg:w-[650px]';
+      'w-full h-[160px] sm:h-[200px] md:h-[240px] lg:h-[288px] lg:w-[725px]';
 
   const wrapperClass = `mx-auto ${dimensions}`;
 

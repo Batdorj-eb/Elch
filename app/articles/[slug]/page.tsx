@@ -37,6 +37,7 @@ export async function generateMetadata({
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const articleUrl = `${siteUrl}/articles/${article.slug}`;
+  const videoUrl = `${siteUrl}/videos/${article.facebook_video_filename}.mp4`;
   
   // ✅ FIXED: Absolute URL үүсгэх
   const getAbsoluteUrl = (imageUrl: string | null) => {
@@ -70,6 +71,15 @@ export async function generateMetadata({
           url: ogImageUrl,  // ✅ Absolute URL
           width: 1200,
           height: 630,
+          alt: article.title,
+        },
+      ],
+      videos: [
+        {
+          url: videoUrl,      // Шууд тоглох боломжтой video
+          width: 1280,
+          height: 720,
+          type: 'video/mp4',
           alt: article.title,
         },
       ],
@@ -287,7 +297,7 @@ export default async function ArticleDetailPage({
               <RelatedNews articles={relatedArticles} />
             </div>
 
-            <div className="flex flex-col sm:flex-col items-center justify-between gap-4 my-6 md:my-8 lg:my-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 my-6 md:my-8 lg:my-10">
               <BannerSection 
                 type="horizontal"
                 className="w-full sm:w-auto"
