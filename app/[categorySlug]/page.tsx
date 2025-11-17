@@ -25,19 +25,17 @@ export default async function CategoryPage({
 }) {
   const { categorySlug } = await params;
 
-  const [category, categoryArticles, breakingNews, sidebarArticles] = await Promise.all([
+  const [category, categoryArticles, breakingNews, sidebarArticles, allArticles] = await Promise.all([
     getCategoryBySlug(categorySlug),
     getArticlesByCategory(categorySlug, 20),
     getBreakingNews(),
-    getArticles({ limit: 10 })
+    getArticles({ limit: 10 }),
+    getArticles({ limit: 100 })  // ✅ Monthly-д ашиглах
   ]);
 
   if (!category) {
     notFound();
   }
-
-  const gridArticles = categoryArticles.slice(1);
-  const articles = await getArticles({ limit: 100 });
 
   const getImageUrl = (article: any) => {
     const url = article?.imageUrl || article?.coverImage;
@@ -134,7 +132,13 @@ export default async function CategoryPage({
             {/* Main Content - LG-аас хойш 773px fixed */}
             <section className="flex-1 w-full lg:max-w-[773px]">
               <BannerSection className="my-3 md:my-4" type={'horizontal'}  />
-              <MonthlySummary articles={articles} />
+              
+              {/* ✅ ШИНЭ: Category filter нэмсэн */}
+              <MonthlySummary 
+                articles={allArticles} 
+                categorySlug={categorySlug}
+                categoryName={category.name}
+              />
             </section>
 
             <aside className="w-full lg:w-[367px] lg:shrink-0 flex flex-col gap-2">
