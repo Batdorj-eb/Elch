@@ -297,37 +297,7 @@ export async function addComment(
 // ХАЙЛТ
 // ============================================
 
-export async function searchArticles(query: string, options?: {
-  category?: string;
-  limit?: number;
-  offset?: number;
-}) {
-  try {
-    const params = new URLSearchParams({
-      q: query,
-      limit: String(options?.limit || 20),
-      offset: String(options?.offset || 0),
-    });
-
-    if (options?.category) {
-      params.append('category', options.category);
-    }
-
-    const res = await fetch(`${API_URL}/search?${params}`, {
-      cache: 'no-store',
-    });
-
-    if (!res.ok) {
-      throw new Error('Search failed');
-    }
-
-    const data = await res.json();
-    return data.data;
-  } catch (error) {
-    console.error('Search error:', error);
-    return { articles: [], pagination: { total: 0 }, query };
-  }
-}
+// lib/api.ts
 
 export async function getSearchSuggestions(query: string) {
   try {
@@ -335,16 +305,44 @@ export async function getSearchSuggestions(query: string) {
       `${API_URL}/search/suggestions?q=${encodeURIComponent(query)}`,
       { cache: 'no-store' }
     );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data; // Array шууд ирнэ
+  } catch (error) {
+    console.error('Search suggestions error:', error);
+    return [];
+  }
+}
 
-    if (!res.ok) {
-      return [];
+export async function searchArticles(
+  query: string,
+  options: { category?: string; limit?: number; offset?: number } = {}
+) {
+  try {
+    const params = new URLSearchParams({
+      q: query,
+      limit: String(options.limit || 20),
+      offset: String(options.offset || 0),
+    });
+
+    if (options.category) {
+      params.append('category', options.category);
     }
 
+    const res = await fetch(
+      `${API_URL}/search?${params.toString()}`,
+      { cache: 'no-store' }
+    );
+
+    if (!res.ok) throw new Error('Search failed');
     const data = await res.json();
-    return data.data || [];
+    return data; // { articles, pagination }
   } catch (error) {
-    console.error('Suggestions error:', error);
-    return [];
+    console.error('Search error:', error);
+    return {
+      articles: [],
+      pagination: { total: 0, limit: 20, offset: 0, hasMore: false }
+    };
   }
 }
 
