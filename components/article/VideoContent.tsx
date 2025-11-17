@@ -23,7 +23,7 @@ export default function VideoContent({ html }: VideoContentProps) {
 
       let wrapper: HTMLDivElement | null = null;
 
-      // YouTube video - илүү олон форматыг дэмжинэ
+      // YouTube video - shorts оролцуулаад
       const youtubeMatch = url.match(
         /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
       );
@@ -45,29 +45,37 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper.appendChild(iframe);
       }
       
-      // Facebook video - сайжруулсан
-      const facebookMatch = url.match(
-        /facebook\.com\/(?:[^/]+\/)?(?:videos?|watch)(?:\/|\?v=)([0-9]+)/
+      // Facebook video, reel, watch
+      const facebookVideoMatch = url.match(
+        /facebook\.com\/(?:[^/]+\/)?(?:videos?|watch|reel)(?:\/|\?v=)([0-9]+)/
       );
       
-      if (facebookMatch && !youtubeMatch) {
-        const videoId = facebookMatch[1];
-        
+      // Facebook reel format: facebook.com/reel/VIDEO_ID
+      const facebookReelMatch = url.match(/facebook\.com\/reel\/([0-9]+)/);
+      
+      if ((facebookVideoMatch || facebookReelMatch) && !youtubeMatch) {
         wrapper = document.createElement('div');
         wrapper.className = 'relative w-full my-6 md:my-8 rounded-lg overflow-hidden border border-neutral-200';
-        wrapper.style.minHeight = '400px';
+        
+        // Reel бол portrait (9:16), бусад нь landscape (16:9)
+        if (facebookReelMatch) {
+          wrapper.style.maxWidth = '500px';
+          wrapper.style.margin = '1.5rem auto';
+          wrapper.style.aspectRatio = '9/16';
+        } else {
+          wrapper.style.aspectRatio = '16/9';
+        }
         
         const iframe = document.createElement('iframe');
-        iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=560&height=315`;
-        iframe.className = 'w-full';
+        iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=560`;
+        iframe.className = 'w-full h-full';
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
-        iframe.style.aspectRatio = '16/9';
         iframe.setAttribute('scrolling', 'no');
         iframe.setAttribute('frameborder', '0');
         iframe.setAttribute('allowfullscreen', 'true');
         iframe.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share');
-        iframe.setAttribute('title', 'Facebook video');
+        iframe.setAttribute('title', facebookReelMatch ? 'Facebook Reel' : 'Facebook video');
         iframe.setAttribute('loading', 'lazy');
         
         wrapper.appendChild(iframe);
