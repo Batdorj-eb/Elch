@@ -16,7 +16,7 @@ import {
 } from '@/lib/api';
 import MonthlySummary from '@/components/news/Monthly';
 import BannerSection from '@/components/common/BannerSection';
-import time from '@/public/icons/time.svg'
+import time from '@/public/icons/time.svg';
 
 export default async function CategoryPage({
   params
@@ -30,7 +30,7 @@ export default async function CategoryPage({
     getArticlesByCategory(categorySlug, 20),
     getBreakingNews(),
     getArticles({ limit: 10 }),
-    getArticles({ limit: 100 })  // ✅ Monthly-д ашиглах
+    getArticles({ limit: 100 })  
   ]);
 
   if (!category) {
@@ -44,6 +44,9 @@ export default async function CategoryPage({
     }
     return url;
   };
+
+  // ✅ Улс төр category эсэхийг шалгах
+  const isPoliticsCategory = categorySlug === 'uls-tur' || category.name === 'Улс төр';
 
   return (
     <div className="min-h-screen bg-[#FFF1E5]">
@@ -61,7 +64,7 @@ export default async function CategoryPage({
             paddingRight: 'clamp(16px, 5vw, 96px)'
           }}
         >
-          {/* Page Title - Responsive */}
+          {/* Page Title */}
           <div className="mb-6 md:mb-8 lg:mb-10">
             <div className="text-center mb-4 md:mb-6 lg:mb-8">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#2F2F2F] inline-block relative pb-2 md:pb-3">
@@ -71,31 +74,33 @@ export default async function CategoryPage({
             </div>
           </div>
           
-          {/* Tags/Filter Section - Responsive */}
-          <div className="mb-4 md:mb-6 lg:mb-8">
-            <div className="flex gap-0 overflow-x-auto pb-2 scrollbar-hide">
-              <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F]">
-                Бүгд
-              </button>
-              <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F]">
-                Сонгуулъ 2028
-              </button>
-              <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F]">
-                Мэтгэлцээн
-              </button>
-              <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F]">
-                Нүүрсний хулгай
-              </button>
-              <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F]">
-                Хөгжлийн банк
-              </button>
-              <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition">
-                Ногоон автобус
-              </button>
+          {/* ✅ Tags - ЗӨВХӨН Улс төр category-д харуулах */}
+          {isPoliticsCategory && (
+            <div className="mb-4 md:mb-6 lg:mb-8">
+              <div className="flex gap-0 overflow-x-auto pb-2 scrollbar-hide">
+                <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F] hover:bg-red-50">
+                  Бүгд
+                </button>
+                <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F] hover:bg-red-50">
+                  Сонгуулъ 2028
+                </button>
+                <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F] hover:bg-red-50">
+                  Мэтгэлцээн
+                </button>
+                <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F] hover:bg-red-50">
+                  Нүүрсний хулгай
+                </button>
+                <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition border-r border-[#2F2F2F] hover:bg-red-50">
+                  Хөгжлийн банк
+                </button>
+                <button className="py-1.5 md:py-2 px-3 md:px-4 text-xs md:text-sm font-medium text-[#2F2F2F] whitespace-nowrap transition hover:bg-red-50">
+                  Ногоон автобус
+                </button>
+              </div>
             </div>
-          </div>
+          )}
           
-          {/* Grid Articles - Responsive */}
+          {/* Grid Articles */}
           <div>
             {categoryArticles.length >= 3 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6 mb-6 md:mb-8 lg:mb-10">
@@ -118,7 +123,10 @@ export default async function CategoryPage({
                         {article.title}
                       </h3>
                       <div className="flex justify-between gap-2 md:gap-3 text-[10px] md:text-xs text-zinc-500 border-t border-b py-1 md:py-1.5" style={{ borderColor: '#C8C8C8' }}>
-                        <span className='flex gap-2'><Image src={time} alt="" width={14} height={14} />{article.timeAgo}</span>
+                        <span className='flex gap-2'>
+                          <Image src={time} alt="" width={14} height={14} />
+                          {article.timeAgo}
+                        </span>
                       </div>
                     </article>
                   </a>
@@ -127,13 +135,11 @@ export default async function CategoryPage({
             )}
           </div>
 
-          {/* Main Content + Sidebar - LG-аас хойш fixed */}
+          {/* Main Content + Sidebar */}
           <div className="flex flex-col lg:flex-row gap-4 md:gap-6 lg:gap-10">
-            {/* Main Content - LG-аас хойш 773px fixed */}
             <section className="flex-1 w-full lg:max-w-[773px]">
-              <BannerSection className="my-3 md:my-4" type={'horizontal'}  />
+              <BannerSection className="my-3 md:my-4" type={'horizontal'} />
               
-              {/* ✅ ШИНЭ: Category filter нэмсэн */}
               <MonthlySummary 
                 articles={allArticles} 
                 categorySlug={categorySlug}
@@ -142,16 +148,13 @@ export default async function CategoryPage({
             </section>
 
             <aside className="w-full lg:w-[367px] lg:shrink-0 flex flex-col gap-2">
-              {/* md болон түүнээс доош нууна */}
               <div className="hidden md:block">
                 <NewsFeed articles={sidebarArticles} />
               </div>
-
               <div>
                 <BannerSection type="vertical" />
               </div>
             </aside>
-
           </div>
         </div>
       </main>

@@ -16,11 +16,10 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
   categorySlug,
   categoryName 
 }) => {
-  const [activeTab, setActiveTab] = useState('Бүгд');
-
   const oneYearAgo = new Date();
   oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
+  // Recent articles filter
   const recentArticles = useMemo(() => {
     return articles.filter(article => {
       const publishedDate = new Date(article.publishedAt || 0);
@@ -32,29 +31,9 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
       
       return isRecent;
     });
-  }, [articles, categorySlug]);
+  }, [articles, categorySlug, oneYearAgo]);
 
-  const latestByCategory = useMemo(() => {
-    const categoryMap = recentArticles.reduce((acc, article) => {
-      const category = article.category;
-
-      if (!acc[category]) {
-        acc[category] = article;
-      } else {
-        const existingDate = new Date(acc[category].publishedAt || 0);
-        const currentDate = new Date(article.publishedAt || 0);
-
-        if (currentDate > existingDate) {
-          acc[category] = article;
-        }
-      }
-
-      return acc;
-    }, {} as Record<string, NewsArticle>);
-
-    return Object.entries(categoryMap);
-  }, [recentArticles]);
-
+  // Сар бүрээр бүлэглэх
   const articlesByMonth = useMemo(() => {
     const grouped: Record<string, NewsArticle[]> = {};
 
@@ -70,22 +49,30 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
       grouped[monthKey].push(article);
     });
 
+    // Сар бүрийн мэдээг огноогоор эрэмбэлэх
+    Object.keys(grouped).forEach(monthKey => {
+      grouped[monthKey].sort((a, b) => {
+        return new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime();
+      });
+    });
+
     return grouped;
   }, [recentArticles]);
 
+  // Tabs - сүүлийн сараас эхлэх
   const tabs = useMemo(() => {
     return Object.keys(articlesByMonth).sort((a, b) => {
       return new Date(b + '.01').getTime() - new Date(a + '.01').getTime();
     });
   }, [articlesByMonth]);
 
+  // ✅ Default - хамгийн сүүлийн сар
+  const [activeTab, setActiveTab] = useState(tabs[0] || '');
+
+  // Display articles - зөвхөн тухайн сарын мэдээ
   const displayArticles = useMemo(() => {
-    if (activeTab === 'Бүгд') {
-      return latestByCategory.map(([_, article]) => article);
-    } else {
-      return articlesByMonth[activeTab] || [];
-    }
-  }, [activeTab, latestByCategory, articlesByMonth]);
+    return articlesByMonth[activeTab] || [];
+  }, [activeTab, articlesByMonth]);
 
   const colors = [
     'bg-green-500',
@@ -97,7 +84,7 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
     'bg-teal-500'
   ];
 
-  // ✅ Хэрэв мэдээ байхгүй бол харуулахгүй
+  // Хэрэв мэдээ байхгүй бол
   if (recentArticles.length === 0) {
     return (
       <section className="my-10 p-6 bg-white rounded-lg text-center">
@@ -113,7 +100,7 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
 
   return (
     <section className="my-10">
-      {/* ✅ ШИНЭ: Category title */}
+      {/* Category title */}
       {categoryName && (
         <div className="mb-4">
           <h2 className="text-lg font-bold text-[#2F2F2F]">
@@ -122,25 +109,15 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
         </div>
       )}
 
-      {/* Tabs */}
+      {/* ✅ Зөвхөн сарын tabs */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide mb-6">
-        <button
-          onClick={() => setActiveTab('Бүгд')}
-          className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
-            activeTab === 'Бүгд'
-              ? 'bg-red-500 text-white border-[#C8C8C8]'
-              : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
-          }`}
-        >
-          Бүгд ({latestByCategory.length})
-        </button>
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
               tab === activeTab
-                ? 'bg-red-500 text-white border-[#C8C8C8]'
+                ? 'bg-red-500 text-white border-red-500'
                 : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
             }`}
           >
@@ -149,7 +126,7 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
         ))}
       </div>
 
-      {/* Articles */}
+      {/* Articles list */}
       <div className="overflow-y-auto h-[1043px] space-y-4 pr-2">
         {displayArticles.length > 0 ? (
           displayArticles.map((article, index) => {
@@ -163,10 +140,11 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
                 className="flex gap-4 cursor-pointer group"
                 style={{ 
                   backgroundColor: isOdd ? '#FFE4CC' : '#FFF7EF',
-                  padding: isOdd ? '' : '0',
+                  padding: '8px',
                 }}
               >
-                <div className={`relative w-[203px] h-[110px] shrink-0 overflow-hidden ${bgColor} flex p-2 items-center justify-center`}>
+                {/* Image section */}
+                <div className={`relative w-[203px] h-[110px] shrink-0 overflow-hidden ${bgColor} flex items-center justify-center`}>
                   {article.coverImage ? (
                     <Image
                       src={article.coverImage}
@@ -175,26 +153,37 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
                       className="object-cover group-hover:scale-105 transition"
                     />
                   ) : (
-                    <span className="text-white font-bold text-lg">Monthly {index + 1}</span>
+                    <span className="text-white font-bold text-lg">
+                      {article.category}
+                    </span>
                   )}
                 </div>
-                <div className="flex-1 p-2">
-                  <h2 className="text-md font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
+
+                {/* Content section */}
+                <div className="flex-1 py-2">
+                  <h2 className="text-md font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2 mb-2">
                     {article.title}
                   </h2>
-                  <div className="flex justify-between gap-2 text-xs text-zinc-500 border-t mt-3" style={{ borderColor: '#C8C8C8' }}>
-                    <span className="flex items-center gap-1 mt-3">
+                  
+                  {/* Meta info */}
+                  <div className="flex items-center gap-3 text-xs text-zinc-500 border-t pt-2" style={{ borderColor: '#C8C8C8' }}>
+                    <span className="flex items-center gap-1">
                       {(() => {
                         const now = new Date();
                         const published = new Date(article.publishedAt || '');
                         const diffMs = now.getTime() - published.getTime();
                         const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
                         const diffDays = Math.floor(diffHours / 24);
+                        
                         if (diffDays > 0) return `${diffDays} өдрийн өмнө`;
                         if (diffHours > 0) return `${diffHours} цагийн өмнө`;
                         const diffMins = Math.floor(diffMs / (1000 * 60));
                         return `${diffMins} минутын өмнө`;
                       })()}
+                    </span>
+                    <span>•</span>
+                    <span className="text-red-500 font-medium">
+                      {article.category}
                     </span>
                   </div>
                 </div>
@@ -203,10 +192,7 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
           })
         ) : (
           <div className="text-center py-10 text-gray-500">
-            {activeTab === 'Бүгд' 
-              ? 'Мэдээ олдсонгүй'
-              : `${activeTab} сард мэдээ байхгүй байна`
-            }
+            {activeTab} сард мэдээ байхгүй байна
           </div>
         )}
       </div>

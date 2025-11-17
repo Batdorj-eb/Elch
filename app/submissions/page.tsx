@@ -40,7 +40,7 @@ export default async function SubmissionsListPage() {
       <Header />
       <NavigationBar />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-10 pb-12 max-w-[1325px]">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-10 pb-12 max-w-[1200px]">
         {/* Page Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
@@ -79,13 +79,6 @@ export default async function SubmissionsListPage() {
                 {/* List Item */}
                 <div className="p-4 sm:p-5 lg:p-6">
                   <div className="flex gap-4">
-                    {/* Number Badge */}
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-red-500 text-white font-bold text-lg flex items-center justify-center">
-                        {index + 1}
-                      </div>
-                    </div>
-
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       {/* Header */}
@@ -98,14 +91,14 @@ export default async function SubmissionsListPage() {
                             <p className="font-semibold text-[#2F2F2F] text-sm">
                               {s.name}
                             </p>
-                            <p className="text-xs text-gray-500">Иргэн</p>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs text-gray-500 float-right">
+                            <Image src={time} alt="time" width={14} height={14} />
+                            <time>{getTimeAgo(s.created_at)}</time>
                           </div>
                         </div>
                         
-                        <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                          <Image src={time} alt="time" width={14} height={14} />
-                          <time>{getTimeAgo(s.created_at)}</time>
-                        </div>
+                
                       </div>
 
                       {/* Title & Content */}
