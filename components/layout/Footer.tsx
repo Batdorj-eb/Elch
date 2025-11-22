@@ -29,19 +29,19 @@ const Footer: React.FC = () => {
               <Link href="/about" className="text-sm hover:text-red-500 transition">
                 Бидний тухай
               </Link>
-              <Link href="/about" className="text-sm hover:text-red-500 transition">
+              <Link href="/privacy-policy" className="text-sm hover:text-red-500 transition">
                 Нийтлэлийн бодлого
               </Link>
-              <Link href="/about" className="text-sm hover:text-red-500 transition">
+              <Link href="/collaboration" className="text-sm hover:text-red-500 transition">
                 Хамтран ажиллах
               </Link>
-              <Link href="/about" className="text-sm hover:text-red-500 transition">
+              <Link href="/policy" className="text-sm hover:text-red-500 transition">
                 Редакцийн бодлого
               </Link>
-              <Link href="/privacy" className="text-sm hover:text-red-500 transition">
+              <Link href="/contact" className="text-sm hover:text-red-500 transition">
                 Холбоо барих
               </Link>
-              <Link href="/contact" className="text-sm hover:text-red-500 transition">
+              <Link href="/secret-policy" className="text-sm hover:text-red-500 transition">
                 Нууцын бодлого
               </Link>
             </div>

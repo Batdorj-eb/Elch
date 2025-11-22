@@ -115,7 +115,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
         flex-nowrap        /* жижиг дэлгэц дээр мөр солигдохгүй */
       "
     >
-      <button
+      {/* <button
         onClick={() => setActiveTab('Бүгд')}
         className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
           activeTab === 'Бүгд'
@@ -124,7 +124,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
         }`}
       >
         Бүгд
-      </button>
+      </button> */}
 
       {tabs.map((tab) => (
         <button
