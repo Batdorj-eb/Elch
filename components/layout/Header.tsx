@@ -4,11 +4,12 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const WEATHER_API = 'https://api.open-meteo.com/v1/forecast?latitude=47.9167&longitude=106.9167&current_weather=true&temperature_unit=celsius';
 
 const Header: React.FC = () => {
-    const [dateString, setDateString] = useState('');
+  const [dateString, setDateString] = useState('');
   const [dayString, setDayString] = useState('');
   const [weather, setWeather] = useState<{ temp: number; wind: number } | null>(null);
 
@@ -36,11 +37,7 @@ const Header: React.FC = () => {
     <>
       <div className="hidden md:block border-b border-stone-300 bg-[#FFF1E5]">
         <div 
-          className="max-w-[1325px] mx-auto py-5"
-          style={{
-            paddingLeft: 'clamp(16px, 5vw, 96px)',
-            paddingRight: 'clamp(16px, 5vw, 96px)'
-          }}
+          className="max-w-[1325px] mx-auto py-5 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 2xl:px-24"
         >
           <div className="flex justify-between items-center gap-5">
             {/* Date Section */}
@@ -52,13 +49,13 @@ const Header: React.FC = () => {
                 <path d="M19 16.5V12.5C19 11.3954 18.1046 10.5 17 10.5H16.5" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               <div className="flex flex-col text-sm">
+                <span className="text-xs font-bold text-[#2F2F2F] whitespace-nowrap">Өнөөдөр</span>
                 <span className="text-[#2F2F2F] font-medium">{dateString}</span>
-                <span className="text-zinc-600">{dayString}</span>
               </div>
             </div>
 
             {/* Logo */}
-            <div className="flex items-center justify-center shrink-0">
+            <Link href="/" className="flex items-center justify-center shrink-0">
               <Image
                 src="/main_logo.png"
                 alt="ELCH NEWS Logo"
@@ -67,7 +64,7 @@ const Header: React.FC = () => {
                 className="h-12 w-auto"
                 priority
               />
-            </div>
+            </Link>
 
             {/* Right Info */}
             <div className="flex items-center gap-4 shrink-0">

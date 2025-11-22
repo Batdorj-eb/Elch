@@ -10,15 +10,15 @@ const Footer: React.FC = () => {
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-24 xl:px-96 py-8 lg:py-10">
         {/* Logo */}
         <div className="mb-6 lg:mb-8 text-center lg:text-left">
-          <div className="text-3xl lg:text-4xl font-bold inline-block">
+          <Link className="text-3xl lg:text-4xl font-bold inline-block" href={'/'}>
             <Image 
               src={Footer_logo} 
               alt="Elch News Logo" 
-              width={150} 
-              height={40} 
+              width={240} 
+              height={41} 
               className="inline-block"
             />
-          </div>
+          </Link>
         </div>
         {/* Links & Social */}
         <div className="border-t border-zinc-700 pt-6 lg:pt-8">
@@ -49,15 +49,16 @@ const Footer: React.FC = () => {
 
           {/* Social Media */}
           <div className="flex items-center justify-center lg:justify-start gap-3 lg:gap-4 mb-6 lg:mb-8 mt-6">
-            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
+            <a href="https://www.facebook.com/Elchnews" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
               <Facebook className="w-4 h-4 lg:w-5 lg:h-5" />
+            </a>
+            <a href="https://x.com/Elch_mn" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
+              <Twitter className="w-4 h-4 lg:w-5 lg:h-5" />
             </a>
             <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
               <Instagram className="w-4 h-4 lg:w-5 lg:h-5" />
             </a>
-            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
-              <Twitter className="w-4 h-4 lg:w-5 lg:h-5" />
-            </a>
+
             <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
               <Youtube className="w-4 h-4 lg:w-5 lg:h-5" />
             </a>

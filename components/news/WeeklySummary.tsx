@@ -157,14 +157,14 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
             <Link
               key={article.id}
               href={`/articles/${article.slug || article.id}`}
-              className="flex gap-4 cursor-pointer group"
+              className="flex gap-2 cursor-pointer group"
               style={{ 
                 backgroundColor: isOdd ? '#FFE4CC' : '#FFF7EF',
                 padding: isOdd ? '' : '0',
               }}
             >
               {/* Image/Badge */}
-              <div className={`relative w-[203px] h-[110px] shrink-0 overflow-hidden ${bgColor} flex p-2 items-center justify-center`}>
+              <div className={`relative w-[110px] h-[90px] shrink-0 overflow-hidden ${bgColor} flex p-2 items-center justify-center`}>
                 {article.coverImage ? (
                   <Image
                     src={article.coverImage}
@@ -180,7 +180,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
               </div>
               
               <div className="flex-1 p-2">
-                <h2 className="text-md font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
+                <h2 className="text-xs md:text:sm font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
                   {article.title}
                 </h2>
                 <div className="flex justify-between gap-2 text-xs text-zinc-500 border-t mt-3" style={{ borderColor: '#C8C8C8' }}>

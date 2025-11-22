@@ -144,7 +144,7 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
                 }}
               >
                 {/* Image section */}
-                <div className={`relative w-[203px] h-[110px] shrink-0 overflow-hidden ${bgColor} flex items-center justify-center`}>
+                <div className={`relative w-[110px] h-[90px] shrink-0 overflow-hidden ${bgColor} flex items-center justify-center`}>
                   {article.coverImage ? (
                     <Image
                       src={article.coverImage}
@@ -161,7 +161,7 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
 
                 {/* Content section */}
                 <div className="flex-1 py-2">
-                  <h2 className="text-md font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2 mb-2">
+                  <h2 className="text-xs md:text:md font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2 mb-2">
                     {article.title}
                   </h2>
                   
@@ -180,10 +180,6 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
                         const diffMins = Math.floor(diffMs / (1000 * 60));
                         return `${diffMins} минутын өмнө`;
                       })()}
-                    </span>
-                    <span>•</span>
-                    <span className="text-red-500 font-medium">
-                      {article.category}
                     </span>
                   </div>
                 </div>

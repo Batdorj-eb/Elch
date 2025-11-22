@@ -58,11 +58,7 @@ export default async function CategoryPage({
 
       <main className="bg-[#FFF1E5]">
         <div 
-          className="max-w-[1325px] mx-auto py-4 md:py-6 lg:py-10"
-          style={{
-            paddingLeft: 'clamp(16px, 5vw, 96px)',
-            paddingRight: 'clamp(16px, 5vw, 96px)'
-          }}
+          className="max-w-[1325px] mx-auto py-4 md:py-6 lg:py-10 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 2xl:px-24"
         >
           {/* Page Title */}
           <div className="mb-6 md:mb-8 lg:mb-10">
@@ -103,7 +99,7 @@ export default async function CategoryPage({
           {/* Grid Articles */}
           <div>
             {categoryArticles.length >= 3 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6 mb-6 md:mb-8 lg:mb-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 mb-6 md:mb-8 lg:mb-10">
                 {categoryArticles.slice(0, 3).map((article) => (
                   <a 
                     key={article.id} 
@@ -111,7 +107,7 @@ export default async function CategoryPage({
                     className="group"
                   >
                     <article className="cursor-pointer">
-                      <div className="relative w-full h-[180px] sm:h-[200px] lg:h-[220px] mb-2 md:mb-3 overflow-hidden">
+                      <div className="relative w-full h-[210px] lg:h-[220px] mb-2 md:mb-3 overflow-hidden">
                         <Image
                           src={getImageUrl(article)}
                           alt={article.title}
@@ -136,7 +132,7 @@ export default async function CategoryPage({
           </div>
 
           {/* Main Content + Sidebar */}
-          <div className="flex flex-col lg:flex-row gap-4 md:gap-6 lg:gap-10">
+          <div className="flex flex-col lg:flex-row gap-6 md:gap-6 lg:gap-10">
             <section className="flex-1 w-full lg:max-w-[773px]">
               <BannerSection className="my-3 md:my-4" type={'horizontal'} />
               

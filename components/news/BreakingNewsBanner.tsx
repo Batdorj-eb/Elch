@@ -42,11 +42,7 @@ const BreakingNewsBanner: React.FC<BreakingNewsBannerProps> = ({ articles }) => 
   return (
     <div className="bg-[#2F2F2F] md:bg-white border-b border-stone-300">
       <div 
-        className="max-w-[1325px] mx-auto py-2"
-        style={{
-          paddingLeft: 'clamp(16px, 5vw, 384px)',
-          paddingRight: 'clamp(16px, 5vw, 384px)'
-        }}
+        className="max-w-[1325px] mx-auto py-2 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 2xl:px-24"
       >
         <div className="flex justify-between items-center gap-2 md:gap-4">
           {/* Breaking News */}

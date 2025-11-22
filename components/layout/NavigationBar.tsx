@@ -4,10 +4,14 @@ import React from 'react';
 import { getCategories } from '@/lib/api';
 import NavigationMenu from './NavigationMenu';
 
-const NavigationBar = async () => {
+interface NavigationBarProps {
+  activeCategory?: string;
+}
+
+const NavigationBar = async ({ activeCategory }: NavigationBarProps) => {
   const categories = await getCategories();
 
-  return <NavigationMenu categories={categories} />;
+  return <NavigationMenu categories={categories} activeCategory={activeCategory} />;
 };
 
 export default NavigationBar;

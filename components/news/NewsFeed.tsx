@@ -73,7 +73,7 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
                   <article className="cursor-pointer group flex gap-3">
                     {/* Article Image */}
                     {item.coverImage && (
-                      <div className="relative w-24 h-20 sm:w-28 sm:h-24 flex-shrink-0 overflow-hidden border border-neutral-200">
+                      <div className="relative w-24 h-20 sm:w-28 sm:h-24 flex-shrink-0 overflow-hidden">
                         <Image
                           src={item.coverImage}
                           alt={item.title}

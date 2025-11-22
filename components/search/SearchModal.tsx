@@ -91,7 +91,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
       <div className="fixed top-0 left-0 right-0 z-[9999] p-3 sm:p-6">
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
           {/* Search Input */}
-          <form onSubmit={handleSearch} className="relative">
+          <form onSubmit={handleSearch} className="relative ">
             <div className="flex items-center gap-3 p-4 sm:p-5 border-b">
               <Search className="w-6 h-6 sm:w-7 sm:h-7 text-zinc-400 flex-shrink-0" />
               <input
@@ -99,7 +99,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Мэдээ хайх... (жишээ: Монгол Улс, эдийн засаг)"
+                placeholder="Мэдээ хайх..."
                 className="flex-1 text-base sm:text-xl outline-none text-zinc-800 placeholder:text-zinc-400"
               />
               {query && (
@@ -122,7 +122,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
           </form>
 
           {/* Suggestions - ✅ ТОМСГОСОН */}
-          <div className="max-h-[70vh] overflow-y-auto">
+          <div className="max-h-[70vh] overflow-y-auto bg-[#FFF1E5]">
             {isLoading && (
               <div className="p-12 text-center">
                 <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-zinc-200 border-t-red-500 mb-3"></div>
@@ -167,7 +167,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
             {!isLoading && query.length >= 2 && suggestions.length === 0 && (
               <div className="p-12 text-center">
-                <Search className="w-16 h-16 mx-auto mb-4 text-zinc-300" />
+                <Search className="w-16 h-16 mx-auto mb-4 bg-[#FFE4CC]" />
                 <h3 className="text-lg font-medium text-zinc-800 mb-2">
                   Үр дүн олдсонгүй
                 </h3>
@@ -179,30 +179,11 @@ const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => {
 
             {query.length === 0 && (
               <div className="p-12 text-center">
-                <Search className="w-16 h-16 mx-auto mb-4 text-zinc-300" />
-                <h3 className="text-lg font-medium text-zinc-800 mb-2">
-                  Мэдээ хайх
-                </h3>
-                <p className="text-zinc-500">
-                  Сонирхож буй сэдвээрээ хайлт хийнэ үү
-                </p>
+                <Search className="w-16 h-16 mx-auto mb-4 text-[#FFE4CC]" />
               </div>
             )}
           </div>
 
-          {/* Footer hint */}
-          <div className="border-t p-3 sm:p-4 bg-zinc-50">
-            <div className="flex items-center justify-between text-xs text-zinc-500">
-              <span className="flex items-center gap-2">
-                <kbd className="px-2 py-1 bg-white border rounded text-[10px] font-mono">Enter</kbd>
-                Бүрэн хайлт
-              </span>
-              <span className="flex items-center gap-2">
-                <kbd className="px-2 py-1 bg-white border rounded text-[10px] font-mono">ESC</kbd>
-                Хаах
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </>

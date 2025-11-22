@@ -1,4 +1,4 @@
-// app/articles/[slug]/page.tsx - RESPONSIVE VERSION
+// app/articles/[slug]/page.tsx
 
 import React from 'react';
 import { notFound } from 'next/navigation';
@@ -20,6 +20,7 @@ import BannerSection from '@/components/common/BannerSection';
 import { processVideoContent } from '@/lib/utils';
 import VideoContent from '@/components/article/VideoContent';
 import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
+import profile from "@/public/profile.png"
 
 export async function generateMetadata({
   params
@@ -38,18 +39,15 @@ export async function generateMetadata({
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const articleUrl = `${siteUrl}/articles/${article.slug}`;
   
-  // ✅ FIXED: Absolute URL үүсгэх
   const getAbsoluteUrl = (imageUrl: string | null) => {
     if (!imageUrl) {
       return `${siteUrl}/default-og-image.jpg`;
     }
     
-    // Хэрэв URL аль хэдийн absolute байвал
     if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
       return imageUrl;
     }
     
-    // Хэрэв relative URL бол absolute болгох
     return `${siteUrl}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
   };
 
@@ -59,7 +57,6 @@ export async function generateMetadata({
     title: `${article.title} - ELCH News`,
     description: article.excerpt || article.title,
     
-    // Open Graph
     openGraph: {
       title: article.title,
       description: article.excerpt || article.title,
@@ -67,7 +64,7 @@ export async function generateMetadata({
       siteName: 'ELCH News',
       images: [
         {
-          url: ogImageUrl,  // ✅ Absolute URL
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: article.title,
@@ -80,17 +77,14 @@ export async function generateMetadata({
       section: article.category_name,
     },
     
-    // Twitter Card
     twitter: {
       card: 'summary_large_image',
       title: article.title,
       description: article.excerpt || article.title,
-      images: [ogImageUrl],  // ✅ Absolute URL
+      images: [ogImageUrl],
     },
   };
 }
-
-
 
 export default async function ArticleDetailPage({
   params
@@ -111,7 +105,6 @@ export default async function ArticleDetailPage({
     getArticles({ limit: 10 })
   ]);
 
-  // 🔥 Full URL үүсгэх
   const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
   const formattedDate = new Date(article.created_at).toLocaleDateString('mn-MN', {
     year: 'numeric',
@@ -128,15 +121,13 @@ export default async function ArticleDetailPage({
       <header>
         <BreakingNewsBanner articles={breakingNews} />
         <Header />
-        <NavigationBar />
+        <NavigationBar activeCategory={article.category_slug} />
       </header>
 
       <main className="max-w-[1500px] mx-auto px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-48 py-6 md:py-8 lg:py-10">
-        {/* 📱 MAIN LAYOUT - Mobile: Stack, Desktop (md+): Sidebar */}
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-10">
           {/* Main Article Content */}
           <article className="flex-1 lg:max-w-[800px]">
-            {/* Category Badge */}
             <Link
               href={`/${article.category_slug}`}
               className="inline-block px-3 py-1 md:px-4 md:py-1.5 text-[#FF3336] text-xs md:text-sm font-bold border border-[#FF3336] hover:bg-red-600 transition mb-3 md:mb-4"
@@ -155,7 +146,6 @@ export default async function ArticleDetailPage({
                   <Clock className="w-3 h-3 md:w-4 md:h-4" />
                   <span className="hidden sm:inline">{formattedDate}</span>
                   <span className="sm:hidden">
-                 
                     {new Date(article.created_at).toLocaleDateString('mn-MN', {
                       month: 'short',
                       day: 'numeric'
@@ -192,28 +182,36 @@ export default async function ArticleDetailPage({
               </div>
             )}
 
-            {/* 📱 AUTHOR + CONTENT SECTION - Mobile: Stack, Desktop (md+): Side by side */}
+              {/* 📱 AUTHOR + CONTENT SECTION - Mobile: Stack, Desktop (md+): Side by side */}
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
               {/* Author Section - Mobile: horizontal, Desktop: vertical */}
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
-                 {article.avatar ? (
+                {article.avatar ? (
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0">
                     <Image
                       src={article.avatar}
                       alt="Avatar"
-                      width={80} // md байхад 48, base 40
+                      width={80}
                       height={80}
                       className="w-full h-full object-cover"
                     />
                   </div>
                 ) : (
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-base shrink-0">
-                    {article.avatar?.[0] || '?'}
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0">
+                    <Image
+                      src={profile}
+                      alt="Default Avatar"
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 )}
-                <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
-                  {article.author_name}
-                </div>
+                {article.author_name && (
+                  <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
+                    {article.author_name}
+                  </div>
+                )}
               </div>
 
               {/* Article Content */}
@@ -229,14 +227,6 @@ export default async function ArticleDetailPage({
 
                 {/* Article Body - Responsive text size */}
                 <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
-                  {/* <div
-                    className="text-[#2F2F2F] leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: processedContent  }}
-                    style={{
-                      fontSize: 'clamp(16px, 2vw, 18px)',
-                      lineHeight: '1.75'
-                    }}
-                  /> */}
                   <VideoContent html={article.content} />
                 </div>
               </div>
@@ -279,29 +269,28 @@ export default async function ArticleDetailPage({
           </aside>
         </div>
         
-            {/* Related News */}
-            <div className="mt-8 md:mt-10 lg:mt-12 ">
-              <h2 className="text-lg md:text-xl lg:text-2xl font-serif font-bold text-[#2F2F2F] mb-4 md:mb-6">
-                Санал болгох мэдээ
-              </h2>
-              <RelatedNews articles={relatedArticles} />
-            </div>
+        {/* Related News */}
+        <div className="mt-8 md:mt-10 lg:mt-12 ">
+          <h2 className="text-lg md:text-xl lg:text-2xl font-serif font-bold text-[#2F2F2F] mb-4 md:mb-6">
+            Санал болгох мэдээ
+          </h2>
+          <RelatedNews articles={relatedArticles} />
+        </div>
 
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 my-6 md:my-8 lg:my-10">
-              <BannerSection 
-                type="horizontal"
-                className="w-full sm:w-auto"
-              />
-              <NewsletterSignup className="w-full sm:w-auto" />
-            </div>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 my-6 md:my-8 lg:my-10">
+          <BannerSection 
+            type="horizontal"
+            className="w-full sm:w-auto"
+          />
+          <NewsletterSignup className="w-full sm:w-auto" />
+        </div>
 
-
-            {/* Comment Section */}
-            <CommentSection 
-              articleId={article.id} 
-              comments={comments}
-            />
-        </main>
+        {/* Comment Section */}
+        <CommentSection 
+          articleId={article.id} 
+          comments={comments}
+        />
+      </main>
 
       <Footer />
     </div>

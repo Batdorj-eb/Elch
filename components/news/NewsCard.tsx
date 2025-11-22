@@ -54,7 +54,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
         <div className={`flex font-serif ${layout === 'vertical' ? 'flex-col' : 'flex-col sm:flex-row gap-3 sm:gap-4'}`}>
           <div className={`relative overflow-hidden ${
             layout === 'vertical' 
-              ? 'w-full h-[180px] sm:h-[200px] mb-3 sm:mb-4' 
+              ? 'w-full h-[210px] mb-3 sm:mb-4' 
               : 'w-full sm:w-[140px] lg:w-[180px] h-[180px] sm:h-[100px] lg:h-[120px] shrink-0'
           }`}>
             <Image
@@ -70,7 +70,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
           </div>
 
           <div className="flex-1">
-            <h3 className="text-sm sm:text-base font-serif font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
+            <h3 className="text-sm sm:text-base font-serif font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2 uppercase">
               {article.title}
             </h3>
 

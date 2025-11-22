@@ -13,7 +13,7 @@ interface HeroArticleProps {
 const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
   return (
     <Link href={`/articles/${article.slug || article.id}`}>
-      <article className="border border-neutral-200 overflow-hidden group">
+      <article className="overflow-hidden group">
         {/* Image */}
         <div className="relative w-full h-[250px] sm:h-[350px] lg:h-[450px]">
           <Image
@@ -48,7 +48,7 @@ const HeroArticle: React.FC<HeroArticleProps> = ({ article }) => {
           {/* Meta Info */}
           <div className="flex justify-between gap-2 text-zinc-600 border-t pt-3" style={{ borderColor: '#5D5D5D' }}>
             <span 
-              className="font-medium text-[#2F2F2F]"
+              className="font-bold text-[#2F2F2F] group-hover:text-red-500 transition"
               style={{ fontSize: '15px' }}
             >
               {article.category}

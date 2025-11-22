@@ -22,7 +22,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ className }) => {
   };
 
   return (
-    <section className={`bg-[#FFE4CC] p-8 text-white max-w-[367px] ${className ?? ''}`}>
+    <section className={`bg-[#FFE4CC] p-8 text-white max-w-[400px] ${className ?? ''}`}>
       <div className="flex justify-center gap-3 mb-4">
         <h2 className="text-2xl font-bold text-[#FF3336] text-center">
           Мэдээлэл авах

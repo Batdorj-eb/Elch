@@ -66,13 +66,13 @@ export default async function HomePage() {
                   />
                 {gridArticles.length > 0 && (
                   <>
-                    <h2 className="flex items-center gap-3 lg:gap-4 mb-6 mt-8">
+                    <h2 className="flex items-center gap-3 lg:gap-4 md:mb-6 mt-8">
                       <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
                       <span className="text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-[#2F2F2F]">
                         Онцлох мэдээ
                       </span>
                     </h2>
-                    <NewsGrid articles={gridArticles} />
+                    <NewsGrid articles={gridArticles}/>
                   </>
                 )}
                 <BannerSection type="horizontal" />
@@ -84,7 +84,7 @@ export default async function HomePage() {
                 {heroArticle && <HeroArticle article={heroArticle} />}
                 {gridArticles.length > 0 && (
                   <>
-                    <h2 className="flex items-center gap-3 lg:gap-4 mb-6">
+                    <h2 className="flex items-center gap-3 lg:gap-4 mb-2 mt-2">
                       <div className="w-[5px] lg:w-[7px] h-[18px] lg:h-[22px] bg-red-500" />
                       <span className="text-xl md:text-2xl lg:text-3xl font-serif font-semibold text-[#2F2F2F]">
                         Онцлох мэдээ

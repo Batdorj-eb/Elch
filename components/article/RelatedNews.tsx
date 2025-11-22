@@ -16,7 +16,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ articles }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
       {articles.slice(0, 3).map((article) => (
         <Link 
           key={article.id}
@@ -25,7 +25,7 @@ const RelatedNews: React.FC<RelatedNewsProps> = ({ articles }) => {
         >
           <article className="overflow-hidden transition-all duration-300">
             {/* Image */}
-            <div className="relative w-full h-[180px]">
+            <div className="relative w-full h-[210px]">
               <Image
                 src={article.imageUrl}
                 alt={article.title}
