@@ -232,8 +232,8 @@ export default async function ArticleDetailPage({
               </div>
             </div>
 
-            {/* Tags - Responsive */}
-            <div className="flex flex-wrap gap-2 mt-6 md:mt-8 lg:mt-10 pt-4 md:pt-6 lg:pt-8 border-t border-neutral-200">
+           {/* Tags - Responsive */}
+            <div className="flex flex-wrap items-center gap-2 mt-6 md:mt-8 lg:mt-10 pt-4 md:pt-6 lg:pt-8 border-t border-neutral-200">
               <span className="text-xs md:text-sm text-zinc-600 font-medium">Холбоотой:</span>
               <Link 
                 href={`/${article.category_slug}`}

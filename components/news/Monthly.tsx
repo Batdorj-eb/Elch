@@ -101,13 +101,13 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
   return (
     <section className="my-10">
       {/* Category title */}
-      {categoryName && (
+      {/* {categoryName && (
         <div className="mb-4">
           <h2 className="text-lg font-bold text-[#2F2F2F]">
             {categoryName} - Сарын хураангуй
           </h2>
         </div>
-      )}
+      )} */}
 
       {/* ✅ Зөвхөн сарын tabs */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide mb-6">
@@ -144,7 +144,7 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
                 }}
               >
                 {/* Image section */}
-                <div className={`relative w-[110px] h-[90px] shrink-0 overflow-hidden ${bgColor} flex items-center justify-center`}>
+                <div className={`relative w-[110px] h-[90px] md:w-[203px] md:h-[110px] shrink-0 overflow-hidden ${bgColor} flex p-2 items-center justify-center`}>
                   {article.coverImage ? (
                     <Image
                       src={article.coverImage}
@@ -161,10 +161,9 @@ const MonthlySummary: React.FC<MonthlySummaryProps> = ({
 
                 {/* Content section */}
                 <div className="flex-1 py-2">
-                  <h2 className="text-xs md:text:md font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2 mb-2">
-                    {article.title}
-                  </h2>
-                  
+                  <h2 className="text-xs md:text-[17px] font-medium md:font-bold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
+                   {article.title}
+                   </h2>
                   {/* Meta info */}
                   <div className="flex items-center gap-3 text-xs text-zinc-500 border-t pt-2" style={{ borderColor: '#C8C8C8' }}>
                     <span className="flex items-center gap-1">

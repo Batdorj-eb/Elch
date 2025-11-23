@@ -35,7 +35,7 @@ export default async function PrivacyPolicyPage() {
         <div className=" mx-auto  shadow-sm p-6 md:p-8 lg:p-10">
           {/* Introduction */}
           <div className="mb-8 text-[#2F2F2F]">
-            <p className="text-sm md:text-base leading-relaxed text-zinc-600">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-zinc-600">
               The below policy examples are intended to serve as guidance for Wayne State University policy owner(s)/co-owners, when drafting policy statements for new or revised policies.
             </p>
           </div>
@@ -45,7 +45,7 @@ export default async function PrivacyPolicyPage() {
             <h2 className="text-lg md:text-xl font-bold text-[#2F2F2F] mb-4">
               Example 1 (For presidential policies):
             </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               The purpose of this University Policy is to clarify rulemaking procedures from the Office of the President, and the procedure for the development, review and approval of policies initiated at other levels or by other bodies in the University. The decision-making authority upon which this University Policy is based follows existing Statutes and actions of the Board of Governors.
             </p>
           </div>
@@ -55,7 +55,7 @@ export default async function PrivacyPolicyPage() {
             <h2 className="text-lg md:text-xl font-bold text-[#2F2F2F] mb-4">
               Example 2 (For administrative regulations):
             </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               This policy has been established to ensure consistency of all external advertisement of university positions. External advertisements are supplemental to internal postings and recruitment/hiring policy requirements. Recruitment resources such as businesses, organizations, professional associations, alumni groups, listservs and trade journals can be utilized by departments to aid in the search process. SR/OPs needing assistance in identifying other potential recruitment resources may contact Human Resources Client Services.
             </p>
           </div>
@@ -65,16 +65,16 @@ export default async function PrivacyPolicyPage() {
             <h2 className="text-lg md:text-xl font-bold text-[#2F2F2F] mb-4">
               Example 3:
             </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               The purpose of this policy is to outline the Wayne State University attendance standards.
             </p>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               Each employee is an important contributor to the University's mission and each employee is needed at work to assist in accomplishment of the University's goals and objectives. Absenteeism and tardiness negatively impact services provided to students and the University community. Absenteeism also sows the morale of other employees who have to perform the work of the absent employee.
             </p>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               To ensure effective and efficient operations of the University and provide the best possible work environment to employees, the University expects employees to adhere to the attendance standards as outlined in this policy.
             </p>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               Please feel free to contact the WSU Policy Office at 313-577-5580, for further assistance in drafting policy statements.
             </p>
           </div>
@@ -84,7 +84,7 @@ export default async function PrivacyPolicyPage() {
             <h2 className="text-lg md:text-xl font-bold text-[#2F2F2F] mb-4">
               Example 4 (For presidential policies):
             </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               The purpose of this University Policy is to clarify rulemaking procedures from the Office of the President, and the procedure for the development, review and approval of policies initiated at other levels or by other bodies in the University. The decision-making authority upon which this University Policy is based follows existing Statutes and actions of the Board of Governors.
             </p>
           </div>
@@ -94,7 +94,7 @@ export default async function PrivacyPolicyPage() {
             <h2 className="text-lg md:text-xl font-bold text-[#2F2F2F] mb-4">
               Example 5 (For administrative regulations):
             </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               This policy has been established to ensure consistency of all external advertisement of university positions. External advertisements are supplemental to internal postings and recruitment/hiring policy requirements. Recruitment resources such as businesses, organizations, professional associations, alumni groups, listservs and trade journals can be utilized by departments to aid in the search process. SR/OPs needing assistance in identifying other potential recruitment resources may contact Human Resources Client Services.
             </p>
           </div>
@@ -104,16 +104,16 @@ export default async function PrivacyPolicyPage() {
             <h2 className="text-lg md:text-xl font-bold text-[#2F2F2F] mb-4">
               Example 6:
             </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               The purpose of this policy is to outline the Wayne State University attendance standards.
             </p>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               Each employee is an important contributor to the University's mission and each employee is needed at work to assist in accomplishment of the University's goals and objectives. Absenteeism and tardiness negatively impact services provided to students and the University community. Absenteeism also sows the morale of other employees who have to perform the work of the absent employee.
             </p>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-4">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-4">
               To ensure effective and efficient operations of the University and provide the best possible work environment to employees, the University expects employees to adhere to the attendance standards as outlined in this policy.
             </p>
-            <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F]">
+            <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F]">
               Please feel free to contact the WSU Policy Office at 313-577-5580, for further assistance in drafting policy statements.
             </p>
           </div>

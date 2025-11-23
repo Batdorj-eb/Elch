@@ -67,7 +67,7 @@ const Header: React.FC = () => {
             </Link>
 
             {/* Right Info */}
-            <div className="flex items-center gap-4 shrink-0">
+            <div className="flex items-center gap-8 shrink-0">
               {/* Currency */}
               <div className="flex flex-col items-center gap-1">
                 <span className="text-xs font-bold text-[#2F2F2F] whitespace-nowrap">Ам.доллар</span>

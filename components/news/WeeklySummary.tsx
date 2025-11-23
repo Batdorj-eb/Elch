@@ -164,7 +164,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
               }}
             >
               {/* Image/Badge */}
-              <div className={`relative w-[110px] h-[90px] shrink-0 overflow-hidden ${bgColor} flex p-2 items-center justify-center`}>
+              <div className={`relative w-[110px] h-[90px] md:w-[203px] md:h-[110px] shrink-0 overflow-hidden ${bgColor} flex p-2 items-center justify-center`}>
                 {article.coverImage ? (
                   <Image
                     src={article.coverImage}
@@ -180,7 +180,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
               </div>
               
               <div className="flex-1 p-2">
-                <h2 className="text-xs md:text:sm font-medium text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
+                <h2 className="text-xs md:text-[17px] font-medium md:font-bold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2">
                   {article.title}
                 </h2>
                 <div className="flex justify-between gap-2 text-xs text-zinc-500 border-t mt-3" style={{ borderColor: '#C8C8C8' }}>

@@ -106,6 +106,7 @@ export interface ArticleComment {
   user_email: string | null;
   content: string;
   likes: number;
+  dislikes:number;
   parent_id: number | null;
   is_approved: boolean;
   created_at: string;

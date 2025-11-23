@@ -176,8 +176,8 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
           </div>
 
           {/* Desktop Live Button - RIGHT */}
-          <button className="hidden lg:flex items-center gap-1.5 lg:gap-2 shrink-0 px-3 lg:px-4 py-1.5 lg:py-2 bg-red-500 text-white text-xs lg:text-sm font-medium rounded hover:bg-red-600 transition">
-            <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white rounded-full animate-pulse" />
+          <button className="hidden lg:flex items-center gap-1.5 lg:gap-2 shrink-0 px-3 lg:px-4 py-1.5 lg:py-2 bg-red-500 text-white text-xs lg:text-sm font-medium hover:bg-red-600 transition">
+            <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 bg-white animate-pulse" />
             ШУУД
           </button>
 

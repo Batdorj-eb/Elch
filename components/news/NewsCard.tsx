@@ -70,7 +70,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
           </div>
 
           <div className="flex-1">
-            <h3 className="text-sm sm:text-base font-serif font-semibold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2 uppercase">
+            <h3 className="text-sm sm:text-base font-serif font-bold text-[#2F2F2F] leading-snug group-hover:text-red-500 transition line-clamp-2 uppercase">
               {article.title}
             </h3>
 

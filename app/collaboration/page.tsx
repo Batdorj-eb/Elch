@@ -33,7 +33,7 @@ export default async function CollaborationPage() {
         </h2>
                 {/* Introduction Text */}
         <div className="m-12 md:mb-16">
-          <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F]">
+          <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel.
           </p>
         </div>
@@ -41,7 +41,7 @@ export default async function CollaborationPage() {
           <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#2F2F2F] mb-6 pb-3 border-l-4 border-[#FF3336] pl-4">
             Төлбөртэй мэдээ байршуулах
           </h2>
-          <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-6">
+          <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-6">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
           </p>
 
@@ -61,7 +61,7 @@ export default async function CollaborationPage() {
             Баннер байршуулах
           </h2>
           
-          <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-6">
+          <p className="text-[11px] lg:text-[18px] md:text-base leading-relaxed text-[#2F2F2F] mb-6">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
           </p>
 
@@ -81,7 +81,7 @@ export default async function CollaborationPage() {
             Контент хамтран бүтээх
           </h2>
           
-          <p className="text-sm md:text-base leading-relaxed text-[#2F2F2F] mb-6">
+          <p className="md:text-base leading-relaxed text-[#2F2F2F] mb-6 text-[11px] lg:text-[18px]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
           </p>
 
@@ -100,7 +100,7 @@ export default async function CollaborationPage() {
           <h3 className="text-xl md:text-2xl font-bold text-[#2F2F2F] mb-4">
             Бидэнтэй хамтран ажиллахыг хүсч байна уу?
           </h3>
-          <p className="text-sm md:text-base text-zinc-600 mb-6">
+          <p className="md:text-base text-zinc-600 mb-6">
             Дэлгэрэнгүй мэдээлэл авах, санал хүсэлт илгээхийг хүсвэл бидэнтэй холбогдоорой.
           </p>
           <a

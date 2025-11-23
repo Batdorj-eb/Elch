@@ -34,11 +34,11 @@ export default async function ContactPage() {
           </h1>
         </div>
 
-        {/* Main Content - Image and Contact Info */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+    {/* Main Content - Image and Contact Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 items-start">
           {/* Building Image */}
-          <div className="w-full">
-            <div className="relative w-full h-[170px] md:h-[250px] lg:h-[350px] rounded-lg overflow-hidden shadow-lg">
+          <div className="lg:col-span-2 w-full">
+            <div className="relative w-full h-[240px] md:h-[300px] lg:h-[438px] rounded-lg overflow-hidden shadow-lg">
               <Image
                 src={building}
                 alt="ELCH News Office Building"
@@ -50,9 +50,9 @@ export default async function ContactPage() {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-6 md:space-y-8">
+          <div className="lg:col-span-1 space-y-6 md:space-y-8">
             {/* Address */}
-            <div className="p-6 md:p-8 rounded-lg shadow-sm">
+            <div className="">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <MapPin className="w-6 h-6 text-[#FF3336]" />
@@ -69,7 +69,7 @@ export default async function ContactPage() {
             </div>
 
             {/* Email */}
-            <div className="p-6 md:p-8 rounded-lg shadow-sm">
+            <div className="">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <Mail className="w-6 h-6 text-[#FF3336]" />
@@ -89,7 +89,7 @@ export default async function ContactPage() {
             </div>
 
             {/* Phone */}
-            <div className="p-6 md:p-8 rounded-lg shadow-sm">
+            <div className="">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <Phone className="w-6 h-6 text-[#FF3336]" />
@@ -100,7 +100,7 @@ export default async function ContactPage() {
                   </h3>
                   <a 
                     href="tel:77700777"
-                    className="inline-block w-full bg-[#FF3336] text-white text-center py-3 px-6 rounded-lg hover:bg-red-600 transition font-medium text-sm md:text-base"
+                    className="inline-block w-full bg-[#FF3336] text-white text-center py-3 px-6 hover:bg-red-600 transition font-medium text-sm md:text-base"
                   >
                     <Phone className="w-4 h-4 inline-block mr-2" />
                     7770-0777
@@ -110,7 +110,7 @@ export default async function ContactPage() {
             </div>
 
             {/* Additional Info */}
-            <div className="p-6 md:p-8 rounded-lg shadow-sm">
+            <div className="p">
               <h3 className="text-lg md:text-xl font-bold text-[#2F2F2F] mb-3">
                 Ажлын цаг:
               </h3>

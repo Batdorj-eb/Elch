@@ -2,11 +2,10 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { ArticleComment } from '@/lib/types';
 import { formatDate, formatDateShort } from '@/lib/utils';
 import Like from '@/public/icons/like.svg';
-// If using Next.js Image for raster images, import it:
 import Image from 'next/image';
 import Share from '@/public/icons/share.svg'; 
 import Dislike from '@/public/icons/dislike.svg';
@@ -28,6 +27,23 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
   const [replyUserName, setReplyUserName] = useState('');
   const [replyText, setReplyText] = useState('');
   const [isReplySubmitting, setIsReplySubmitting] = useState(false);
+
+  // Track liked comments in localStorage
+  const [likedComments, setLikedComments] = useState<Set<number>>(new Set());
+  const [dislikedComments, setDislikedComments] = useState<Set<number>>(new Set());
+
+  // Load liked/disliked comments from localStorage on mount
+  useEffect(() => {
+    const storedLikes = localStorage.getItem(`article_${articleId}_likes`);
+    const storedDislikes = localStorage.getItem(`article_${articleId}_dislikes`);
+    
+    if (storedLikes) {
+      setLikedComments(new Set(JSON.parse(storedLikes)));
+    }
+    if (storedDislikes) {
+      setDislikedComments(new Set(JSON.parse(storedDislikes)));
+    }
+  }, [articleId]);
 
   // Main comment submit
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,12 +128,40 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
   };
 
   const handleLike = async (commentId: number) => {
+    // Check if already liked
+    if (likedComments.has(commentId)) {
+      return; // Already liked, do nothing
+    }
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/${commentId}/like`, {
         method: 'POST',
       });
 
       if (response.ok) {
+        // Update state
+        const newLikedComments = new Set(likedComments);
+        newLikedComments.add(commentId);
+        setLikedComments(newLikedComments);
+
+        // Save to localStorage
+        localStorage.setItem(
+          `article_${articleId}_likes`,
+          JSON.stringify(Array.from(newLikedComments))
+        );
+
+        // Remove from dislikes if exists
+        if (dislikedComments.has(commentId)) {
+          const newDislikedComments = new Set(dislikedComments);
+          newDislikedComments.delete(commentId);
+          setDislikedComments(newDislikedComments);
+          localStorage.setItem(
+            `article_${articleId}_dislikes`,
+            JSON.stringify(Array.from(newDislikedComments))
+          );
+        }
+
+        // Update UI
         setComments(comments.map(comment => {
           if (comment.id === commentId) {
             return { ...comment, likes: comment.likes + 1 };
@@ -127,6 +171,54 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
       }
     } catch (error) {
       console.error('Like error:', error);
+    }
+  };
+
+  const handleDislike = async (commentId: number) => {
+    // Check if already disliked
+    if (dislikedComments.has(commentId)) {
+      return; // Already disliked, do nothing
+    }
+
+    // Note: You'll need to add a dislike endpoint in your backend
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/${commentId}/dislike`, {
+        method: 'POST',
+      });
+
+      if (response.ok) {
+        // Update state
+        const newDislikedComments = new Set(dislikedComments);
+        newDislikedComments.add(commentId);
+        setDislikedComments(newDislikedComments);
+
+        // Save to localStorage
+        localStorage.setItem(
+          `article_${articleId}_dislikes`,
+          JSON.stringify(Array.from(newDislikedComments))
+        );
+
+        // Remove from likes if exists
+        if (likedComments.has(commentId)) {
+          const newLikedComments = new Set(likedComments);
+          newLikedComments.delete(commentId);
+          setLikedComments(newLikedComments);
+          localStorage.setItem(
+            `article_${articleId}_likes`,
+            JSON.stringify(Array.from(newLikedComments))
+          );
+        }
+
+        // Update UI if you're tracking dislikes count
+        setComments(comments.map(comment => {
+          if (comment.id === commentId) {
+            return { ...comment, dislikes: (comment.dislikes || 0) + 1 };
+          }
+          return comment;
+        }));
+      }
+    } catch (error) {
+      console.error('Dislike error:', error);
     }
   };
 
@@ -235,31 +327,48 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
                       className="flex items-center gap-1 hover:text-red-500 transition"
                     >
                       <div className='flex gap-1 items-center'>
-                        <Image src={Share} alt='dsdsd'/>
+                        <Image src={Share} alt='share'/>
                         <span>Хариулах</span>
                       </div>
                     </button>
                     <button 
                       onClick={() => handleLike(comment.id)}
-                     
+                      disabled={likedComments.has(comment.id)}
+                      className={`flex gap-1 items-center transition ${
+                        likedComments.has(comment.id) 
+                          ? 'text-red-500 cursor-not-allowed' 
+                          : 'hover:text-red-500 cursor-pointer'
+                      }`}
                     >
-                    <div className='flex gap-1 items-center'>
-                      <Image src={Like} alt='dsdsd'/>
+                      <Image 
+                        src={Like} 
+                        alt='like'
+                        className={likedComments.has(comment.id) ? 'opacity-100' : 'opacity-70'}
+                      />
                       <span>{comment.likes}</span>
-                    </div>
                     </button>
-                    <button>
-                    <div className='flex gap-1 items-center'>
-                      <Image src={Dislike} alt='dsdsd'/>
-                      <span>0</span>
-                    </div>
+                    <button
+                      onClick={() => handleDislike(comment.id)}
+                      disabled={dislikedComments.has(comment.id)}
+                      className={`flex gap-1 items-center transition ${
+                        dislikedComments.has(comment.id) 
+                          ? 'text-blue-500 cursor-not-allowed' 
+                          : 'hover:text-blue-500 cursor-pointer'
+                      }`}
+                    >
+                      <Image 
+                        src={Dislike} 
+                        alt='dislike'
+                        className={dislikedComments.has(comment.id) ? 'opacity-100' : 'opacity-70'}
+                      />
+                      <span>{comment.dislikes || 0}</span>
                     </button>
                   </div>
 
                   {/* Reply Form */}
                   {replyingTo === comment.id && (
                     <div className="mt-4 p-3 border-l-2 border-red-500">
-                      <p className="text-xs text-gray-600 mb-3">
+                      <p className="text-xs text-black mb-3">
                         <span className="font-semibold text-[#EF4444]">{comment.user_name}</span>-д хариулах
                       </p>
                       <form onSubmit={(e) => handleReplySubmit(e, comment.id)} className="space-y-2">
@@ -268,7 +377,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
                           value={replyUserName}
                           onChange={(e) => setReplyUserName(e.target.value)}
                           placeholder="Таны нэр"
-                          className="w-full px-3 py-2 bg-white border border-gray-200 text-sm focus:outline-none focus:border-red-500"
+                          className="w-full px-3 py-2 bg-white border border-gray-200 text-sm focus:outline-none focus:border-red-500 text-black"
                           disabled={isReplySubmitting}
                           required
                         />
@@ -276,7 +385,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments: in
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
                           placeholder="Хариулт бичих..."
-                          className="w-full px-3 py-2 bg-white border border-gray-200 text-sm resize-none focus:outline-none focus:border-red-500"
+                          className="w-full px-3 py-2 bg-white border border-gray-200 text-sm resize-none focus:outline-none focus:border-red-500 text-black"
                           rows={3}
                           disabled={isReplySubmitting}
                           required

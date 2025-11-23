@@ -49,18 +49,17 @@ const Footer: React.FC = () => {
 
           {/* Social Media */}
           <div className="flex items-center justify-center lg:justify-start gap-3 lg:gap-4 mb-6 lg:mb-8 mt-6">
-            <a href="https://www.facebook.com/Elchnews" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
-              <Facebook className="w-4 h-4 lg:w-5 lg:h-5" />
+            <a href="https://www.facebook.com/Elchnews" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition no-underline">
+              <Facebook className="w-4 h-4 lg:w-5 lg:h-5" strokeWidth={2} />
             </a>
-            <a href="https://x.com/Elch_mn" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
-              <Twitter className="w-4 h-4 lg:w-5 lg:h-5" />
+            <a href="https://x.com/Elch_mn" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition no-underline">
+              <Twitter className="w-4 h-4 lg:w-5 lg:h-5" strokeWidth={2} />
             </a>
-            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
-              <Instagram className="w-4 h-4 lg:w-5 lg:h-5" />
+            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition no-underline">
+              <Instagram className="w-4 h-4 lg:w-5 lg:h-5" strokeWidth={2} />
             </a>
-
-            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition">
-              <Youtube className="w-4 h-4 lg:w-5 lg:h-5" />
+            <a href="#" className="w-9 h-9 lg:w-10 lg:h-10 bg-zinc-700 rounded-full flex items-center justify-center hover:bg-red-500 transition no-underline">
+              <Youtube className="w-4 h-4 lg:w-5 lg:h-5" strokeWidth={2} />
             </a>
           </div>
 
@@ -75,4 +74,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-
