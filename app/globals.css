@@ -109,8 +109,70 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
 }
 
+.video-responsive-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+}
 
-/* globals.css эсвэл tailwind.css файлд */
-a svg {
-  text-decoration: none;
+.video-responsive-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ✅ Mobile adjustments */
+@media (max-width: 768px) {
+  .video-responsive-wrapper {
+    margin: 1rem 0;
+  }
+}
+
+/* ========================================
+   ARTICLE CONTENT - IMAGE OVERFLOW FIX
+======================================== */
+
+/* ✅ All figures in article content */
+.article-content figure,
+.article-content figure.image,
+.article-content figure.image_resized {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 1.5rem 0 !important;
+}
+
+/* ✅ All images in article content */
+.article-content img {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  border-radius: 0.5rem;
+}
+
+/* ✅ Override inline styles */
+.article-content figure[style*="width"],
+.article-content img[style*="width"] {
+  width: 100% !important;
+}
+
+.article-content figure[style*="height"],
+.article-content img[style*="height"] {
+  height: auto !important;
+}
+
+/* ✅ Mobile responsive */
+@media (max-width: 768px) {
+  .article-content figure,
+  .article-content img {
+    margin: 1rem 0 !important;
+  }
 }

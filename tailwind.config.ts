@@ -16,6 +16,7 @@ const config: Config = {
         sans: ['var(--font-inter)', 'sans-serif'],
         serif: ['var(--font-playfair)', 'serif'],
       },
+      
     },
   },
   plugins: [],
