@@ -38,10 +38,11 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper.className = 'video-responsive-wrapper';
         wrapper.style.cssText = `
           position: relative;
+          padding-bottom: 56.25%;
           height: 0;
           overflow: hidden;
-          max-width: 100%;
-          margin: 1.5rem 0;
+          max-width: 578px;
+          margin: 1.5rem auto;
           border-radius: 0.5rem;
           border: 1px solid #e5e5e5;
           background: #000;
@@ -76,11 +77,12 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper = document.createElement('div');
         wrapper.className = 'video-responsive-wrapper';
         
-        // ✅ FIXED: Different aspect ratios
+        // ✅ FIXED: Proper aspect ratios
         if (facebookReelMatch) {
           // Portrait video (9:16)
           wrapper.style.cssText = `
             position: relative;
+            padding-bottom: 177.78%;
             height: 0;
             overflow: hidden;
             max-width: 578px;
@@ -92,10 +94,11 @@ export default function VideoContent({ html }: VideoContentProps) {
           // Landscape video (16:9)
           wrapper.style.cssText = `
             position: relative;
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            max-width: 100%;
-            margin: 1.5rem 0;
+            max-width: 578px;
+            margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
           `;
@@ -172,7 +175,7 @@ export default function VideoContent({ html }: VideoContentProps) {
       className="article-content text-[#2F2F2F] leading-relaxed"
       dangerouslySetInnerHTML={{ __html: html }}
       style={{
-        fontSize: 'clamp(16px, 2vw, 18px)',
+        fontSize: 'clamp(14px, 2vw, 16px)',
         lineHeight: '1.75'
       }}
     />
