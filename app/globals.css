@@ -102,7 +102,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .sticky-ad {
   position: sticky;
-  top: 1rem; /* distance from top while scrolling */
+  top: 1rem;
 }
 .stop-at-bottom {
   position: relative;
@@ -127,7 +127,6 @@ h1, h2, h3, h4, h5, h6 {
   border: 0;
 }
 
-/* ✅ Mobile adjustments */
 @media (max-width: 768px) {
   .video-responsive-wrapper {
     margin: 1rem 0;
@@ -138,7 +137,6 @@ h1, h2, h3, h4, h5, h6 {
    ARTICLE CONTENT - IMAGE OVERFLOW FIX
 ======================================== */
 
-/* ✅ All figures in article content */
 .article-content figure,
 .article-content figure.image,
 .article-content figure.image_resized {
@@ -148,7 +146,6 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1.5rem 0 !important;
 }
 
-/* ✅ All images in article content */
 .article-content img {
   max-width: 100% !important;
   width: 100% !important;
@@ -157,7 +154,6 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0.5rem;
 }
 
-/* ✅ Override inline styles */
 .article-content figure[style*="width"],
 .article-content img[style*="width"] {
   width: 100% !important;
@@ -168,10 +164,167 @@ h1, h2, h3, h4, h5, h6 {
   height: auto !important;
 }
 
-/* ✅ Mobile responsive */
 @media (max-width: 768px) {
   .article-content figure,
   .article-content img {
     margin: 1rem 0 !important;
+  }
+}
+
+/* ========================================
+   ARTICLE CONTENT - BLOCKQUOTE STYLING
+======================================== */
+
+.article-content blockquote {
+  border-left: 4px solid #FF3336;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  background-color: #fafafa;
+  border-radius: 0 8px 8px 0;
+  color: #374151;
+}
+
+.article-content blockquote p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.article-content blockquote p:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+/* ========================================
+   ARTICLE CONTENT - TYPOGRAPHY
+======================================== */
+
+.article-content p {
+  margin-bottom: 1.25rem;
+  text-align: justify;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4 {
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.article-content h2 {
+  font-size: 1.5rem;
+}
+
+.article-content h3 {
+  font-size: 1.25rem;
+}
+
+.article-content h4 {
+  font-size: 1.125rem;
+}
+
+/* ========================================
+   ARTICLE CONTENT - LISTS
+======================================== */
+
+.article-content ul,
+.article-content ol {
+  margin: 1.25rem 0;
+  padding-left: 1.5rem;
+}
+
+.article-content ul {
+  list-style-type: disc;
+}
+
+.article-content ol {
+  list-style-type: decimal;
+}
+
+.article-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.75;
+}
+
+.article-content li::marker {
+  color: #FF3336;
+}
+
+/* ========================================
+   ARTICLE CONTENT - LINKS
+======================================== */
+
+.article-content a {
+  color: #FF3336;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+.article-content a:hover {
+  color: #dc2626;
+}
+
+/* ========================================
+   ARTICLE CONTENT - TABLES
+======================================== */
+
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.article-content th,
+.article-content td {
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.article-content th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.article-content tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* ========================================
+   ARTICLE CONTENT - MOBILE RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+  .article-content blockquote {
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+  }
+
+  .article-content p {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  .article-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .article-content h3 {
+    font-size: 1.125rem;
+  }
+
+  .article-content table {
+    font-size: 0.8rem;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .article-content th,
+  .article-content td {
+    padding: 0.5rem;
   }
 }
