@@ -26,7 +26,7 @@ export default function VideoContent({ html }: VideoContentProps) {
 
       let wrapper: HTMLDivElement | null = null;
 
-      // ✅ YouTube video - shorts оролцуулаад
+      // ✅ YouTube video
       const youtubeMatch = url.match(
         /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
       );
@@ -35,25 +35,21 @@ export default function VideoContent({ html }: VideoContentProps) {
         const videoId = youtubeMatch[1];
         
         wrapper = document.createElement('div');
-        wrapper.className = 'video-responsive-wrapper';
+        wrapper.className = 'video-wrapper';
         wrapper.style.cssText = `
-          position: relative;
-          padding-bottom: 56.25%;
-          height: 0;
-          overflow: hidden;
+          width: 100%;
           max-width: 578px;
+          aspect-ratio: 16/9;
           margin: 1.5rem auto;
           border-radius: 0.5rem;
           border: 1px solid #e5e5e5;
           background: #000;
+          overflow: hidden;
         `;
         
         const iframe = document.createElement('iframe');
         iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
         iframe.style.cssText = `
-          position: absolute;
-          top: 0;
-          left: 0;
           width: 100%;
           height: 100%;
           border: 0;
@@ -66,7 +62,7 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper.appendChild(iframe);
       }
       
-      // ✅ Facebook video, reel, watch
+      // ✅ Facebook video - FIXED
       const facebookVideoMatch = url.match(
         /facebook\.com\/(?:[^/]+\/)?(?:videos?|watch|reel)(?:\/|\?v=)([0-9]+)/
       );
@@ -75,45 +71,44 @@ export default function VideoContent({ html }: VideoContentProps) {
       
       if ((facebookVideoMatch || facebookReelMatch) && !youtubeMatch) {
         wrapper = document.createElement('div');
-        wrapper.className = 'video-responsive-wrapper';
+        wrapper.className = 'video-wrapper facebook-video';
         
-        // ✅ FIXED: Proper aspect ratios
         if (facebookReelMatch) {
           // Portrait video (9:16)
           wrapper.style.cssText = `
-            position: relative;
-            padding-bottom: 177.78%;
-            height: 0;
-            overflow: hidden;
+            width: 100%;
             max-width: 578px;
+            height: 650px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
+            overflow: hidden;
+            position: relative;
           `;
         } else {
           // Landscape video (16:9)
           wrapper.style.cssText = `
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
+            width: 100%;
             max-width: 578px;
+            height: 325px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
+            overflow: hidden;
+            position: relative;
           `;
         }
         
         const iframe = document.createElement('iframe');
-        iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=560&height=315`;
+        // ✅ CRITICAL: show_text=false, autoplay=false
+        iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&autoplay=false&width=578`;
         iframe.style.cssText = `
-          position: absolute;
-          top: 0;
-          left: 0;
           width: 100%;
           height: 100%;
           border: none;
-          overflow: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
         `;
         iframe.setAttribute('scrolling', 'no');
         iframe.setAttribute('frameborder', '0');
@@ -134,36 +129,24 @@ export default function VideoContent({ html }: VideoContentProps) {
     // 2. IMAGE PROCESSING (FIX OVERFLOW)
     // ========================================
     
-    // ✅ Fix all figure elements (images)
     const imageFigures = contentRef.current.querySelectorAll('figure.image, figure.image_resized, figure');
     imageFigures.forEach((figure) => {
-      // Skip if it's a video wrapper we just created
       if (figure.querySelector('iframe')) return;
       
       const figureElement = figure as HTMLElement;
-      
-      // Remove inline width styles
       figureElement.style.width = '100%';
       figureElement.style.maxWidth = '100%';
       figureElement.style.height = 'auto';
-      
-      // Add responsive classes
       figureElement.classList.add('w-full', 'max-w-full', 'my-6', 'md:my-8');
     });
 
-    // ✅ Fix all img elements
     const images = contentRef.current.querySelectorAll('img');
     images.forEach((img) => {
-      // Remove inline width/height attributes
       img.removeAttribute('width');
       img.removeAttribute('height');
-      
-      // Remove inline styles that set fixed width
       img.style.width = '100%';
       img.style.maxWidth = '100%';
       img.style.height = 'auto';
-      
-      // Add Tailwind classes
       img.classList.add('w-full', 'h-auto', 'rounded-lg', 'border', 'border-neutral-200');
     });
 
@@ -175,7 +158,7 @@ export default function VideoContent({ html }: VideoContentProps) {
       className="article-content text-[#2F2F2F] leading-relaxed"
       dangerouslySetInnerHTML={{ __html: html }}
       style={{
-        fontSize: 'clamp(14px, 2vw, 16px)',
+        fontSize: 'clamp(16px, 2vw, 18px)',
         lineHeight: '1.75'
       }}
     />
