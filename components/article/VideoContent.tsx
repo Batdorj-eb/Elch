@@ -169,7 +169,7 @@ export default function VideoContent({ html }: VideoContentProps) {
       className="article-content text-[#2F2F2F] leading-relaxed"
       dangerouslySetInnerHTML={{ __html: html }}
       style={{
-        fontSize: 'clamp(14px, 2vw, 16px)',
+        fontSize: 'clamp(13px, 2vw, 15px)',
         lineHeight: '1.75'
       }}
     />
