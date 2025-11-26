@@ -36,7 +36,7 @@ export default function VideoContent({ html }: VideoContentProps) {
           width: 100%;
           max-width: 578px;
           aspect-ratio: 16/9;
-          margin: 1.5rem auto;
+          margin: 0 auto;
           border-radius: 0.5rem;
           border: 1px solid #e5e5e5;
           background: #000;
@@ -62,7 +62,7 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper.appendChild(iframe);
       }
       
-      // ✅ Facebook video - NO max-height
+      // ✅ Facebook video - Full width, no aspect ratio constraint
       const facebookVideoMatch = url.match(
         /facebook\.com\/(?:[^/]+\/)?(?:videos?|watch|reel)(?:\/|\?v=)([0-9]+)/
       );
@@ -72,42 +72,38 @@ export default function VideoContent({ html }: VideoContentProps) {
       if ((facebookVideoMatch || facebookReelMatch) && !youtubeMatch) {
         wrapper = document.createElement('div');
         
+        // Facebook video wrapper - no fixed aspect ratio, let FB control the size
+        wrapper.style.cssText = `
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+        `;
+        
+        const iframe = document.createElement('iframe');
+        
         if (facebookReelMatch) {
-          // Portrait video (9:16)
-          wrapper.style.cssText = `
+          // Reel - portrait video
+          iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=476&height=846`;
+          iframe.style.cssText = `
             width: 100%;
-            max-width: 578px;
-            aspect-ratio: 9/16;
-            margin: 1.5rem auto;
-            border-radius: 0.5rem;
-            border: 1px solid #e5e5e5;
-            overflow: hidden;
-            position: relative;
+            max-width: 476px;
+            height: 846px;
+            border: none;
+            display: block;
+            margin: 0 auto;
           `;
         } else {
-          // Landscape video (16:9)
-          wrapper.style.cssText = `
+          // Regular video - landscape
+          iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=560`;
+          iframe.style.cssText = `
             width: 100%;
-            max-width: 578px;
-            aspect-ratio: 16/9;
-            margin: 1.5rem auto;
-            border-radius: 0.5rem;
-            border: 1px solid #e5e5e5;
-            overflow: hidden;
-            position: relative;
+            height: 314px;
+            border: none;
+            display: block;
           `;
         }
         
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=578`;
-        iframe.style.cssText = `
-          width: 100%;
-          height: 100%;
-          border: none;
-          position: absolute;
-          top: 0;
-          left: 0;
-        `;
         iframe.setAttribute('scrolling', 'no');
         iframe.setAttribute('frameborder', '0');
         iframe.setAttribute('allowfullscreen', 'true');
