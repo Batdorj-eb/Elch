@@ -34,12 +34,10 @@ export default function VideoContent({ html }: VideoContentProps) {
       if (youtubeMatch) {
         const videoId = youtubeMatch[1];
         
-        // ✅ FIXED: Padding-bottom trick for proper aspect ratio
         wrapper = document.createElement('div');
         wrapper.className = 'video-responsive-wrapper';
         wrapper.style.cssText = `
           position: relative;
-          padding-bottom: 56.25%;
           height: 0;
           overflow: hidden;
           max-width: 100%;
@@ -83,10 +81,9 @@ export default function VideoContent({ html }: VideoContentProps) {
           // Portrait video (9:16)
           wrapper.style.cssText = `
             position: relative;
-            padding-bottom: 177.78%;
             height: 0;
             overflow: hidden;
-            max-width: 500px;
+            max-width: 578px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
@@ -95,7 +92,6 @@ export default function VideoContent({ html }: VideoContentProps) {
           // Landscape video (16:9)
           wrapper.style.cssText = `
             position: relative;
-            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             max-width: 100%;
