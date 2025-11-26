@@ -79,7 +79,7 @@ export default function VideoContent({ html }: VideoContentProps) {
             width: 100%;
             max-width: 578px;
             aspect-ratio: 9/16;
-            max-height: 1027px;
+            max-height: 725px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
@@ -92,7 +92,7 @@ export default function VideoContent({ html }: VideoContentProps) {
             width: 100%;
             max-width: 578px;
             aspect-ratio: 16/9;
-            max-height: 325px;
+            max-height: 525px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
@@ -156,7 +156,7 @@ export default function VideoContent({ html }: VideoContentProps) {
       className="article-content text-[#2F2F2F] leading-relaxed"
       dangerouslySetInnerHTML={{ __html: html }}
       style={{
-        fontSize: 'clamp(16px, 2vw, 18px)',
+        fontSize: 'clamp(14px, 2vw, 16px)',
         lineHeight: '1.75'
       }}
     />
