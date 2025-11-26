@@ -36,7 +36,6 @@ export default function VideoContent({ html }: VideoContentProps) {
           width: 100%;
           max-width: 578px;
           aspect-ratio: 16/9;
-          max-height: 325px;
           margin: 1.5rem auto;
           border-radius: 0.5rem;
           border: 1px solid #e5e5e5;
@@ -63,7 +62,7 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper.appendChild(iframe);
       }
       
-      // ✅ Facebook video - FIXED with aspect-ratio + max-height
+      // ✅ Facebook video - NO max-height
       const facebookVideoMatch = url.match(
         /facebook\.com\/(?:[^/]+\/)?(?:videos?|watch|reel)(?:\/|\?v=)([0-9]+)/
       );
@@ -79,7 +78,6 @@ export default function VideoContent({ html }: VideoContentProps) {
             width: 100%;
             max-width: 578px;
             aspect-ratio: 9/16;
-            max-height: 725px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
@@ -92,7 +90,6 @@ export default function VideoContent({ html }: VideoContentProps) {
             width: 100%;
             max-width: 578px;
             aspect-ratio: 16/9;
-            max-height: 525px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
