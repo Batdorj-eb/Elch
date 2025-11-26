@@ -12,9 +12,6 @@ export default function VideoContent({ html }: VideoContentProps) {
   useEffect(() => {
     if (!contentRef.current) return;
 
-    // ========================================
-    // 1. VIDEO PROCESSING (YouTube, Facebook)
-    // ========================================
     const figures = contentRef.current.querySelectorAll('figure.media');
     
     figures.forEach((figure) => {
@@ -35,16 +32,17 @@ export default function VideoContent({ html }: VideoContentProps) {
         const videoId = youtubeMatch[1];
         
         wrapper = document.createElement('div');
-        wrapper.className = 'video-wrapper';
         wrapper.style.cssText = `
           width: 100%;
           max-width: 578px;
           aspect-ratio: 16/9;
+          max-height: 325px;
           margin: 1.5rem auto;
           border-radius: 0.5rem;
           border: 1px solid #e5e5e5;
           background: #000;
           overflow: hidden;
+          position: relative;
         `;
         
         const iframe = document.createElement('iframe');
@@ -53,6 +51,9 @@ export default function VideoContent({ html }: VideoContentProps) {
           width: 100%;
           height: 100%;
           border: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
         `;
         iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
         iframe.setAttribute('allowfullscreen', 'true');
@@ -62,7 +63,7 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper.appendChild(iframe);
       }
       
-      // ✅ Facebook video - FIXED
+      // ✅ Facebook video - FIXED with aspect-ratio + max-height
       const facebookVideoMatch = url.match(
         /facebook\.com\/(?:[^/]+\/)?(?:videos?|watch|reel)(?:\/|\?v=)([0-9]+)/
       );
@@ -71,14 +72,14 @@ export default function VideoContent({ html }: VideoContentProps) {
       
       if ((facebookVideoMatch || facebookReelMatch) && !youtubeMatch) {
         wrapper = document.createElement('div');
-        wrapper.className = 'video-wrapper facebook-video';
         
         if (facebookReelMatch) {
           // Portrait video (9:16)
           wrapper.style.cssText = `
             width: 100%;
             max-width: 578px;
-            height: 650px;
+            aspect-ratio: 9/16;
+            max-height: 1027px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
@@ -90,7 +91,8 @@ export default function VideoContent({ html }: VideoContentProps) {
           wrapper.style.cssText = `
             width: 100%;
             max-width: 578px;
-            height: 325px;
+            aspect-ratio: 16/9;
+            max-height: 325px;
             margin: 1.5rem auto;
             border-radius: 0.5rem;
             border: 1px solid #e5e5e5;
@@ -100,8 +102,7 @@ export default function VideoContent({ html }: VideoContentProps) {
         }
         
         const iframe = document.createElement('iframe');
-        // ✅ CRITICAL: show_text=false, autoplay=false
-        iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&autoplay=false&width=578`;
+        iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=578`;
         iframe.style.cssText = `
           width: 100%;
           height: 100%;
@@ -125,10 +126,7 @@ export default function VideoContent({ html }: VideoContentProps) {
       }
     });
 
-    // ========================================
-    // 2. IMAGE PROCESSING (FIX OVERFLOW)
-    // ========================================
-    
+    // Image processing
     const imageFigures = contentRef.current.querySelectorAll('figure.image, figure.image_resized, figure');
     imageFigures.forEach((figure) => {
       if (figure.querySelector('iframe')) return;
