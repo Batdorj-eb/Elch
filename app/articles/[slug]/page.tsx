@@ -21,6 +21,7 @@ import { processVideoContent } from '@/lib/utils';
 import VideoContent from '@/components/article/VideoContent';
 import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
 import profile from "@/public/profile.png"
+import ViewCounter from '@/components/article/ViewCounter';
 
 export async function generateMetadata({
   params
@@ -35,7 +36,6 @@ export async function generateMetadata({
       title: 'Мэдээ олдсонгүй',
     };
   }
-
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const articleUrl = `${siteUrl}/articles/${article.slug}`;
   
@@ -116,8 +116,16 @@ export default async function ArticleDetailPage({
 
   const processedContent = processVideoContent(article.content);
 
+  // Check if author should be shown
+  const shouldShowAuthor = article.show_author === 1 || article.show_author === true;
+
+  // Determine display name and avatar
+  const displayName = shouldShowAuthor ? article.author_name : 'Админ';
+  const displayAvatar = shouldShowAuthor && article.avatar ? article.avatar : null;
+
   return (
     <div className="min-h-screen bg-[#FFF1E5]">
+      <ViewCounter slug={slug} /> 
       <header>
         <BreakingNewsBanner articles={breakingNews} />
         <Header />
@@ -182,15 +190,15 @@ export default async function ArticleDetailPage({
               </div>
             )}
 
-              {/* 📱 AUTHOR + CONTENT SECTION - Mobile: Stack, Desktop (md+): Side by side */}
+            {/* 📱 AUTHOR + CONTENT SECTION - Mobile: Stack, Desktop (md+): Side by side */}
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
-              {/* Author Section - Mobile: horizontal, Desktop: vertical */}
+              {/* Author Section - Always show (either real author or Admin) */}
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
-                {article.avatar ? (
+                {displayAvatar ? (
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0">
                     <Image
-                      src={article.avatar}
-                      alt="Avatar"
+                      src={displayAvatar}
+                      alt={displayName || 'Avatar'}
                       width={80}
                       height={80}
                       className="w-full h-full object-cover"
@@ -207,11 +215,9 @@ export default async function ArticleDetailPage({
                     />
                   </div>
                 )}
-                {article.author_name && (
-                  <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
-                    {article.author_name}
-                  </div>
-                )}
+                <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
+                  {displayName}
+                </div>
               </div>
 
               {/* Article Content */}

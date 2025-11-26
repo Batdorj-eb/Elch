@@ -520,3 +520,25 @@ export async function getSubmission(id: string): Promise<Submission | null> {
     return null;
   }
 }
+
+
+export async function incrementViewCount(slug: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_URL}/articles/slug/${slug}/increment-view`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!res.ok) {
+      console.error('Failed to increment view count:', res.status);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('incrementViewCount error:', error);
+    return false;
+  }
+}
