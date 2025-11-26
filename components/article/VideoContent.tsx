@@ -1,13 +1,59 @@
 // components/article/VideoContent.tsx
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 interface VideoContentProps {
   html: string;
 }
 
+interface FBSDKType {
+  XFBML: {
+    parse: (element?: HTMLElement | null) => void;
+  };
+  init: (config: { xfbml: boolean; version: string }) => void;
+}
+
+declare global {
+  interface Window {
+    FB?: FBSDKType;
+    fbAsyncInit?: () => void;
+  }
+}
+
 export default function VideoContent({ html }: VideoContentProps) {
   const contentRef = useRef<HTMLDivElement>(null);
+  const fbLoadedRef = useRef(false);
+
+  const parseFBVideos = useCallback(() => {
+    if (window.FB && contentRef.current) {
+      window.FB.XFBML.parse(contentRef.current);
+    }
+  }, []);
+
+  // Load Facebook SDK
+  useEffect(() => {
+    if (fbLoadedRef.current) return;
+    
+    window.fbAsyncInit = () => {
+      window.FB?.init({
+        xfbml: true,
+        version: 'v18.0'
+      });
+      parseFBVideos();
+    };
+
+    if (!document.getElementById('facebook-jssdk')) {
+      const script = document.createElement('script');
+      script.id = 'facebook-jssdk';
+      script.src = 'https://connect.facebook.net/en_US/sdk.js';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+      fbLoadedRef.current = true;
+    } else if (window.FB) {
+      parseFBVideos();
+    }
+  }, [parseFBVideos]);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -23,7 +69,7 @@ export default function VideoContent({ html }: VideoContentProps) {
 
       let wrapper: HTMLDivElement | null = null;
 
-      // ✅ YouTube video
+      // YouTube video
       const youtubeMatch = url.match(
         /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
       );
@@ -34,11 +80,9 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper = document.createElement('div');
         wrapper.style.cssText = `
           width: 100%;
-          max-width: 578px;
+          max-width: 575px;
           aspect-ratio: 16/9;
           margin: 0 auto;
-          border-radius: 0.5rem;
-          border: 1px solid #e5e5e5;
           background: #000;
           overflow: hidden;
           position: relative;
@@ -62,56 +106,28 @@ export default function VideoContent({ html }: VideoContentProps) {
         wrapper.appendChild(iframe);
       }
       
-      // ✅ Facebook video - Full width, no aspect ratio constraint
+      // Facebook video
       const facebookVideoMatch = url.match(
         /facebook\.com\/(?:[^/]+\/)?(?:videos?|watch|reel)(?:\/|\?v=)([0-9]+)/
       );
-      
       const facebookReelMatch = url.match(/facebook\.com\/reel\/([0-9]+)/);
       
       if ((facebookVideoMatch || facebookReelMatch) && !youtubeMatch) {
         wrapper = document.createElement('div');
-        
-        // Facebook video wrapper - no fixed aspect ratio, let FB control the size
         wrapper.style.cssText = `
           width: 100%;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
+          max-width: 575px;
+          margin: 0 auto;
         `;
         
-        const iframe = document.createElement('iframe');
+        const fbVideo = document.createElement('div');
+        fbVideo.className = 'fb-video';
+        fbVideo.setAttribute('data-href', url);
+        fbVideo.setAttribute('data-width', '575');
+        fbVideo.setAttribute('data-show-text', 'false');
+        fbVideo.setAttribute('data-allowfullscreen', 'true');
         
-        if (facebookReelMatch) {
-          // Reel - portrait video
-          iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=476&height=846`;
-          iframe.style.cssText = `
-            width: 100%;
-            max-width: 476px;
-            height: 846px;
-            border: none;
-            display: block;
-            margin: 0 auto;
-          `;
-        } else {
-          // Regular video - landscape
-          iframe.src = `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=560`;
-          iframe.style.cssText = `
-            width: 100%;
-            height: 314px;
-            border: none;
-            display: block;
-          `;
-        }
-        
-        iframe.setAttribute('scrolling', 'no');
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allowfullscreen', 'true');
-        iframe.setAttribute('allow', 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share');
-        iframe.setAttribute('title', facebookReelMatch ? 'Facebook Reel' : 'Facebook video');
-        iframe.setAttribute('loading', 'lazy');
-        
-        wrapper.appendChild(iframe);
+        wrapper.appendChild(fbVideo);
       }
 
       if (wrapper) {
@@ -119,10 +135,13 @@ export default function VideoContent({ html }: VideoContentProps) {
       }
     });
 
+    // Parse after DOM update
+    const timer = setTimeout(parseFBVideos, 200);
+
     // Image processing
     const imageFigures = contentRef.current.querySelectorAll('figure.image, figure.image_resized, figure');
     imageFigures.forEach((figure) => {
-      if (figure.querySelector('iframe')) return;
+      if (figure.querySelector('iframe') || figure.querySelector('.fb-video')) return;
       
       const figureElement = figure as HTMLElement;
       figureElement.style.width = '100%';
@@ -141,7 +160,8 @@ export default function VideoContent({ html }: VideoContentProps) {
       img.classList.add('w-full', 'h-auto', 'rounded-lg', 'border', 'border-neutral-200');
     });
 
-  }, [html]);
+    return () => clearTimeout(timer);
+  }, [html, parseFBVideos]);
 
   return (
     <div 
