@@ -73,6 +73,7 @@ async function SearchResults({
                 <NewsCard 
                   key={article.id} 
                   article={article}
+                  hideTime={true}
                 />
               ))}
             </div>

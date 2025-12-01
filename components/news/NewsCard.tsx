@@ -12,12 +12,14 @@ interface NewsCardProps {
   article: NewsArticle;
   layout?: 'horizontal' | 'vertical';
   className?: string;
+  hideTime?: boolean;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({ 
   article, 
   layout = 'horizontal',
-  className = '' 
+  className = '' ,
+  hideTime = false 
 }) => {
   const [timeAgo, setTimeAgo] = useState('');
 
@@ -76,13 +78,15 @@ const NewsCard: React.FC<NewsCardProps> = ({
 
             <div className="flex justify-between gap-2 mt-1.5 sm:mb-2 text-[11px] sm:text-xs text-zinc-600 font-sans py-2 border-t border-b border-[#C8C8C8] inline-block">
               <span className="font-medium">{article.category}</span>
-              <time 
+              {!hideTime && (
+                <time 
                   className="text-zinc-600 flex items-center gap-1"
                   style={{ fontSize: '12px' }}
                 >
-                <Image src={time} alt="" width={14} height={14} />
-                {article.timeAgo}
-              </time>
+                  <Image src={time} alt="" width={14} height={14} />
+                  {article.timeAgo}
+                </time>
+              )}
             </div>
           </div>
         </div>

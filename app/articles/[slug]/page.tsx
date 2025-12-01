@@ -201,7 +201,7 @@ export default async function ArticleDetailPage({
                       alt={displayName || 'Avatar'}
                       width={80}
                       height={80}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 ) : (
@@ -238,16 +238,20 @@ export default async function ArticleDetailPage({
               </div>
             </div>
 
-           {/* Tags - Responsive */}
-            <div className="flex flex-wrap items-center gap-2 mt-6 md:mt-8 lg:mt-10 pt-4 md:pt-6 lg:pt-8 border-t border-neutral-200">
-              <span className="text-xs md:text-sm text-zinc-600 font-medium">Холбоотой:</span>
-              <Link 
-                href={`/${article.category_slug}`}
-                className="px-2 md:px-3 py-1 border border-[#c8c8c8] text-zinc-700 text-xs rounded-full hover:bg-red-500 hover:text-white transition"
-              >
-                {article.category_name}
-              </Link>
-            </div>
+            {article.tags && article.tags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2 mt-6 md:mt-8 lg:mt-10 pt-4 md:pt-6 lg:pt-8 border-t border-neutral-200">
+                <span className="text-xs md:text-sm text-zinc-600 font-medium">Холбоотой:</span>
+                {article.tags.split(',').map((tag: string, index: number) => (
+                  <Link 
+                    key={index}
+                    href={`/search?q=${tag.trim()}`}
+                    className="px-2 md:px-3 py-1 border border-[#c8c8c8] text-zinc-700 text-xs rounded-full hover:bg-red-500 hover:text-white transition"
+                  >
+                    {tag.trim()}
+                  </Link>
+                ))}
+              </div>
+            )}
 
             {/* Footer Share - Compact version */}
             <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-neutral-200">

@@ -542,3 +542,49 @@ export async function incrementViewCount(slug: string): Promise<boolean> {
     return false;
   }
 }
+
+
+export async function getTags(limit = 10): Promise<string[]> {
+  try {
+    const res = await fetch(`${API_URL}/articles/tags?limit=${limit}`, { 
+      cache: 'no-store' 
+    });
+    
+    if (!res.ok) {
+      console.error('Failed to fetch tags:', res.status);
+      return [];
+    }
+    
+    const data = await res.json();
+    return data.success ? data.tags : [];
+  } catch (error) {
+    console.error('getTags error:', error);
+    return [];
+  }
+}
+
+// ============================================
+// NEWSLETTER
+// ============================================
+
+export async function subscribeNewsletter(email: string): Promise<{ success: boolean; message: string }> {
+  try {
+    const res = await fetch(`${API_URL}/newsletter/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+    return {
+      success: data.success,
+      message: data.message
+    };
+  } catch (error) {
+    console.error('Newsletter subscribe error:', error);
+    return {
+      success: false,
+      message: 'Алдаа гарлаа. Дахин оролдоно уу.'
+    };
+  }
+}

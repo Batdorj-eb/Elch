@@ -88,6 +88,7 @@ export interface BackendArticle {
   created_at: string;
   updated_at: string;
   show_author: boolean | number; 
+  tags: string;
 }
 
 export interface Category {

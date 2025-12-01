@@ -1,24 +1,36 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail } from 'lucide-react';
+import { subscribeNewsletter } from '@/lib/api';
 
 interface NewsletterSignupProps {
-  className?: string; // ✅ className prop нэмлээ
+  className?: string; 
 }
 
 const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ className }) => {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Newsletter signup:', email);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setEmail('');
-    }, 3000);
+    setIsLoading(true);
+    setError('');
+
+    const result = await subscribeNewsletter(email);
+
+    if (result.success) {
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setEmail('');
+      }, 3000);
+    } else {
+      setError(result.message);
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -30,11 +42,11 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ className }) => {
       </div>
       
       <p className="text-sm text-center mb-6 text-[#2F2F2F]">
-         7 Хоногийн мэдээлэл, нийтлэл, өдөр бүрийн шинэчлэл хүлээн авна уу.
+        7 хоногийн мэдээлэл, нийтлэл, өдөр бүрийн шинэчлэл хүлээн авна уу.
       </p>
 
       {isSubmitted ? (
-        <div className="bg-white text-red-500 rounded-lg p-4 text-center font-medium">
+        <div className="bg-white text-green-600 rounded-lg p-4 text-center font-medium">
           ✓ Амжилттай бүртгэгдлээ!
         </div>
       ) : (
@@ -44,15 +56,21 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ className }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="И-мэйл хаяг"
-            className="w-full px-4 py-3 bg-white text-[#2F2F2F] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-white" 
+            className="w-full px-4 py-3 bg-white text-[#2F2F2F] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-500" 
             required
+            disabled={isLoading}
           />
+          
+          {error && (
+            <p className="text-red-600 text-sm text-center">{error}</p>
+          )}
           
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-[#FF3336] text-white font-medium hover:bg-red-50 transition"
+            disabled={isLoading}
+            className="w-full px-6 py-3 bg-[#FF3336] text-white font-medium hover:bg-red-600 transition disabled:opacity-50"
           >
-            Илгээх
+            {isLoading ? 'Илгээж байна...' : 'Илгээх'}
           </button>
         </form>
       )}

@@ -101,20 +101,19 @@ export default async function HomePage() {
 
             {/* Right Sidebar */}
             <aside className="hidden lg:flex w-[367px] flex-col lg:shrink-0">
-              <div className="flex flex-col justify-between h-full gap-3 mb-11">
-                {/* Top section */}
-                <div>     
+              <div className="flex-1 relative">
+                <div className="mb-3">
                   <NewsFeed articles={newsFeedArticles} />
-                  <BannerSection 
-                    type="vertical" 
-                  />
                 </div>
 
-                {/* Bottom section */}
-                <div style={{marginTop:"-100px"}}>
-                  <TopicsSection />
-                  <NewsletterSignup />
+                <div className="sticky top-4">
+                  <BannerSection type="vertical" />
                 </div>
+              </div>
+
+              <div className="mb-11">
+                <TopicsSection />
+                <NewsletterSignup />
               </div>
             </aside>
           </div>
