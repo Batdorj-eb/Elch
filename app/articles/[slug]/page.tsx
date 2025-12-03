@@ -111,7 +111,8 @@ export default async function ArticleDetailPage({
     month: 'long',
     day: 'numeric',
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
+    timeZone: 'Asia/Ulaanbaatar' 
   });
 
   const processedContent = processVideoContent(article.content);
@@ -153,12 +154,15 @@ export default async function ArticleDetailPage({
                 <time className="flex items-center gap-1">
                   <Clock className="w-3 h-3 md:w-4 md:h-4" />
                   <span className="hidden sm:inline">{formattedDate}</span>
-                  <span className="sm:hidden">
-                    {new Date(article.created_at).toLocaleDateString('mn-MN', {
-                      month: 'short',
-                      day: 'numeric'
-                    })}
-                  </span>
+<span className="sm:hidden">
+  {new Date(article.created_at).toLocaleDateString('mn-MN', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Asia/Ulaanbaatar'
+  })}
+</span>
                 </time>
               </div>
 
@@ -193,7 +197,7 @@ export default async function ArticleDetailPage({
             {/* 📱 AUTHOR + CONTENT SECTION - Mobile: Stack, Desktop (md+): Side by side */}
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
               {/* Author Section - Always show (either real author or Admin) */}
-              <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-2">
+              <div className="hidden md:flex md:flex-col items-center md:items-start gap-3 md:gap-2">
                 {displayAvatar ? (
                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0">
                     <Image
@@ -235,6 +239,34 @@ export default async function ArticleDetailPage({
                 <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
                   <VideoContent html={article.content} />
                 </div>
+              </div>
+            </div>
+            {/* 📱 Author Section - Mobile only (shown at end of article) */}
+            <div className="flex md:hidden items-center gap-3 py-4 border-t border-neutral-200">
+              {displayAvatar ? (
+                <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
+                  <Image
+                    src={displayAvatar}
+                    alt={displayName || 'Avatar'}
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              ) : (
+                <div className="w-10 h-10 overflow-hidden shrink-0">
+                  <Image
+                    src={profile}
+                    alt="Default Avatar"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              )}
+              <div className="font-medium text-sm text-[#2F2F2F]">
+                <span className='font-bold'>Elch.mn</span>
+                <span className='text-xs block'>{displayName}</span>
               </div>
             </div>
 
