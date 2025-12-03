@@ -20,7 +20,7 @@ import BannerSection from '@/components/common/BannerSection';
 import { processVideoContent } from '@/lib/utils';
 import VideoContent from '@/components/article/VideoContent';
 import NewsletterSignup from '@/components/sidebar/NewsletterSignup';
-import profile from "@/public/profile.png"
+import profile from "@/public/EN.svg"
 import ViewCounter from '@/components/article/ViewCounter';
 
 export async function generateMetadata({
@@ -120,7 +120,7 @@ export default async function ArticleDetailPage({
   const shouldShowAuthor = article.show_author === 1 || article.show_author === true;
 
   // Determine display name and avatar
-  const displayName = shouldShowAuthor ? article.author_name : 'Админ';
+  const displayName = shouldShowAuthor ? article.author_name : 'Мэдээний нийтлэгч';
   const displayAvatar = shouldShowAuthor && article.avatar ? article.avatar : null;
 
   return (
@@ -205,24 +205,24 @@ export default async function ArticleDetailPage({
                     />
                   </div>
                 ) : (
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0">
+                  <div className="w-10 h-10 mx-auto md:w-12 md:h-12 overflow-hidden shrink-0">
                     <Image
                       src={profile}
                       alt="Default Avatar"
                       width={80}
                       height={80}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 )}
-                <div className="font-medium text-sm md:text-base text-[#2F2F2F]">
-                  {displayName}
+                <div className="font-medium text-sm mx-auto text-center md:text-base text-[#2F2F2F]">
+                  <span className='font-bold'> Elch.mn <br/></span>
+                  <span className='text-xs'> {displayName}</span>
                 </div>
               </div>
 
               {/* Article Content */}
               <div className="flex-1">
-                {/* Article Excerpt */}
                 {article.excerpt && (
                   <div className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-neutral-50 border-l-4 border-red-500 rounded-r-lg">
                     <p className="text-sm md:text-base lg:text-lg font-medium text-[#2F2F2F] leading-relaxed">
