@@ -56,7 +56,7 @@ export default async function HomePage() {
         <div className="max-w-[1325px] mx-auto px-4 sm:px-6 md:px-8 lg:px-24">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 md:mt-10">
             {/* Left Column */}
-            <section className="flex-1 flex flex-col gap-6 max-w-[773px]">
+            <section className="flex-1 flex flex-col gap-6 max-w-[730px]">
               {/* Mobile order */}
               <div className="lg:hidden flex flex-col gap-6">
                 {heroArticle && <HeroArticle article={heroArticle} />}
