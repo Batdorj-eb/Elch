@@ -130,7 +130,7 @@ const WeeklySummary: React.FC<WeeklySummaryProps> = ({ articles }) => {
         <button
           key={tab}
           onClick={() => setActiveTab(tab)}
-          className={`px-4 py-2 text-sm rounded-full transition whitespace-nowrap border ${
+          className={`px-1 py-1 text-xs max-w-[96px] max-h-[35px] rounded-full transition whitespace-nowrap border ${
             tab === activeTab
               ? 'bg-red-500 text-white border-[#C8C8C8]'
               : 'text-[#2F2F2F] hover:bg-neutral-200 border-[#C8C8C8]'
