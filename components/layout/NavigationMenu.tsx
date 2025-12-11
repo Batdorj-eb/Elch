@@ -242,7 +242,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
                       </svg>
                     <div className="flex flex-col">
                       <span className="text-xs font-bold text-[#2F2F2F] whitespace-nowrap">Ам.доллар</span>
-                      <span className="text-xs font-medium text-[#2F2F2F]">3,580.5</span>
+                      <span className="text-xs font-medium text-[#2F2F2F]">3,544.5</span>
                     </div>
                   </div>
 

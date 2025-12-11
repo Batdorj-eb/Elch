@@ -231,22 +231,8 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles: initialArticles }) => {
 // Helper function to convert backend article
 function convertToNewsArticle(backendArticle: any): NewsArticle {
   const publishedDate = new Date(backendArticle.published_at || backendArticle.created_at);
-  const now = new Date();
-  const diffMs = now.getTime() - publishedDate.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
 
-  let timeAgo: string;
-  if (diffMins < 60) {
-    timeAgo = `${diffMins} минутын өмнө`;
-  } else if (diffHours < 24) {
-    timeAgo = `${diffHours} цагийн өмнө`;
-  } else if (diffDays < 7) {
-    timeAgo = `${diffDays} өдрийн өмнө`;
-  } else {
-    timeAgo = publishedDate.toLocaleDateString('mn-MN');
-  }
+  const timeAgo = `${publishedDate.getFullYear()}.${String(publishedDate.getMonth() + 1).padStart(2, '0')}.${String(publishedDate.getDate()).padStart(2, '0')}`;
 
   const imageUrl = backendArticle.featured_image || 
                    backendArticle.cover_image || 

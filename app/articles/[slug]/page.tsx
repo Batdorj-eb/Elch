@@ -106,7 +106,7 @@ export default async function ArticleDetailPage({
   ]);
 
   const articleUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/articles/${article.slug}`;
-  const formattedDate = new Date(article.created_at).toLocaleDateString('mn-MN', {
+  const formattedDate = new Date(article.published_at || article.created_at).toLocaleDateString('mn-MN', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -154,15 +154,15 @@ export default async function ArticleDetailPage({
                 <time className="flex items-center gap-1">
                   <Clock className="w-3 h-3 md:w-4 md:h-4" />
                   <span className="hidden sm:inline">{formattedDate}</span>
-<span className="sm:hidden">
-  {new Date(article.created_at).toLocaleDateString('mn-MN', {
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZone: 'Asia/Ulaanbaatar'
-  })}
-</span>
+                  <span className="sm:hidden">
+                    {new Date(article.published_at || article.created_at).toLocaleDateString('mn-MN', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      timeZone: 'Asia/Ulaanbaatar'
+                    })}
+                  </span>
                 </time>
               </div>
 
