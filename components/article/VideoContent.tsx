@@ -139,49 +139,74 @@ export default function VideoContent({ html }: VideoContentProps) {
     const timer = setTimeout(parseFBVideos, 200);
 
     // ============================================
-    // TABLE PROCESSING - Fit tables within container
+    // TABLE PROCESSING - Responsive tables
     // ============================================
     const tableFigures = contentRef.current.querySelectorAll<HTMLElement>('figure.table');
     tableFigures.forEach((figureElement) => {
-      // Reset figure styles to fit container
+      // Figure wrapper - allow scroll on mobile
       figureElement.style.width = '100%';
       figureElement.style.maxWidth = '100%';
       figureElement.style.margin = '1.5rem 0';
       figureElement.style.overflowX = 'auto';
+      figureElement.style.setProperty('-webkit-overflow-scrolling', 'touch');
       
       // Get the table inside
       const table = figureElement.querySelector<HTMLTableElement>('table');
       if (table) {
-        table.style.width = '100%';
-        table.style.maxWidth = '100%';
-        table.style.tableLayout = 'fixed';
-        table.style.borderCollapse = 'collapse';
-        table.style.fontSize = '11px';
+        // Check if mobile (< 768px)
+        const isMobile = window.innerWidth < 768;
         
-        // Style table cells - compact
+        if (isMobile) {
+          // Mobile: natural width with scroll
+          table.style.width = 'auto';
+          table.style.minWidth = '600px';
+          table.style.tableLayout = 'auto';
+          table.style.fontSize = '10px';
+        } else {
+          // Desktop: fit to container
+          table.style.width = '100%';
+          table.style.maxWidth = '100%';
+          table.style.tableLayout = 'fixed';
+          table.style.fontSize = '9px';
+        }
+        
+        table.style.borderCollapse = 'collapse';
+        
+        // Style table cells - very compact
         const cells = table.querySelectorAll<HTMLTableCellElement>('td, th');
         cells.forEach((cell) => {
-          cell.style.padding = '4px 6px';
+          cell.style.padding = isMobile ? '4px 6px' : '3px 4px';
           cell.style.border = '1px solid #e5e5e5';
           cell.style.verticalAlign = 'middle';
-          cell.style.wordWrap = 'break-word';
-          cell.style.whiteSpace = 'normal';
-          cell.style.overflow = 'hidden';
-          cell.style.textOverflow = 'ellipsis';
+          cell.style.textAlign = 'center';
+          
+          if (isMobile) {
+            cell.style.whiteSpace = 'nowrap';
+          } else {
+            cell.style.wordWrap = 'break-word';
+            cell.style.whiteSpace = 'normal';
+            cell.style.overflow = 'hidden';
+            cell.style.textOverflow = 'ellipsis';
+            cell.style.maxWidth = '80px';
+          }
         });
         
-        // Style images inside table - make them very small
+        // Style images inside table - smaller
         const tableImages = table.querySelectorAll<HTMLImageElement>('img');
         tableImages.forEach((img) => {
-          img.style.width = '35px';
-          img.style.maxWidth = '35px';
-          img.style.height = '45px';
+          const imgSize = isMobile ? '40px' : '30px';
+          const imgHeight = isMobile ? '50px' : '38px';
+          
+          img.style.width = imgSize;
+          img.style.maxWidth = imgSize;
+          img.style.minWidth = imgSize;
+          img.style.height = imgHeight;
           img.style.objectFit = 'cover';
-          img.style.borderRadius = '4px';
-          img.classList.remove('w-full', 'max-w-full');
-          img.removeAttribute('class');
+          img.style.borderRadius = '3px';
           img.style.display = 'block';
           img.style.margin = '0 auto';
+          // Remove all classes that might override
+          img.className = '';
         });
       }
     });
@@ -189,18 +214,39 @@ export default function VideoContent({ html }: VideoContentProps) {
     // Also handle tables not wrapped in figure
     const standaloneTables = contentRef.current.querySelectorAll<HTMLTableElement>('table:not(figure.table table)');
     standaloneTables.forEach((tableElement) => {
-      tableElement.style.width = '100%';
-      tableElement.style.maxWidth = '100%';
-      tableElement.style.tableLayout = 'fixed';
+      const isMobile = window.innerWidth < 768;
+      
+      // Wrap in scrollable container if not already
+      if (!tableElement.parentElement?.classList.contains('table-wrapper')) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'table-wrapper';
+        wrapper.style.overflowX = 'auto';
+        wrapper.style.setProperty('-webkit-overflow-scrolling', 'touch');
+        wrapper.style.margin = '1.5rem 0';
+        tableElement.parentNode?.insertBefore(wrapper, tableElement);
+        wrapper.appendChild(tableElement);
+      }
+      
+      if (isMobile) {
+        tableElement.style.width = 'auto';
+        tableElement.style.minWidth = '600px';
+        tableElement.style.fontSize = '10px';
+      } else {
+        tableElement.style.width = '100%';
+        tableElement.style.tableLayout = 'fixed';
+        tableElement.style.fontSize = '9px';
+      }
       tableElement.style.borderCollapse = 'collapse';
-      tableElement.style.fontSize = '11px';
       
       const cells = tableElement.querySelectorAll<HTMLTableCellElement>('td, th');
       cells.forEach((cell) => {
-        cell.style.padding = '4px 6px';
+        cell.style.padding = isMobile ? '4px 6px' : '3px 4px';
         cell.style.border = '1px solid #e5e5e5';
-        cell.style.wordWrap = 'break-word';
-        cell.style.whiteSpace = 'normal';
+        cell.style.textAlign = 'center';
+        if (!isMobile) {
+          cell.style.wordWrap = 'break-word';
+          cell.style.whiteSpace = 'normal';
+        }
       });
     });
 
