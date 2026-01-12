@@ -8,7 +8,7 @@ import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { Category } from '@/lib/types';
-import sm_logo from '../../public/sm_logo.png';
+import sp_logo from '../../public/sp_logo.png';
 import Logo from '@/public/EN.svg'
 
 interface NavigationMenuProps {
@@ -140,7 +140,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
           <div className="shrink-0">
             <Link href="/">
               <Image
-                src={sm_logo}
+                src={sp_logo}
                 alt="Logo"
                 width={200}
                 height={50}
@@ -148,24 +148,23 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
               />
             </Link>
             <Link href="/" className="hidden lg:block text-xl xl:text-2xl font-bold text-red-500">
-              <Image src={Logo} alt='logo'/>
+              <Image src={Logo} alt='logo' />
             </Link>
           </div>
 
           {/* Desktop Menu - CENTER */}
           <div className="hidden lg:flex items-center justify-center flex-1 max-w-[1000px] mx-4">
             {menuCategories.map((category, index) => {
-              const isActive = activeCategory 
-                ? category.slug === activeCategory 
+              const isActive = activeCategory
+                ? category.slug === activeCategory
                 : pathname.startsWith(`/${category.slug}`);
-              
+
               return (
                 <React.Fragment key={category.id}>
                   <Link
                     href={`/${category.slug}`}
-                    className={`px-2 lg:px-3 xl:px-4 py-3 text-xs lg:text-sm hover:bg-zinc-700 transition whitespace-nowrap relative ${
-                      isActive ? 'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#FF3336]' : ''
-                    }`}
+                    className={`px-2 lg:px-3 xl:px-4 py-3 text-xs lg:text-sm hover:bg-zinc-700 transition whitespace-nowrap relative ${isActive ? 'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[3px] after:bg-[#FF3336]' : ''
+                      }`}
                   >
                     {category.name}
                   </Link>
@@ -235,11 +234,11 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
                       <span className="text-[#2F2F2F] font-sm">{dateString}</span>
                     </div>
                   </div>
-                  <div className="flex gap-1 items-center" style={{marginLeft:"-20px"}}>
-                      <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.5 21C15.7467 21 20 16.5228 20 11C20 5.47715 15.7467 1 10.5 1C5.25329 1 1 5.47715 1 11C1 16.5228 5.25329 21 10.5 21Z" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M13 8C12.4292 7.31501 11.4239 6.83855 10.5 6.80872M10.5 6.80872C9.40075 6.77322 8.41667 7.36998 8.41667 9.00001C8.41667 12 13 10.5 13 13.5C13 15.211 11.7802 15.9462 10.5 15.891M10.5 6.80872V5M8 14.5C8.53707 15.3593 9.53567 15.8494 10.5 15.891M10.5 15.891V18" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                  <div className="flex gap-1 items-center" style={{ marginLeft: "-20px" }}>
+                    <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10.5 21C15.7467 21 20 16.5228 20 11C20 5.47715 15.7467 1 10.5 1C5.25329 1 1 5.47715 1 11C1 16.5228 5.25329 21 10.5 21Z" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M13 8C12.4292 7.31501 11.4239 6.83855 10.5 6.80872M10.5 6.80872C9.40075 6.77322 8.41667 7.36998 8.41667 9.00001C8.41667 12 13 10.5 13 13.5C13 15.211 11.7802 15.9462 10.5 15.891M10.5 6.80872V5M8 14.5C8.53707 15.3593 9.53567 15.8494 10.5 15.891M10.5 15.891V18" stroke="#EF4444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                     <div className="flex flex-col">
                       <span className="text-xs font-bold text-[#2F2F2F] whitespace-nowrap">Ам.доллар</span>
                       <span className="text-xs font-medium text-[#2F2F2F]">3,544.5</span>
@@ -265,18 +264,17 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
               {/* Category Links */}
               <div className="mt-2 border-t border-[#C8C8C8]">
                 {visibleCategories.map((category, idx) => {
-                  const isActive = activeCategory 
-                    ? category.slug === activeCategory 
+                  const isActive = activeCategory
+                    ? category.slug === activeCategory
                     : pathname.startsWith(`/${category.slug}`);
-                  
+
                   return (
                     <Link
                       key={category.id}
                       href={`/${category.slug}`}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`block px-4 py-3 text-sm hover:bg-zinc-100 transition border-b border-[#C8C8C8] ${
-                        isActive ? 'border-b-2 border-b-[#FF3336]' : ''
-                      }`}
+                      className={`block px-4 py-3 text-sm hover:bg-zinc-100 transition border-b border-[#C8C8C8] ${isActive ? 'border-b-2 border-b-[#FF3336]' : ''
+                        }`}
                       ref={idx === 0 ? firstLinkRef : undefined}
                     >
                       {category.name}
