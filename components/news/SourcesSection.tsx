@@ -15,7 +15,7 @@ const SourcesSection: React.FC<SourcesSectionProps> = ({ articles }) => {
   // 🔥 "Сурвалжлага" (slug: video) категорийн мэдээнүүд
   const videoArticles = articles.filter(article => 
     article.categorySlug === 'video' || 
-    article.category === 'Сурвалжлага'
+    article.category === 'Видео мэдээ'
   ).slice(0, 3); // Эхний 3-ийг авах
 
   if (videoArticles.length === 0) {

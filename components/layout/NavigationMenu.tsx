@@ -33,7 +33,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
       'society',
       'peoples-representative',
       'tech',
-      'fact-checking',
+      'video',
       'pop-news',
       'world',
       '126-attendance',
@@ -65,12 +65,12 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
   }, [categories, customOrder]);
 
   const menuCategories = useMemo(
-    () => orderedCategories.filter((c) => c.slug !== 'video'),
+    () => orderedCategories.filter((c) => c.slug !== 'fact-checking'),
     [orderedCategories]
   );
 
   const visibleCategories = useMemo(
-    () => orderedCategories.filter((c) => c.slug !== 'video'),
+    () => orderedCategories.filter((c) => c.slug !== 'fact-checking'),
     [orderedCategories]
   );
 
