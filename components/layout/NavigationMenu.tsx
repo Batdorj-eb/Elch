@@ -210,11 +210,20 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ categories, activeCateg
             aria-label="Mobile navigation"
           >
             <div className="absolute inset-0 bg-[#FFF1E5] p-4 overflow-y-auto max-h-screen">
-              <div className="flex justify-end">
+              <div className="flex mb-6 justify-between align-center">
+                <Link href="/">
+                  <Image
+                    src={sp_logo}
+                    alt="Logo"
+                    width={200}
+                    height={50}
+                    className="lg:hidden h-7 md:h-8 w-auto"
+                  />
+                </Link>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close menu"
-                  className="p-2 rounded hover:bg-zinc-100 transition"
+                  className="rounded hover:bg-zinc-100 transition"
                 >
                   <X className="w-5 h-5" />
                 </button>
