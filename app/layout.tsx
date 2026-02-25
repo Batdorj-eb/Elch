@@ -1,14 +1,11 @@
-// app/layout.tsx
-
 import type { Metadata } from 'next';
 import localFont from 'next/font/local'
 import './globals.css';
 
-// Inter font - үндсэн текстэд
 const inter = localFont({
   src: [
     {
-      path: '../public/fonts/Inter-Regular.woff2',  // Path-г засав
+      path: '../public/fonts/Inter-Regular.woff2',  
       weight: '400',
       style: 'normal',
     },
@@ -21,7 +18,6 @@ const inter = localFont({
   variable: '--font-inter',
 })
 
-// Playfair Display - гарчиг, title-д
 const playfair = localFont({
   src: [
     {
@@ -61,6 +57,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="mn" className={`${inter.variable} ${playfair.variable}`}>
+      <head>
+        <meta
+          property="fb:app_id"
+          content={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || "2617569178642307"}
+        />
+      </head>
       <body className={inter.className}>
         {children}
       </body>
