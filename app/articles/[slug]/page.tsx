@@ -30,24 +30,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  
+
   if (!article) {
-    return {
-      title: 'Мэдээ олдсонгүй',
-    };
+    return { title: 'Мэдээ олдсонгүй' };
   }
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
   const articleUrl = `${siteUrl}/articles/${article.slug}`;
-  
+  const fbAppId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID;
+
   const getAbsoluteUrl = (imageUrl: string | null) => {
-    if (!imageUrl) {
-      return `${siteUrl}/default-og-image.jpg`;
-    }
-    
-    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-      return imageUrl;
-    }
-    
+    if (!imageUrl) return `${siteUrl}/default-og-image.jpg`;
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return imageUrl;
     return `${siteUrl}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
   };
 
@@ -56,32 +50,29 @@ export async function generateMetadata({
   return {
     title: `${article.title} - ELCH News`,
     description: article.excerpt || article.title,
-    
+
     openGraph: {
       title: article.title,
       description: article.excerpt || article.title,
       url: articleUrl,
       siteName: 'ELCH News',
-      images: [
-        {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: article.title,
-        },
-      ],
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: article.title }],
       locale: 'mn_MN',
       type: 'article',
       publishedTime: article.published_at,
       authors: article.author_name ? [article.author_name] : undefined,
       section: article.category_name,
     },
-    
+
     twitter: {
       card: 'summary_large_image',
       title: article.title,
       description: article.excerpt || article.title,
       images: [ogImageUrl],
+    },
+
+    other: {
+      ...(fbAppId ? { "fb:app_id": fbAppId } : {}),
     },
   };
 }
