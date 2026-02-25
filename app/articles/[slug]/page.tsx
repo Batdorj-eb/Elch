@@ -37,7 +37,6 @@ export async function generateMetadata({
 
   const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/$/, '');
   const articleUrl = `${siteUrl}/articles/${article.slug}`;
-  const fbAppId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID;
 
   const getAbsoluteUrl = (imageUrl: string | null) => {
     if (!imageUrl) return `${siteUrl}/default-og-image.jpg`;
@@ -69,10 +68,6 @@ export async function generateMetadata({
       title: article.title,
       description: article.excerpt || article.title,
       images: [ogImageUrl],
-    },
-
-    other: {
-      ...(fbAppId ? { "fb:app_id": fbAppId } : {}),
     },
   };
 }
