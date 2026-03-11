@@ -100,7 +100,10 @@ export default async function CategoryPage({
           <div>
             {categoryArticles.length >= 3 && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 mb-6 md:mb-8 lg:mb-10">
-                {categoryArticles.slice(0, 3).map((article) => (
+                {categoryArticles
+                  .sort((a, b) => new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime())
+                  .slice(0, 3)
+                  .map((article) => (
                   <a 
                     key={article.id} 
                     href={`/articles/${article.slug || article.id}`}

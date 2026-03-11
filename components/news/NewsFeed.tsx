@@ -51,7 +51,11 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles: initialArticles }) => {
           setHasMore(false);
         }
         
-        setNewArticles(prev => [...prev, ...newItems]);
+        setNewArticles(prev => 
+          [...prev, ...newItems].sort((a, b) =>
+            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+          )
+        );
         setOffset(prev => prev + newItems.length);
       }
     } catch (error) {
