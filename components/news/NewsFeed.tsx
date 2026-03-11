@@ -17,8 +17,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const NewsFeed: React.FC<NewsFeedProps> = ({ articles: initialArticles }) => {
   const [activeTab, setActiveTab] = useState<'new' | 'trending'>('new');
   
-  // Шинэ мэдээ state
-  const [newArticles, setNewArticles] = useState<NewsArticle[]>(initialArticles || []);
+  const [newArticles, setNewArticles] = useState<NewsArticle[]>(
+    [...(initialArticles || [])].sort((a, b) =>
+      new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime()
+    )
+  );
   const [offset, setOffset] = useState(initialArticles?.length || 0);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -51,9 +54,10 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles: initialArticles }) => {
           setHasMore(false);
         }
         
+        // fetchMoreArticles дотор || 0 нэмэх
         setNewArticles(prev => 
           [...prev, ...newItems].sort((a, b) =>
-            new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+            new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime()
           )
         );
         setOffset(prev => prev + newItems.length);
