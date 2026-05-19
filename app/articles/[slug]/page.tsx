@@ -122,7 +122,7 @@ export default async function ArticleDetailPage({
       <main className="max-w-[1500px] mx-auto px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-48 py-6 md:py-8 lg:py-10">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 xl:gap-10">
           {/* Main Article Content */}
-          <article className="flex-1 lg:max-w-[800px]">
+          <article className="flex-1 min-w-0 lg:max-w-[800px]">
             <Link
               href={`/${article.category_slug}`}
               className="inline-block px-3 py-1 md:px-4 md:py-1.5 text-[#FF3336] text-xs md:text-sm font-bold border border-[#FF3336] hover:bg-red-600 transition mb-3 md:mb-4"
@@ -181,7 +181,7 @@ export default async function ArticleDetailPage({
             )}
 
             {/* 📱 AUTHOR + CONTENT SECTION - Mobile: Stack, Desktop (md+): Side by side */}
-            <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 lg:mb-10 min-w-0">
               {/* Author Section - Always show (either real author or Admin) */}
               <div className="hidden md:flex md:flex-col items-center md:items-start gap-3 md:gap-2">
                 {displayAvatar ? (
@@ -212,7 +212,7 @@ export default async function ArticleDetailPage({
               </div>
 
               {/* Article Content */}
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 {article.excerpt && (
                   <div className="mb-4 md:mb-6 lg:mb-8 p-3 md:p-4 lg:p-6 bg-neutral-50 border-l-4 border-red-500 rounded-r-lg">
                     <p className="text-sm md:text-base lg:text-lg font-medium text-[#2F2F2F] leading-relaxed">
@@ -222,7 +222,7 @@ export default async function ArticleDetailPage({
                 )}
 
                 {/* Article Body - Responsive text size */}
-                <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none">
+                <div className="prose prose-sm md:prose-base lg:prose-lg max-w-none min-w-0">
                   <VideoContent html={article.content} />
                 </div>
               </div>

@@ -267,30 +267,57 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ========================================
-   ARTICLE CONTENT - TABLES
+   ARTICLE CONTENT - TABLES (horizontal scroll)
 ======================================== */
 
-.article-content table {
+.article-content figure.table.table-scroll,
+.article-content .table-wrapper {
   width: 100%;
-  border-collapse: collapse;
+  max-width: 100%;
   margin: 1.5rem 0;
-  font-size: 0.9rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.article-content th,
-.article-content td {
+.article-content figure.table.table-scroll table,
+.article-content .table-wrapper table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: inherit;
+}
+
+.article-content figure.table.table-scroll th,
+.article-content figure.table.table-scroll td,
+.article-content .table-wrapper th,
+.article-content .table-wrapper td {
   border: 1px solid #e5e7eb;
   padding: 0.75rem 1rem;
   text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
-.article-content th {
+.article-content figure.table.table-scroll th,
+.article-content .table-wrapper th {
   background-color: #f9fafb;
   font-weight: 600;
 }
 
-.article-content tr:nth-child(even) {
+.article-content figure.table.table-scroll tr:nth-child(even),
+.article-content .table-wrapper tr:nth-child(even) {
   background-color: #fafafa;
+}
+
+.article-content figure.table.table-scroll img,
+.article-content .table-wrapper img {
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  display: block;
+  margin: 0 auto;
+  border-radius: 0.25rem;
 }
 
 /* ========================================
@@ -316,15 +343,12 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.125rem;
   }
 
-  .article-content table {
-    font-size: 0.8rem;
-    display: block;
-    overflow-x: auto;
-  }
-
-  .article-content th,
-  .article-content td {
-    padding: 0.5rem;
+  .article-content figure.table.table-scroll th,
+  .article-content figure.table.table-scroll td,
+  .article-content .table-wrapper th,
+  .article-content .table-wrapper td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
   }
 }
 
