@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
 
           {/* Copyright */}
           <p className="text-xs text-zinc-400 text-center lg:text-left">
-            © 2025 Элч Ньюс. Бүх эрх хуулиар хамгаалагдсан.
+            © 2026 Элч Ньюс. Бүх эрх хуулиар хамгаалагдсан.
           </p>
         </div>
       </div>
